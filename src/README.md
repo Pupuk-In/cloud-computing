@@ -1,64 +1,345 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# API Spec
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Authentication
 
-## About Laravel
+### Register
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+All API must use this authentication
+- URL :
+    - /auth/signup
+- Method :
+    - POST
+- Header :
+    - Content-Type: application/json
+    - Accept: application/json
+- Body :
+```json 
+{
+    "name" : "string",
+    "username" : "string, no whistespace, alphanumeric",
+    "email" : "string, email",
+    "password" : "string, min:8",
+    "password_confirmation" : "string"
+}
+```
+- Response :
+```json 
+{
+    "message" : "User created successfully"
+}
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Login
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+All API must use this authentication
+- URL :
+    - /auth/login
+- Method :
+    - POST
+- Header :
+    - Content-Type: application/json
+    - Accept: application/json
+- Body :
+```json 
+{
+    "email" : "string",
+    "password" : "string"
+}
+```
+- Response :
+```json 
+{
+    "message" : "User logged in successfully"
+    "user" : 
+    {
+        "id": "integer",
+        "name": "string",
+        "email": "string",
+        "email_verified_at": "string",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "access_token": "string"
+    }
+}
+```
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Home Screen
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Get Items on Home Screen
 
-## Laravel Sponsors
+### Get All Fertilizer Types
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- URL :
+    - /fertilizerTypes
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+- Parameters :
+    - 
+- Response :
+```json 
+{
+    "message" : "Fertilizer Types fetched successfully",
+    "types" : 
+    {
+        "id" : "integer",
+        "name" : "string",
+        "picture" : "string, URL"
+    }
+}
+```
 
-### Premium Partners
+### Get All Plants
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- URL :
+    - /plants
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+ - Parameters :
+    - 
+- Response :
+```json 
+{
+    "message" : "Plants fetched successfully",
+    "plants" : 
+    {
+        "id" : "integer",
+        "name" : "string",
+        "picture" : "string, URL",
+        "soils_id" : "integer"
+    }
+}
+```
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Search Page
 
-## Code of Conduct
+## Card Item Lists
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Get All Items
 
-## Security Vulnerabilities
+- URL :
+    - /items
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+- Parameters :
+    - page as int, optional
+    - size as int, optional
+    - query as string
+    - price as int
+    - type as string
+    - plant as string
+    - part as string
+    - soil as string
+    - sort_by as string
+- Response :
+```json 
+{
+    "message" : "Items fetched successfully",
+    "items" : 
+    {
+        "id" : "integer",
+        "name" : "string",
+        "picture" : "string, URL",
+        "description" : "string, longtext",
+        "price" : "integer",
+        "stock" : "integer",
+        "rating" : "float",
+        "type" : "string",
+        "plant" : "string",
+        "part" : "string"
+    }
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+# Item Detail Page
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Item Details
+
+### Get Details of Clicked Items
+
+- URL :
+    - /items/:id
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+- Parameters :
+    - 
+- Response :
+```json 
+{
+    "message" : "Item Details fetched successfully",
+    "items" : 
+    {
+        "id" : "integer",
+        "name" : "string",
+        "picture" : "string, URL",
+        "description" : "string, longtext",
+        "price" : "integer",
+        "stock" : "integer",
+        "rating" : "float",
+        "type" : "string",
+        "plant" : "string",
+        "part" : "string"
+    }
+}
+```
+
+
+# Cart Items Page
+
+## Lists of Items in Cart
+
+### Get All Items
+
+- URL :
+    - /carts
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+- Parameters :
+    - 
+- Response :
+```json 
+{
+    "message" : "Cart items fetched successfully",
+    "carts" : "items" : 
+    {
+        {
+            "id" : "integer",
+            "name" : "string",
+            "picture" : "string, URL",
+            "description" : "string, longtext",
+            "price" : "integer",
+            "stock" : "integer",
+            "rating" : "float",
+            "type" : "string",
+            "plant" : "string",
+            "part" : "string"
+        }
+    }
+}
+```
+
+
+# Wishlisted Items Page
+
+## Lists of Items in Wishlists
+
+### Get All Items
+
+- URL :
+    - /wishlists
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+- Parameters :
+    - 
+- Response :
+```json 
+{
+    "message" : "Cart items fetched successfully",
+    "wishlists" : "items" : 
+    {
+        {
+            "id" : "integer",
+            "name" : "string",
+            "picture" : "string, URL",
+            "description" : "string, longtext",
+            "price" : "integer",
+            "stock" : "integer",
+            "rating" : "float",
+            "type" : "string",
+            "plant" : "string",
+            "part" : "string"
+        }
+    }
+}
+```
+
+
+# Store Page
+
+## Seller POV
+
+### Create Store Profile
+
+- URL :
+    - /stores/create
+- Method :
+    - Post
+- Header :
+    - Content-Type: application/json
+    - Accept: application/json
+- Body :
+```json 
+{
+    "name" : "string",
+    "picture" : "string, URL",
+    "address" : "string, longtext",
+    "latitude" : "double",
+    "longitude" : "double",
+    "description" : "string, longtext"
+}
+```
+- Response :
+```json 
+{
+    "message" : "Store created successfully"
+}
+```
+
+
+## Buyer POV
+
+### Store Profile
+
+- URL :
+    - /stores/:id
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+- Parameters :
+    - stores_id as int
+    - page as int, optional
+    - size as int, optional
+- Response :
+```json 
+{
+    "message" : "Store page fetched successfully",
+    "stores" : 
+    {
+        "name" : "string",
+        "picture" : "string, URL",
+        "address" : "string, longtext",
+        "latitude" : "double",
+        "longitude" : "double",
+        "description" : "string, longtext",
+        "rating" : "double"
+    },
+    "items" :
+    {
+        "id" : "integer",
+        "name" : "string",
+        "picture" : "string, URL",
+        "description" : "string, longtext",
+        "price" : "integer",
+        "stock" : "integer",
+        "rating" : "float",
+        "type" : "string",
+        "plant" : "string",
+        "part" : "string"
+    }
+}
+```
