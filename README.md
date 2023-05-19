@@ -1,10 +1,12 @@
 # API Spec
 
+## API
+https://auth-api-test-6-ocgnabibnq-et.a.run.app/api
+
 ## Authentication
 
 ### Register
 
-All API must use this authentication
 - URL :
     - /auth/signup
 - Method :
@@ -63,7 +65,26 @@ All API must use this authentication
 }
 ```
 
+### Logout
 
+- URL :
+    - /logout
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Parameters :
+    - 
+- Response :
+```json 
+{
+    "message" : "User logged out successfully"
+}
+```
+
+
+# DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA
 # Home Screen
 
 ## Get Items on Home Screen
