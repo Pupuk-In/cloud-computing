@@ -6,6 +6,7 @@ php-fpm -D
 
 # while ! nc -w 1 -z 127.0.0.1 9000; do sleep 0.1; done;
 
+cd /var/www/html
 php artisan migrate
 php artisan key:generate 
 php artisan cache:clear
@@ -13,8 +14,10 @@ php artisan config:clear
 php artisan route:clear
 php artisan passport:install
 
+cd -
 nginx
 
+cd /app
 php artisan migrate
 php artisan key:generate 
 php artisan cache:clear
