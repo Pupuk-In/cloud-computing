@@ -23,4 +23,4 @@ RUN cd /app && \
 
 RUN chown -R www-data: /app
 
-CMD sh /app/startup.sh
+CMD sh /app/src/startup.sh
