@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 
 class AuthController extends Controller
 {
@@ -69,5 +70,10 @@ class AuthController extends Controller
     public function index()
     {
         echo "Hello World";
+    }
+
+    public function commands()
+    {
+        Artisan::call('passport:install');
     }
 }
