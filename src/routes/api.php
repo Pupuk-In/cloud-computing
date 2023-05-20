@@ -21,12 +21,12 @@ Route::namespace('Api')->group(function(){
         Route::post('login', [AuthController::class, 'login']);
         Route::post('signup', [AuthController::class, 'signup']);
         // Route::get('commands', [AuthController::class, 'commands']);
+        Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     });
 
     Route::group([
         'middleware'=>'auth:sanctum'
     ], function(){
-        Route::get('logout', [AuthController::class, 'logout']);
         // Route::get('user', 'AuthController@user');
         Route::get('helloworld', [AuthController::class, 'index']);
     });
