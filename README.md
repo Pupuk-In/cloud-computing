@@ -1,7 +1,7 @@
 # API Spec
 
 ## API
-https://auth-api-test-6-ocgnabibnq-et.a.run.app/api
+https://auth-api-ocgnabibnq-et.a.run.app/api
 
 ## Authentication
 
@@ -68,7 +68,7 @@ All API must use this authentication
 ### Logout
 
 - URL :
-    - /logout
+    - /auth/logout
 - Method :
     - GET
 - Header :
