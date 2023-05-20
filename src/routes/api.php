@@ -20,11 +20,11 @@ Route::namespace('Api')->group(function(){
     Route::prefix('auth')->group(function(){
         Route::post('login', [AuthController::class, 'login']);
         Route::post('signup', [AuthController::class, 'signup']);
-        Route::get('commands', [AuthController::class, 'commands']);
+        // Route::get('commands', [AuthController::class, 'commands']);
     });
 
     Route::group([
-        'middleware'=>'auth:api'
+        'middleware'=>'auth:sanctum'
     ], function(){
         Route::get('logout', [AuthController::class, 'logout']);
         // Route::get('user', 'AuthController@user');
