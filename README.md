@@ -120,6 +120,87 @@ All API must use this authentication
 ```
 
 
+# Store Page
+
+## Seller POV
+
+### Create Store Profile
+
+- Endpoint :
+    - /store/profiles
+- Method :
+    - POST
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "name": "string, required, unique",
+    "picture" : "string",
+    "address": "string, required",
+    "latitude": "double, required",
+    "longitude": "double, required",
+    "description": "string",
+}
+```
+- Response :
+```json 
+{
+    "store": {
+        "name": "string",
+        "picture" : "string",
+        "address": "string",
+        "latitude": "double",
+        "longitude": "double",
+        "description": "string",
+        "rating": "float",
+        "profile_id": "integer",
+        "updated_at": "datetime",
+        "created_at": "datetime",
+        "id": "integer"
+    }
+}
+```
+
+### Update Store Profile
+
+- Endpoint :
+    - /store/profiles
+- Method :
+    - PATCH
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "name": "string, required, unique",
+    "picture" : "string",
+    "address": "string, required",
+    "latitude": "double, required",
+    "longitude": "double, required",
+    "description": "string",
+}
+```
+- Response :
+```json 
+{
+    "store": {
+        "name": "string",
+        "picture" : "string",
+        "address": "string",
+        "latitude": "double",
+        "longitude": "double",
+        "description": "string",
+        "rating": "float",
+        "profile_id": "integer",
+        "updated_at": "datetime",
+        "created_at": "datetime",
+        "id": "integer"
+    }
+}
+```
 
 # DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA (WIP)
 # Home Screen
@@ -325,37 +406,6 @@ All API must use this authentication
 }
 ```
 
-
-# Store Page
-
-## Seller POV
-
-### Create Store Profile
-
-- Endpoint :
-    - /stores/create
-- Method :
-    - Post
-- Header :
-    - Content-Type: application/json
-    - Accept: application/json
-- Body :
-```json 
-{
-    "name" : "string",
-    "picture" : "string, URL",
-    "address" : "string, longtext",
-    "latitude" : "double",
-    "longitude" : "double",
-    "description" : "string, longtext"
-}
-```
-- Response :
-```json 
-{
-    "message" : "Store created successfully"
-}
-```
 
 
 ## Buyer POV

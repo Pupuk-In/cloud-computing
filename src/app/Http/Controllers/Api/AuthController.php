@@ -75,11 +75,8 @@ class AuthController extends Controller
 
     public function index()
     {
-        echo "Hello World";
-    }
-
-    public function commands()
-    {
-        Artisan::call('passport:install');
+        return response()->json([
+            "message" => "Authenticaed User Detected"
+        ], 200);
     }
 }

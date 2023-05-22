@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'string',
-            'picture' => 'image',
+            'picture' => 'string',
             'birth_date' => 'date',
             'age' => 'integer',
             'address' => 'string',

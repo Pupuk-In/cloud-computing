@@ -13,18 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('profiles', function (Blueprint $table) {
+        Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
+            $table->string('name')->unique();
             $table->string('picture')->nullable();
-            $table->date('birth_date')->nullable();
-            $table->integer('age')->nullable();
-            $table->string('address')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->string('address');
+            $table->double('latitude');
+            $table->double('longitude');
+            $table->string('description')->nullable();
+            $table->float('rating')->nullable();
+            $table->unsignedBigInteger('profile_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->foreign('profile_id')->references('id')->on('profiles')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
         });
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profiles');
+        Schema::dropIfExists('stores');
     }
 };
