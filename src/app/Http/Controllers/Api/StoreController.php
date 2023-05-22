@@ -42,7 +42,6 @@ class StoreController extends Controller
 
         $profile = Profile::where('user_id', $user->id)->first();
 
-
         $request->validate([
             'name' => 'string|required',
             'picture' => 'string',
