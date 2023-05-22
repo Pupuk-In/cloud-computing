@@ -398,6 +398,7 @@ All API must use this authentication
         "type" : "string",
         "plant" : "string",
         "part" : "string",
+        "test" : "test"
     }
 }
 ```
