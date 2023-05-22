@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Profile;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
 
@@ -39,20 +40,24 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
             'username' => 'required|string|alpha_dash|unique:users,username',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|confirmed'
         ]);
 
         $user = new User([
-            'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
 
         $user->save();
+
+        $profile = new Profile([
+            'user_id' => $user->id,
+        ]);
+
+        $profile->save();
 
         return response()->json([
             "message" => "User registered successfully"

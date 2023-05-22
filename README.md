@@ -7,7 +7,7 @@ https://auth-api-ocgnabibnq-et.a.run.app/api
 
 ### Register
 
-- URL :
+- Endpoint :
     - /auth/signup
 - Method :
     - POST
@@ -17,11 +17,10 @@ https://auth-api-ocgnabibnq-et.a.run.app/api
 - Body :
 ```json 
 {
-    "name" : "string",
-    "username" : "string, no whistespace, alphanumeric",
-    "email" : "string, email",
-    "password" : "string, min:8",
-    "password_confirmation" : "string"
+    "username" : "string, no whistespace, alphanumeric, required",
+    "email" : "string, email, required",
+    "password" : "string, min:8, required",
+    "password_confirmation" : "string, required"
 }
 ```
 - Response :
@@ -34,7 +33,7 @@ https://auth-api-ocgnabibnq-et.a.run.app/api
 ### Login
 
 All API must use this authentication
-- URL :
+- Endpoint :
     - /auth/login
 - Method :
     - POST
@@ -44,18 +43,17 @@ All API must use this authentication
 - Body :
 ```json 
 {
-    "email" : "string",
-    "password" : "string"
+    "email" : "string, required",
+    "password" : "string, required"
 }
 ```
 - Response :
 ```json 
 {
-    "message" : "User logged in successfully"
+    "message" : "User logged in successfully",
     "user" : 
     {
         "id": "integer",
-        "name": "string",
         "email": "string",
         "email_verified_at": "string",
         "created_at": "datetime",
@@ -67,7 +65,7 @@ All API must use this authentication
 
 ### Logout
 
-- URL :
+- Endpoint :
     - /auth/logout
 - Method :
     - GET
@@ -83,15 +81,54 @@ All API must use this authentication
 }
 ```
 
+### Profile
 
-# DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA
+- Endpoint :
+    - /user/profiles
+- Method :
+    - PATCH
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "name" : "string",
+    "picture" : "string",
+    "birth_date" : "date",
+    "age" : "integer",
+    "address" : "string",
+    "phone_number" : "string"
+}
+```
+- Response :
+```json 
+{
+    "profile": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "birth_date": "date, format: yyyy-mm-dd",
+        "age": "age",
+        "address": "string",
+        "phone_number": "string",
+        "user_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+    }
+}
+```
+
+
+
+# DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA (WIP)
 # Home Screen
 
 ## Get Items on Home Screen
 
 ### Get All Fertilizer Types
 
-- URL :
+- Endpoint :
     - /fertilizerTypes
 - Method :
     - GET
@@ -114,7 +151,7 @@ All API must use this authentication
 
 ### Get All Plants
 
-- URL :
+- Endpoint :
     - /plants
 - Method :
     - GET
@@ -143,7 +180,7 @@ All API must use this authentication
 
 ### Get All Items
 
-- URL :
+- Endpoint :
     - /items
 - Method :
     - GET
@@ -186,7 +223,7 @@ All API must use this authentication
 
 ### Get Details of Clicked Items
 
-- URL :
+- Endpoint :
     - /items/:id
 - Method :
     - GET
@@ -221,7 +258,7 @@ All API must use this authentication
 
 ### Get All Items
 
-- URL :
+- Endpoint :
     - /carts
 - Method :
     - GET
@@ -258,7 +295,7 @@ All API must use this authentication
 
 ### Get All Items
 
-- URL :
+- Endpoint :
     - /wishlists
 - Method :
     - GET
@@ -295,7 +332,7 @@ All API must use this authentication
 
 ### Create Store Profile
 
-- URL :
+- Endpoint :
     - /stores/create
 - Method :
     - Post
@@ -325,7 +362,7 @@ All API must use this authentication
 
 ### Store Profile
 
-- URL :
+- Endpoint :
     - /stores/:id
 - Method :
     - GET
