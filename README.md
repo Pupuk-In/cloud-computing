@@ -397,7 +397,8 @@ All API must use this authentication
         "rating" : "float",
         "type" : "string",
         "plant" : "string",
-        "part" : "string"
+        "part" : "string",
+        "test" : "test"
     }
 }
 ```
