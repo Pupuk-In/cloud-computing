@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Store extends Model
+class PlantPart extends Model
 {
     use HasFactory;
 
@@ -16,22 +16,11 @@ class Store extends Model
      */
     protected $fillable = [
         'name',
-        'picture',
-        'address',
-        'latitude',
-        'longitude',
-        'description',
-        'rating',
-        'profile_id',
+        'picture'
     ];
-
-    public function profile()
-    {
-        return $this->belongsTo(Profile::class);
-    }
 
     public function item()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsToMany(Item::class);
     }
 }

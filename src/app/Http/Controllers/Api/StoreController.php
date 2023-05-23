@@ -18,7 +18,7 @@ class StoreController extends Controller
         $profile = Profile::where('user_id', $user->id)->first();
 
         $request->validate([
-            'name' => 'string|required',
+            'name' => 'string|required|unique:stores,name',
             'picture' => 'string',
             'address' => 'string|required',
             'latitude' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
@@ -28,6 +28,10 @@ class StoreController extends Controller
         ]);
 
         $request['profile_id'] = $profile->id;
+
+        $request->validate([
+            'profile_id' => 'unique:stores,profile_id'
+        ]);
 
         $store = Store::create($request->all());
 
@@ -43,7 +47,7 @@ class StoreController extends Controller
         $profile = Profile::where('user_id', $user->id)->first();
 
         $request->validate([
-            'name' => 'string|required',
+            'name' => 'string|required|unique:stores,name',
             'picture' => 'string',
             'address' => 'string|required',
             'latitude' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
