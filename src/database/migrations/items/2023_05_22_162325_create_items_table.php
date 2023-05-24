@@ -16,21 +16,22 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string("picture");
-            $table->text("description")->nullable();
+            $table->string("picture")->nullable();
+            $table->text("description");
             $table->integer("price");
             $table->integer("stock");
             $table->integer("sold");
             $table->float("rating")->nullable();
             $table->text("relevance")->nullable();
             $table->string("brand")->nullable();
-            $table->unsignedBigInteger('type_id');
+            $table->unsignedBigInteger('type_id')->nullable();
+            $table->unsignedBigInteger('plant_part_id')->nullable();
             $table->unsignedBigInteger('store_id');
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('type_id')->references('id')->on('types')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
+            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreign('plant_part_id')->references('id')->on('plant_parts');
             $table->foreign('store_id')->references('id')->on('stores')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');

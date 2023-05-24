@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Artisan;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        return response()->json([
+            "profile" => $profile
+        ], 200);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

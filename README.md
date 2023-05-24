@@ -8,7 +8,7 @@ https://auth-api-ocgnabibnq-et.a.run.app/api
 ### Register
 
 - Endpoint :
-    - /auth/signup
+    - /signup
 - Method :
     - POST
 - Header :
@@ -34,7 +34,7 @@ https://auth-api-ocgnabibnq-et.a.run.app/api
 
 All API must use this authentication
 - Endpoint :
-    - /auth/login
+    - /login
 - Method :
     - POST
 - Header :
@@ -66,7 +66,7 @@ All API must use this authentication
 ### Logout
 
 - Endpoint :
-    - /auth/logout
+    - /logout
 - Method :
     - GET
 - Header :
@@ -81,10 +81,42 @@ All API must use this authentication
 }
 ```
 
-### Profile
+
+## User Profile
+
+### User Profile View
 
 - Endpoint :
-    - /user/profiles
+    - /users
+- Method :
+    - GET
+- Header :
+    - Authorization: Bearer <access_token>
+- Body :
+    -
+- Response :
+```json 
+{
+    "profile": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "birth_date": "date, format: yyyy-mm-dd",
+        "age": "age",
+        "address": "string",
+        "phone_number": "string",
+        "user_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    }
+}
+```
+
+
+### User Profile Edit
+
+- Endpoint :
+    - /users
 - Method :
     - PATCH
 - Header :
@@ -122,12 +154,44 @@ All API must use this authentication
 
 # Store Page
 
+## Buyer POV
+
+### Store Page View
+
+- Endpoint :
+    - /stores/:id
+- Method :
+    - GET
+- Header :
+    -
+- Body :
+    -
+- Response :
+```json 
+{
+    "profile": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "address": "string",
+        "latitude": "boolean",
+        "longitude": "boolean",
+        "description": "text",
+        "rating": "float",
+        "profile_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+}
+```
+Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa toko milik akun yang sedang login.
+
+
 ## Seller POV
 
 ### Create Store Profile
 
 - Endpoint :
-    - /store/profiles
+    - /stores
 - Method :
     - POST
 - Header :
@@ -166,7 +230,7 @@ All API must use this authentication
 ### Update Store Profile
 
 - Endpoint :
-    - /store/profiles
+    - /stores
 - Method :
     - PATCH
 - Header :
@@ -201,6 +265,146 @@ All API must use this authentication
     }
 }
 ```
+
+
+# Item Page
+
+## Buyer POV
+
+### Item Details Page
+
+- Endpoint :
+    - /stores/items/:id
+- Method :
+    - GET
+- Header :
+    -
+- Body :
+    -
+- Response :
+```json 
+{
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "description": "text",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
+
+## Seller POV
+
+### Create New Items
+
+- Endpoint :
+    - /stores/items
+- Method :
+    - POST
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "item": {
+        "name": "string, required",
+        "picture": "string",
+        "description": "text, required",
+        "price": "integer, required",
+        "stock": "integer, required",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer"
+    }
+}
+```
+- Response :
+```json 
+{
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "description": "text",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
+### Update Item Details
+
+- Endpoint :
+    - /stores/items/:id
+- Method :
+    - PATCH
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "name": "string, required",
+    "picture": "string",
+    "description": "text, required",
+    "price": "integer, required",
+    "stock": "integer, required",
+    "relevance": "text",
+    "brand": "string",
+    "type_id": "integer",
+    "plant_part_id": "integer"
+}
+```
+- Response :
+```json 
+{
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "description": "text",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
+
 
 # DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA (WIP)
 # Home Screen

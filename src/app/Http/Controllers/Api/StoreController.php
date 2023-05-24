@@ -7,10 +7,44 @@ use Illuminate\Http\Request;
 use App\Models\Store;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Validation\Rule;
 
 class StoreController extends Controller
 {
+    public function index(Request $request)
+    {
+        $store = Store::where('id', $request->id)->first();
+
+        if(!$store){
+            return response()->json([
+                "message" => "Store not found"
+            ], 404);
+        }
+
+        return response()->json([
+            "store" => $store
+        ], 200);
+    }
+
+    public function indexself()
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $store = Store::where('profile_id', $profile->id)->first();
+
+        if(!$store){
+            return response()->json([
+                "message" => "Store not found"
+            ], 404);
+        }
+
+        return response()->json([
+            "store" => $store
+        ], 200);
+    }
+    
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -46,8 +80,11 @@ class StoreController extends Controller
 
         $profile = Profile::where('user_id', $user->id)->first();
 
+        $store = Store::where('profile_id', $profile->id)->first();
+
         $request->validate([
-            'name' => 'string|required|unique:stores,name',
+            'name' => 'string|required',
+            Rule::unique('stores', 'name')->ignore($store->id),
             'picture' => 'string',
             'address' => 'string|required',
             'latitude' => ['required','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
@@ -59,7 +96,7 @@ class StoreController extends Controller
         // ['user_id' => $user->id],
         // );
 
-        $store = Store::where('profile_id', $profile->id)->first();
+        
 
         $store->update($request->all());
 

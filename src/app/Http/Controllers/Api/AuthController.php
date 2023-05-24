@@ -75,8 +75,11 @@ class AuthController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
+
         return response()->json([
-            "message" => "Authenticaed User Detected"
+            "message" => "Authenticaed User Detected",
+            "user" => $user
         ], 200);
     }
 }

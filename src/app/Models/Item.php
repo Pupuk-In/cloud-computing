@@ -25,6 +25,7 @@ class Item extends Model
         'relevance',
         'brand',
         'type_id',
+        'plant_part_id',
         'store_id'
     ];
 
