@@ -67,5 +67,7 @@ class Kernel extends HttpKernel
         'storeprofile' => \App\Http\Middleware\StoreProfiles::class,
         'item-create' => \App\Http\Middleware\ItemCreate::class,
         'item-edit' => \App\Http\Middleware\ItemEdit::class,
+        'item-inactive' => \App\Http\Middleware\ItemInactive::class,
+        'item-all' => \App\Http\Middleware\ItemAllPrivate::class,
     ];
 }

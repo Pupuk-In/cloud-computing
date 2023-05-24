@@ -28,6 +28,6 @@ class Soil extends Model
 
     public function plant()
     {
-        return $this->belongsTo(Plant::class);
+        return $this->belongsToMany(Plant::class);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\SoilController;
 use App\Http\Middleware\UserProfiles;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,13 +35,49 @@ Route::namespace('Api')->group(function(){
 
     Route::prefix('stores')->group(function(){
         Route::get('{id}', [StoreController::class, 'index']);
-        Route::get('', [StoreController::class, 'indexself'])->middleware('auth:sanctum');
-        Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum')->middleware('storeprofile');
-        Route::patch('', [StoreController::class, 'update'])->middleware('auth:sanctum')->middleware('storeprofile');
+        Route::get('', [StoreController::class, 'indexSelf']);
+        Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum', 'storeprofile');
+        Route::patch('', [StoreController::class, 'update'])->middleware('auth:sanctum', 'storeprofile');
+        
+        Route::get('items/actives', [ItemController::class, 'index']);
+        Route::get('items/inactives', [ItemController::class, 'indexInactive'])->middleware('auth:sanctum');
+        Route::get('items/getall', [ItemController::class, 'indexAllItems'])->middleware('auth:sanctum');
+        Route::get('items/{id}', [ItemController::class, 'indexDetail']);
 
-        Route::get('items/{id}', [ItemController::class, 'index']);
-        Route::post('items', [ItemController::class, 'store'])->middleware('item-create');
-        Route::patch('items/{id}', [ItemController::class, 'update'])->middleware('item-edit');
+        Route::post('items', [ItemController::class, 'store'])->middleware('auth:sanctum', 'item-create');
+        Route::patch('items/{id}', [ItemController::class, 'update'])->middleware('auth:sanctum', 'item-inactive');
+
+        Route::delete('items/del/{id}', [ItemController::class, 'destroy'])->middleware('auth:sanctum', 'item-edit');
+        Route::patch('items/restore/{id}', [ItemController::class, 'restoreSoftDelete'])->middleware('auth:sanctum', 'item-inactive');
+        Route::delete('items/permdel/{id}', [ItemController::class, 'PermDelete'])->middleware('auth:sanctum', 'item-inactive');
+    });
+
+    Route::prefix('soils')->group(function(){
+        Route::get('', [SoilController::class, 'index']);
+        Route::post('', [SoilController::class, 'store']);
+        Route::patch('{id}', [SoilController::class, 'update']);
+        Route::delete('{id}', [SoilController::class, 'destroy']);
+    });
+
+    Route::prefix('plants')->group(function(){
+        Route::get('', [PlantController::class, 'index']);
+        Route::post('', [PlantController::class, 'store']);
+        Route::patch('{id}', [PlantController::class, 'update']);
+        Route::delete('{id}', [PlantController::class, 'destroy']);
+    });
+
+    Route::prefix('types')->group(function(){
+        Route::get('', [TypeController::class, 'index']);
+        Route::post('', [TypeController::class, 'store']);
+        Route::patch('{id}', [TypeController::class, 'update']);
+        Route::delete('{id}', [TypeController::class, 'destroy']);
+    });
+
+    Route::prefix('plantparts')->group(function(){
+        Route::get('', [PlantPartController::class, 'index']);
+        Route::post('', [PlantPartController::class, 'store']);
+        Route::patch('{id}', [PlantPartController::class, 'update']);
+        Route::delete('{id}', [PlantPartController::class, 'destroy']);
     });
 
     Route::get('index', [AuthController::class, 'index'])->middleware('auth:sanctum');

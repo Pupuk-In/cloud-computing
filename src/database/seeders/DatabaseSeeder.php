@@ -14,6 +14,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            UserSeeder::class,
+            ProfileSeeder::class,
+            StoreSeeder::class,
+            SoilSeeder::class,
+            PlantSeeder::class,
+            TypeSeeder::class,
+            PlantPartSeeder::class,
+            ItemSeeder::class,
+            PivotPlantSoil::class,
+            PivotItemPlant::class,
+            PivotItemType::class,
+            PivotItemPlantPart::class,
+        ]);
     }
 }

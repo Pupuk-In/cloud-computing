@@ -32,7 +32,6 @@
 
 ### Login
 
-All API must use this authentication
 - Endpoint :
     - /login
 - Method :
@@ -72,8 +71,6 @@ All API must use this authentication
 - Header :
     - Accept: application/json
     - Authorization: Bearer <access_token>
-- Parameters :
-    - 
 - Response :
 ```json 
 {
@@ -92,8 +89,6 @@ All API must use this authentication
     - GET
 - Header :
     - Authorization: Bearer <access_token>
-- Body :
-    -
 - Response :
 ```json 
 {
@@ -162,10 +157,6 @@ All API must use this authentication
     - /stores/:id
 - Method :
     - GET
-- Header :
-    -
-- Body :
-    -
 - Response :
 ```json 
 {
@@ -271,16 +262,42 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 
 ## Buyer POV
 
+### Get All Active Items
+
+- Endpoint :
+    - /stores/items/actives
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "description": "text",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
 ### Item Details Page
 
 - Endpoint :
     - /stores/items/:id
 - Method :
     - GET
-- Header :
-    -
-- Body :
-    -
 - Response :
 ```json 
 {
@@ -307,6 +324,71 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 
 
 ## Seller POV
+
+### Get All Inactive Items
+
+- Endpoint :
+    - /stores/items/inactives
+- Method :
+    - GET
+- Header :
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "description": "text",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
+### Get All Active and Inactive Items
+
+- Endpoint :
+    - /stores/items/getall
+- Method :
+    - GET
+- Header :
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "description": "text",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
 
 ### Create New Items
 
@@ -401,6 +483,88 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "updated_at": "datetime",
         "deleted_at": "datetime"
     }
+}
+```
+
+### Soft Delete Items
+
+- Endpoint :
+    - /stores/items/del/:id
+- Method :
+    - DELETE
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "description": "text",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
+### Restore Soft Deleted Items
+
+- Endpoint :
+    - /stores/items/restore/:id
+- Method :
+    - PATCH
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string",
+        "description": "text",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "type_id": "integer",
+        "plant_part_id": "integer",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
+### Permanently Delete Items from Table
+
+- Endpoint :
+    - /stores/items/permdel/:id
+- Method :
+    - DELETE
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "message": "Item deleted permanently"
 }
 ```
 

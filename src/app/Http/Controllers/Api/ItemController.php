@@ -11,15 +11,54 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $item = Item::where('id', $request->id)->first();
+        $items = Item::get();
+
+        return response()->json([
+            "items" => $items
+        ], 200);
+    }
+
+    public function indexDetail(Request $request)
+    {
+        $item = Item::withTrashed()->where('id', $request->id)->first();
 
         if(!$item){
             return response()->json([
                 "message" => "Item not found"
             ], 404);
         }
+
+        return response()->json([
+            "item" => $item
+        ], 200);
+    }
+
+    public function indexInactive()
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $store = Store::where('profile_id', $profile->id)->first();
+
+        $item = Item::onlyTrashed()->where('store_id', $store->id)->get();
+
+        return response()->json([
+            "item" => $item
+        ], 200);
+    }
+
+    public function indexAllItems()
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $store = Store::where('profile_id', $profile->id)->first();
+
+        $item = Item::withTrashed()->where('store_id', $store->id)->get();
 
         return response()->json([
             "item" => $item
@@ -87,7 +126,7 @@ class ItemController extends Controller
         // ['user_id' => $user->id],
         // );
 
-        $item = Item::where('id', $request->id)->first();
+        $item = Item::findOrFail($id);
 
         $item->update($request->all());
 
@@ -95,6 +134,58 @@ class ItemController extends Controller
 
         return response()->json([
             "item" => $item
+        ], 200);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $item = Item::findOrFail($id);
+
+        if(!$item){
+            return response()->json([
+                "message" => "Item not found"
+            ], 404);
+        }
+
+        $item->delete();
+
+        return response()->json([
+            "message" => $item
+        ], 200);
+    }
+
+    public function restoreSoftDelete(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $store = Store::where('profile_id', $profile->id)->first();
+
+        $item = Item::onlyTrashed()->where('store_id', $store->id)->where('id', $id);
+
+        $item->restore();
+
+        return response()->json([
+            "message" => "Item restored successfully",
+            "item" => $item
+        ], 200);
+    }
+
+    public function PermDelete(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $store = Store::where('profile_id', $profile->id)->first();
+
+        $item = Item::withTrashed()->where('store_id', $store->id)->where('id', $id);
+
+        $item->forceDelete();
+
+        return response()->json([
+            "message" => "Item deleted permanently"
         ], 200);
     }
 }

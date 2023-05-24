@@ -26,7 +26,7 @@ class StoreController extends Controller
         ], 200);
     }
 
-    public function indexself()
+    public function indexSelf()
     {
         $user = Auth::user();
 

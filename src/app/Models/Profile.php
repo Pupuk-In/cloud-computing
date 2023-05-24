@@ -33,4 +33,9 @@ class Profile extends Model
     {
         return $this->hasOne(Store::class);
     }
+
+    public function wishlist()
+    {
+        return $this->belongsToMany(Item::class);
+    }
 }

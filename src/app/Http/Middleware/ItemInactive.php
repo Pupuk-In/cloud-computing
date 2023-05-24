@@ -9,8 +9,7 @@ use App\Models\Profile;
 use App\Models\Store;
 use App\Models\Item;
 
-
-class ItemEdit
+class ItemInactive
 {
     /**
      * Handle an incoming request.
@@ -26,7 +25,7 @@ class ItemEdit
         $store = Store::where('profile_id', $profile->id)->first();
         
         $id = $request->route()->parameter('id');
-        $item = Item::findOrFail($id);
+        $item = Item::withTrashed()->findOrFail($id);
 
         if ($item->store_id != $store->id) {
             return response()->json([

@@ -16,7 +16,8 @@ class Plant extends Model
      */
     protected $fillable = [
         'name',
-        'picture'
+        'picture',
+        'soil_id'
     ];
 
     public function item()

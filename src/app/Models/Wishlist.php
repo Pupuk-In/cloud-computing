@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Type extends Model
+class Wishlist extends Model
 {
     use HasFactory;
 
@@ -15,12 +15,17 @@ class Type extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'picture'
+        'profile_id',
+        'item_id'
     ];
 
+    public function profile()
+    {
+        return $this->hasMany(Profile::class);
+    }
+    
     public function item()
     {
-        return $this->belongsToMany(Item::class);
+        return $this->hasMany(Item::class);
     }
 }

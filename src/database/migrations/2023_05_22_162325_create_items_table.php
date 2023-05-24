@@ -24,14 +24,10 @@ return new class extends Migration
             $table->float("rating")->nullable();
             $table->text("relevance")->nullable();
             $table->string("brand")->nullable();
-            $table->unsignedBigInteger('type_id')->nullable();
-            $table->unsignedBigInteger('plant_part_id')->nullable();
             $table->unsignedBigInteger('store_id');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('type_id')->references('id')->on('types');
-            $table->foreign('plant_part_id')->references('id')->on('plant_parts');
             $table->foreign('store_id')->references('id')->on('stores')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');

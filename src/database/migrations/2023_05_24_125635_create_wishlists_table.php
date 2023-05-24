@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('plants', function (Blueprint $table) {
+        Schema::create('wishlists', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("picture");
-            $table->unsignedBigInteger("soil_id");
+            $table->unsignedBigInteger('profile_id');
+            $table->unsignedBigInteger('item_id');
             $table->timestamps();
 
-            $table->foreign('soil_id')->references('id')->on('soils');
+            $table->foreign('profile_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('item_id')->references('id')->on('items')->cascadeOnDelete();
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plants');
+        Schema::dropIfExists('wishlists');
     }
 };
