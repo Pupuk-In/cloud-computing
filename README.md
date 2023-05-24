@@ -1,7 +1,7 @@
 # API Spec
 
 ## API
-https://auth-api-ocgnabibnq-et.a.run.app/api
+
 
 ## Authentication
 
