@@ -15,34 +15,26 @@ class PlantSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('plants')->insert([
-            'name' => 'Jagung',
-            'picture' => 'ini gambar Jagung',
-        ]);
+        $crops = array(
+            "Padi",
+            "Jagung",
+            "Kedelai",
+            "Kentang",
+            "Tebu",
+            "Kelapa Sawit",
+            "Cabe",
+            "Tomat",
+            "Bawang Merah",
+            "Cabai"
+        );
 
-        DB::table('plants')->insert([
-            'name' => 'Kentang',
-            'picture' => 'ini gambar Kentang',
-        ]);
-
-        DB::table('plants')->insert([
-            'name' => 'Wortel',
-            'picture' => 'ini gambar Wortel',
-        ]);
-
-        DB::table('plants')->insert([
-            'name' => 'Kol',
-            'picture' => 'ini gambar Kol',
-        ]);
-
-        DB::table('plants')->insert([
-            'name' => 'Ubi',
-            'picture' => 'ini gambar Ubi',
-        ]);
-
-        DB::table('plants')->insert([
-            'name' => 'Semangka',
-            'picture' => 'ini gambar Semangka',
-        ]);
+        foreach ($crops as $crop) {
+            DB::table('plants')->insert([
+                'name' => $crop,
+                'picture' => 'ini gambar ' . $crop,
+                'created_at' => date('Y-m-d H:i:sO', time()),
+                'updated_at' => date('Y-m-d H:i:sO', time())
+            ]);
+        }
     }
 }

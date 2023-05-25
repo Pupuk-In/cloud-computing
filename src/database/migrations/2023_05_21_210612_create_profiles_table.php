@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('picture')->nullable();
             $table->date('birth_date')->nullable();
-            $table->integer('age')->nullable();
-            $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
+            $table->string('address')->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

@@ -15,34 +15,22 @@ class PlantPartSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('plant_parts')->insert([
-            'name' => 'Daun',
-            'picture' => 'ini gambar Daun'
-        ]);
+        $plantParts = array(
+            "Akar",
+            "Batang",
+            "Daun",
+            "Bunga",
+            "Buah",
+            "Biji"
+        );
 
-        DB::table('plant_parts')->insert([
-            'name' => 'Bunga',
-            'picture' => 'ini gambar Bunga'
+        foreach($plantParts as $plantpart){
+            DB::table('plant_parts')->insert([
+            'name' => $plantpart,
+            'picture' => 'ini gambar ' . $plantpart,
+            'created_at' => date('Y-m-d H:i:sO', time()),
+            'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
-
-        DB::table('plant_parts')->insert([
-            'name' => 'Buah',
-            'picture' => 'ini gambar Buah'
-        ]);
-
-        DB::table('plant_parts')->insert([
-            'name' => 'Tangkai',
-            'picture' => 'ini gambar Tangkai'
-        ]);
-
-        DB::table('plant_parts')->insert([
-            'name' => 'Akar',
-            'picture' => 'ini gambar Akar'
-        ]);
-
-        DB::table('plant_parts')->insert([
-            'name' => 'Rusuk',
-            'picture' => 'ini gambar Rusuk'
-        ]);
+        }
     }
 }

@@ -4,11 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\PageHomeController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\StoreController;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\SoilController;
-use App\Http\Middleware\UserProfiles;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\PlantController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +31,6 @@ Route::namespace('Api')->group(function(){
     Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
     Route::post('reset-password', [AuthController::class, 'resetPassword'])->middleware('auth:sanctum');
 
-    Route::prefix('users')->middleware('auth:sanctum')->group(function(){
-        Route::get('', [UserController::class, 'index'])->middleware('userprofile');
-        Route::patch('', [UserController::class, 'update'])->middleware('userprofile');
-    });
-
     Route::prefix('stores')->group(function(){
         Route::get('{id}', [StoreController::class, 'index']);
         Route::get('', [StoreController::class, 'indexSelf']);
@@ -52,6 +49,17 @@ Route::namespace('Api')->group(function(){
         Route::patch('items/restore/{id}', [ItemController::class, 'restoreSoftDelete'])->middleware('auth:sanctum', 'item-inactive');
         Route::delete('items/permdel/{id}', [ItemController::class, 'PermDelete'])->middleware('auth:sanctum', 'item-inactive');
     });
+
+    Route::prefix('home')->group(function(){
+        Route::get('types', [PageHomeController::class, 'indexTypeHome']);
+        Route::get('plants', [PageHomeController::class, 'indexPlantHome']);
+    });
+
+    Route::prefix('profile')->middleware('auth:sanctum')->group(function(){
+        Route::get('', [ProfileController::class, 'index'])->middleware('userprofile');
+        Route::patch('', [ProfileController::class, 'update'])->middleware('userprofile');
+    });
+
 
     Route::prefix('soils')->group(function(){
         Route::get('', [SoilController::class, 'index']);

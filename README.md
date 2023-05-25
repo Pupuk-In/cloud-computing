@@ -1,8 +1,5 @@
 # API Spec
 
-## API
-
-
 ## Authentication
 
 ### Register
@@ -104,6 +101,8 @@
 ```
 
 
+# Profile Page Screen
+
 ## User Profile
 
 ### User Profile View
@@ -117,6 +116,7 @@
 - Response :
 ```json 
 {
+    "message": "Profile fetched successfully.",
     "profile": {
         "id": "integer",
         "name": "string",
@@ -131,7 +131,6 @@
     }
 }
 ```
-
 
 ### User Profile Edit
 
@@ -156,6 +155,7 @@
 - Response :
 ```json 
 {
+    "message": "Profile updated successfully.",
     "profile": {
         "id": "integer",
         "name": "string",
@@ -166,17 +166,63 @@
         "phone_number": "string",
         "user_id": "integer",
         "created_at": "datetime",
-        "updated_at": "datetime",
+        "updated_at": "datetime"
     }
 }
 ```
 
 
-# Store Page
+# Home Screen
 
-## Buyer POV
+## Get Items on Home Screen
 
-### Store Page View
+### Get All Fertilizer Types
+
+- Endpoint :
+    - /home/types
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message" : "Fertilizer types fetched successfully.",
+    "type" : 
+    {
+        "id" : "integer",
+        "name" : "string",
+        "picture" : "string, URL",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    }
+}
+```
+
+### Get All Plants
+
+- Endpoint :
+    - /plants
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message" : "Plants fetched successfully.",
+    "plants" : 
+    {
+        "id" : "integer",
+        "name" : "string",
+        "picture" : "string, URL",
+        "soils_id" : "integer"
+    }
+}
+```
+
+
+# Store Page Screen
+
+## Store View
+
+### Store Details Page View
 
 - Endpoint :
     - /stores/:id
@@ -185,26 +231,26 @@
 - Response :
 ```json 
 {
-    "profile": {
+    "message": "Store details fetched successfully",
+    "store": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture" : "string",
         "address": "string",
-        "latitude": "boolean",
-        "longitude": "boolean",
-        "description": "text",
+        "latitude": "double",
+        "longitude": "double",
+        "description": "string",
         "rating": "float",
         "profile_id": "integer",
+        "updated_at": "datetime",
         "created_at": "datetime",
-        "updated_at": "datetime"
+    }
 }
 ```
+
 Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa toko milik akun yang sedang login.
 
-
-## Seller POV
-
-### Create Store Profile
+### Create New Store
 
 - Endpoint :
     - /stores
@@ -227,7 +273,9 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 - Response :
 ```json 
 {
+    "message": "Store created successfully",
     "store": {
+        "id": "integer",
         "name": "string",
         "picture" : "string",
         "address": "string",
@@ -238,7 +286,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "profile_id": "integer",
         "updated_at": "datetime",
         "created_at": "datetime",
-        "id": "integer"
     }
 }
 ```
@@ -266,7 +313,9 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 - Response :
 ```json 
 {
+    "message": "Store updated successfully",
     "store": {
+        "id": "integer",
         "name": "string",
         "picture" : "string",
         "address": "string",
@@ -277,7 +326,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "profile_id": "integer",
         "updated_at": "datetime",
         "created_at": "datetime",
-        "id": "integer"
     }
 }
 ```
@@ -595,58 +643,8 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 
 
 
+
 # DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA (WIP)
-# Home Screen
-
-## Get Items on Home Screen
-
-### Get All Fertilizer Types
-
-- Endpoint :
-    - /fertilizerTypes
-- Method :
-    - GET
-- Header :
-    - Accept: application/json
-- Parameters :
-    - 
-- Response :
-```json 
-{
-    "message" : "Fertilizer Types fetched successfully",
-    "types" : 
-    {
-        "id" : "integer",
-        "name" : "string",
-        "picture" : "string, URL"
-    }
-}
-```
-
-### Get All Plants
-
-- Endpoint :
-    - /plants
-- Method :
-    - GET
-- Header :
-    - Accept: application/json
- - Parameters :
-    - 
-- Response :
-```json 
-{
-    "message" : "Plants fetched successfully",
-    "plants" : 
-    {
-        "id" : "integer",
-        "name" : "string",
-        "picture" : "string, URL",
-        "soils_id" : "integer"
-    }
-}
-```
-
 
 # Search Page
 
@@ -708,7 +706,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 - Response :
 ```json 
 {
-    "message" : "Item Details fetched successfully",
+    "message" : "Item details fetched successfully",
     "items" : 
     {
         "id" : "integer",

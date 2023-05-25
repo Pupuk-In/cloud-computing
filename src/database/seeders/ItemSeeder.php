@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+use function Database\Seeders\descriptionGen as SeedersDescriptionGen;
+
 class ItemSeeder extends Seeder
 {
     /**
@@ -17,225 +19,120 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 1,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 2,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 3,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 4,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 5,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 1,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 2,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 3,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 4,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 5,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 1,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 2,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 3,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 4,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 5,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 1,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 2,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 3,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 4,
-        ]);
-        DB::table('items')->insert([
-            'name' => Str::random(5),
-            'picture' => Str::random(10),
-            'description' => Str::random(50),
-            'price' => rand(5000, 100000),
-            'stock' => rand(50, 200),
-            'sold' => 0,
-            'rating' => 0,
-            'brand' => Str::random(5),
-            'store_id' => 5,
-        ]);
+        $fertilizers = array(
+            "Nitrogen",
+            "Phosphorus",
+            "Potassium",
+            "Ammonium nitrate",
+            "Urea",
+            "Diammonium phosphate",
+            "Superphosphate",
+            "Potassium nitrate",
+            "Calcium nitrate",
+            "Ammonium sulfate",
+            "Triple superphosphate",
+            "Bone meal",
+            "Blood meal",
+            "Fish emulsion",
+            "Compost",
+            "Manure",
+            "Seaweed fertilizer",
+            "Wood ash",
+            "Gypsum",
+            "Epsom salt",
+            "Humic acid",
+            "Bat guano",
+            "Feather meal",
+            "Cottonseed meal",
+            "Alfalfa meal",
+            "Kelp meal",
+            "Rock phosphate",
+            "Greensand",
+            "Azomite",
+            "Sulfur",
+            "Boron",
+            "Iron",
+            "Magnesium",
+            "Manganese",
+            "Zinc",
+            "Copper",
+            "Molybdenum",
+            "Selenium",
+            "Cobalt",
+            "Lime",
+            "Dolomite",
+            "Granite dust",
+            "Zeolite",
+            "Vermiculite",
+            "Perlite",
+            "Peat moss",
+            "Coco coir",
+            "Biochar",
+            "Worm castings",
+            "Mycorrhizae"
+        );
+
+        $brands = array(
+            "HarvestPro",
+            "GreenGrove",
+            "CropTech",
+            "FarmFresh",
+            "AgriMax",
+            "EcoGrow",
+            "Nature'sBest",
+            "AgroSolutions",
+            "FarmersChoice",
+            "AgriVital",
+            "FarmTech",
+            "AgroPro",
+            "GrowGuard",
+            "FieldMaster",
+            "AgriHarvest",
+            "AgroElite",
+            "CropCare",
+            "FarmFirst",
+            "AgriEdge",
+            "HarvestGuard"
+        );
+
+        function itemDescGen(){
+            $words = array(
+                "agriculture", "farmers", "crops", "harvest", "sustainability",
+                "fertilizers", "irrigation", "market", "livestock", "crop rotation",
+                "supply chain", "technology", "innovation", "sustainable practices",
+                "agritech", "organic farming", "food security", "rural development",
+                "agribusiness", "crop protection", "soil health", "greenhouse", "precision farming",
+                "drones", "smart farming", "vertical farming", "agronomy", "biotechnology",
+                "horticulture", "seed industry", "poultry", "aquaculture", "food processing",
+                "rural entrepreneurship", "market access", "commodity trading", "livestock management",
+                "agricultural machinery", "agricultural finance", "agricultural research",
+                "sustainable agriculture", "agroecology", "agricultural policy", "agricultural education"
+            );
+
+            $description = "";
+            for ($i = 0; $i < 40; $i++) {
+                $randomWord = $words[array_rand($words)];
+                $description .= $randomWord . " ";
+            }
+
+            $description = trim($description);
+            return $description;
+        }
+        
+        for ($i = 0; $i < 50; $i++) {
+            DB::table('items')->insert([
+                'name' => $fertilizers[array_rand($fertilizers)],
+                'picture' => Str::random(10),
+                'description' => itemDescGen(),
+                'price' => rand(5000, 100000),
+                'stock' => rand(50, 200),
+                'sold' => 0,
+                'rating' => 0,
+                'brand' => $brands[array_rand($brands)],
+                'store_id' => rand(1, 5),
+                'created_at' => date('Y-m-d H:i:sO', time()),
+                'updated_at' => date('Y-m-d H:i:sO', time())
+            ]);
+        }
     }
 }

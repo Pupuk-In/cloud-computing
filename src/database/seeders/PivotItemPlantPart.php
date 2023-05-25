@@ -15,29 +15,13 @@ class PivotItemPlantPart extends Seeder
      */
     public function run()
     {
-        DB::table('items_has_plant_parts')->insert([
-            'item_id' => rand(1,3),
-            'plant_part_id' => rand(1,6)
-        ]);
-        DB::table('items_has_plant_parts')->insert([
-            'item_id' => rand(1,3),
-            'plant_part_id' => rand(1,6)
-        ]);
-        DB::table('items_has_plant_parts')->insert([
-            'item_id' => rand(1,3),
-            'plant_part_id' => rand(1,6)
-        ]);
-        DB::table('items_has_plant_parts')->insert([
-            'item_id' => rand(1,3),
-            'plant_part_id' => rand(1,6)
-        ]);
-        DB::table('items_has_plant_parts')->insert([
-            'item_id' => rand(1,3),
-            'plant_part_id' => rand(1,6)
-        ]);
-        DB::table('items_has_plant_parts')->insert([
-            'item_id' => rand(1,3),
-            'plant_part_id' => rand(1,6)
-        ]);
+        for ($i= 0; $i < 100; $i++){
+            DB::table('items_has_plant_parts')->insert([
+                'item_id' => rand(1,50),
+                'plant_part_id' => rand(1,6),
+                'created_at' => date('Y-m-d H:i:sO', time()),
+                'updated_at' => date('Y-m-d H:i:sO', time())
+            ]);
+        }
     }
 }

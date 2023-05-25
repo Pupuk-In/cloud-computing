@@ -17,29 +17,36 @@ class TypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('types')->insert([
-            'name' => 'urea',
-            'picture' => 'ini gambar urea'
-        ]);
+        $types = array(
+            "Nitrogen",
+            "Fosfor",
+            "Kalium",
+            "Organik",
+            "Hayati",
+            "Majemuk",
+            "Kandang",
+            "Kompos",
+            "Urea",
+            "NPK",
+            "ZA (Zwavelzure Ammoniak)",
+            "TSP (Triple Super Phosphate)",
+            "Kieserite",
+            "Dolomit",
+            "ZK (Zwavelzure Kali)",
+            "Magnesium",
+            "Kalsium",
+            "Boron",
+            "Besi",
+            "Mangan"
+        );
 
-        DB::table('types')->insert([
-            'name' => 'npk',
-            'picture' => 'ini gambar npk'
-        ]);
-
-        DB::table('types')->insert([
-            'name' => 'phonska',
-            'picture' => 'ini gambar phonska'
-        ]);
-
-        DB::table('types')->insert([
-            'name' => 'kcl',
-            'picture' => 'ini gambar kcl'
-        ]);
-
-        DB::table('types')->insert([
-            'name' => 'sp-36',
-            'picture' => 'ini gambar sp-36'
-        ]);
+        foreach($types as $type){
+            DB::table('types')->insert([
+                'name' => $type,
+                'picture' => 'ini gambar ' . $type,
+                'created_at' => date('Y-m-d H:i:sO', time()),
+                'updated_at' => date('Y-m-d H:i:sO', time())
+            ]);
+        }
     }
 }

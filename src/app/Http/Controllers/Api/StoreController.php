@@ -70,6 +70,7 @@ class StoreController extends Controller
         $store = Store::create($request->all());
 
         return response()->json([
+            "message" => "Store created successfully",
             "store" => $store
         ], 200);
     }
@@ -103,6 +104,7 @@ class StoreController extends Controller
         // $profile->update($request->all());
 
         return response()->json([
+            "message" => "Store updated successfully",
             "store" => $store
         ], 200);
     }

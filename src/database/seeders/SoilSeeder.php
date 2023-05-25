@@ -15,76 +15,91 @@ class SoilSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('soils')->insert([
-            'name' => 'Regosol',
-            'picture' => 'ini gambar Regosol',
-            'description' => 'Tanah regosol ini termasuk dari salah satu sub jenis tanah Entisol. Tanah ini bermula dari pelapukan material yang dikeluarkan oleh letusan gunung berapi seperti pasir, lahar, debu dan lipili. Jenis tanah ini belum berkembang dengan sempurna.',
-            'nitrogen' => (float)mt_rand(0, 10),
-            'phospor' => (float)mt_rand(0, 10),
-            'calium' => (float)mt_rand(0, 10),
-            'ph' => (float)mt_rand(0, 10),
-            'temp' => (float)mt_rand(0, 10),
-            'humidity' => (float)mt_rand(0, 10),
-        ]);
+        $soils = array(
+            "Tanah Liat",
+            "Tanah Humus",
+            "Tanah Pasir",
+            "Tanah Lempung",
+            "Tanah Gambut",
+            "Tanah Laterit",
+            "Tanah Podsolik",
+            "Tanah Vulkanik",
+            "Tanah Berpasir",
+            "Tanah Berlempung"
+        );
 
-        DB::table('soils')->insert([
-            'name' => 'Latosol',
-            'picture' => 'ini gambar Latosol',
-            'description' => 'Tanah ini terbentuk  dari proses pelapukan batuan sedimen dan metamorf. Tingkat perkembangan tanah latosol secara horizon berlangsung lambat sampai sedang. Hal ini dikarenakan sebagian besar tanah berasa didaerah yang lembab.',
-            'nitrogen' => (float)mt_rand(0, 10),
-            'phospor' => (float)mt_rand(0, 10),
-            'calium' => (float)mt_rand(0, 10),
-            'ph' => (float)mt_rand(0, 10),
-            'temp' => (float)mt_rand(0, 10),
-            'humidity' => (float)mt_rand(0, 10),
-        ]);
+        function soilDescGen(){
+            $soilWords = array(
+                "tanah",
+                "lahan",
+                "struktur",
+                "kandungan",
+                "kelembaban",
+                "pH",
+                "porositas",
+                "dekomposisi",
+                "humus",
+                "nutrisi",
+                "retensi",
+                "partikel",
+                "komposisi",
+                "agregat",
+                "erosi",
+                "pertanian",
+                "pertanaman",
+                "tanaman",
+                "rekayasa",
+                "pertumbuhan",
+                "pupuk",
+                "teknik",
+                "manajemen",
+                "produksi",
+                "pengelolaan",
+                "optimasi",
+                "perbaikan",
+                "budidaya",
+                "peningkatan",
+                "rendah",
+                "tinggi",
+                "berkelanjutan",
+                "irigasi",
+                "drainase",
+                "keberlanjutan",
+                "efisiensi",
+                "kualitas",
+                "keuntungan",
+                "hasil",
+                "tanam",
+                "berkebun",
+                "penyuburan",
+                "analisis",
+                "pertumbuhan"
+            );
 
-        DB::table('soils')->insert([
-            'name' => 'Organosol',
-            'picture' => 'ini gambar Organosol',
-            'description' => 'Tanah yang terbentuk dari proses pelapukan dan pembusukan bahan-bahan organic ini dapat dijumpai di daerah rawa-rawa ataupun daerah yang banyak digenangi air. Maka jenis tanah ini memiliki tekstur yang lembek karena tergenang air.',
-            'nitrogen' => (float)mt_rand(0, 10),
-            'phospor' => (float)mt_rand(0, 10),
-            'calium' => (float)mt_rand(0, 10),
-            'ph' => (float)mt_rand(0, 10),
-            'temp' => (float)mt_rand(0, 10),
-            'humidity' => (float)mt_rand(0, 10),
-        ]);
+            $description = '';
 
-        DB::table('soils')->insert([
-            'name' => 'Alluvial',
-            'picture' => 'ini gambar Alluvial',
-            'description' => 'Tanah yang banyak ditemukan di hilir sungai ini adalah jenis tanah muda yang terbentuk dari pengendapan material halus aliran sungai. Tanah ini memiliki struktur tanah yang lepas-lepas dengan warna kelabu.',
-            'nitrogen' => (float)mt_rand(0, 10),
-            'phospor' => (float)mt_rand(0, 10),
-            'calium' => (float)mt_rand(0, 10),
-            'ph' => (float)mt_rand(0, 10),
-            'temp' => (float)mt_rand(0, 10),
-            'humidity' => (float)mt_rand(0, 10),
-        ]);
+            for ($i = 0; $i < 40; $i++) {
+                $randomIndex = array_rand($soilWords);
+                $description .= $soilWords[$randomIndex] . ' ';
+            }
 
-        DB::table('soils')->insert([
-            'name' => 'Laterit',
-            'picture' => 'ini gambar Laterit',
-            'description' => 'Tanah yang diusung-usung serupa dengan PMK ini memiliki suhu yang jauh lebih tinggi. Unsur hara yang terdapat di tanah ini cukup banyak dan tanah ini juga cukup subur, namun hilang karena larut dibawa air hujan.',
-            'nitrogen' => (float)mt_rand(0, 10),
-            'phospor' => (float)mt_rand(0, 10),
-            'calium' => (float)mt_rand(0, 10),
-            'ph' => (float)mt_rand(0, 10),
-            'temp' => (float)mt_rand(0, 10),
-            'humidity' => (float)mt_rand(0, 10),
-        ]);
+            return $description;
+        }
 
-        DB::table('soils')->insert([
-            'name' => 'Rendzina',
-            'picture' => 'ini gambar Rendzina',
-            'description' => 'Tanah yang memiliki tekstur lembut dan daya permeabilitas yang tinggi ini terbentuk dari batuan basalt, batu kapur dan granit. Karena daya permeabilitas yang dimilikinya cukup tinggi membuat tanah ini mampu untuk menikat air.',
-            'nitrogen' => (float)mt_rand(0, 10),
-            'phospor' => (float)mt_rand(0, 10),
-            'calium' => (float)mt_rand(0, 10),
-            'ph' => (float)mt_rand(0, 10),
-            'temp' => (float)mt_rand(0, 10),
-            'humidity' => (float)mt_rand(0, 10),
-        ]);
+        foreach($soils as $soil){
+            DB::table('soils')->insert([
+                'name' => $soil,
+                'picture' => 'ini gambar ' . $soil,
+                'description' => soilDescGen(),
+                'nitrogen' => 20 + mt_rand() / mt_getrandmax() * (200 - 20),
+                'phospor' =>  10 + mt_rand() / mt_getrandmax() * (50 - 10),
+                'calium' => 100 + mt_rand() / mt_getrandmax() * (400 - 100),
+                'ph' =>  5.5 + mt_rand() / mt_getrandmax() * (7.5 - 5.5),
+                'temp' => 20 + mt_rand() / mt_getrandmax() * (30 - 20),
+                'humidity' => 40 + mt_rand() / mt_getrandmax() * (80 - 40),
+                'created_at' => date('Y-m-d H:i:sO', time()),
+                'updated_at' => date('Y-m-d H:i:sO', time())
+            ]);
+        }
     }
 }
