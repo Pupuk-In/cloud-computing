@@ -12,7 +12,9 @@ class PageHomeController extends Controller
 {
     public function indexTypeHome()
     {
-        $type = Type::all();
+        $type = Type::inRandomOrder()
+                ->limit(10)
+                ->get();
 
         return response()->json([
             "message" => "Fertilizer types fetched successfully.",
