@@ -78,6 +78,31 @@
 }
 ```
 
+### Reset Password
+
+- Endpoint :
+    - /reset-password
+- Method :
+    - POST
+- Header :
+    - Content-Type: application/json
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "old_password" : "string, required",
+    "new_password" : "string, required, min:6",
+    "confirm_password" : "string, required, same: new_password"
+}
+```
+- Response :
+```json 
+{
+    "message" : "Password updated successfully.",
+}
+```
+
 
 ## User Profile
 

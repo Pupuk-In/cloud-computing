@@ -27,6 +27,7 @@ Route::namespace('Api')->group(function(){
     Route::post('signup', [AuthController::class, 'signup']);
     // Route::get('commands', [AuthController::class, 'commands']);
     Route::get('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('reset-password', [AuthController::class, 'resetPassword'])->middleware('auth:sanctum');
 
     Route::prefix('users')->middleware('auth:sanctum')->group(function(){
         Route::get('', [UserController::class, 'index'])->middleware('userprofile');
