@@ -17,11 +17,12 @@ class StoreController extends Controller
 
         if(!$store){
             return response()->json([
-                "message" => "Store not found"
+                "message" => "Store not found."
             ], 404);
         }
 
         return response()->json([
+            "message" => "Store details fetched successfully.",
             "store" => $store
         ], 200);
     }
@@ -36,11 +37,12 @@ class StoreController extends Controller
 
         if(!$store){
             return response()->json([
-                "message" => "Store not found"
+                "message" => "Store not found."
             ], 404);
         }
 
         return response()->json([
+            "message" => "Store details fetched successfully.",
             "store" => $store
         ], 200);
     }
@@ -70,7 +72,7 @@ class StoreController extends Controller
         $store = Store::create($request->all());
 
         return response()->json([
-            "message" => "Store created successfully",
+            "message" => "Store created successfully.",
             "store" => $store
         ], 200);
     }
@@ -104,7 +106,7 @@ class StoreController extends Controller
         // $profile->update($request->all());
 
         return response()->json([
-            "message" => "Store updated successfully",
+            "message" => "Store updated successfully.",
             "store" => $store
         ], 200);
     }

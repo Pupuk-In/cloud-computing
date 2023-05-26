@@ -11,26 +11,34 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
-    public function index()
+    public function indexActive()
     {
         $items = Item::get();
 
+        $store = Store::where('id', $items->store_id)->first();
+
         return response()->json([
+            "message" => "All active items fetched successfully.",
             "items" => $items
         ], 200);
     }
 
     public function indexDetail(Request $request)
     {
-        $item = Item::withTrashed()->where('id', $request->id)->first();
+        $item = Item::where('id', $request->id)->first();
+
+        $store = Store::select('id','name','address','rating')->where('id', $item->store_id)->first();
 
         if(!$item){
             return response()->json([
-                "message" => "Item not found"
+                "message" => "Item not found."
             ], 404);
         }
 
+        $item['store'] = $store;
+
         return response()->json([
+            "message" => "Item details fetched successfully.",
             "item" => $item
         ], 200);
     }
@@ -46,6 +54,7 @@ class ItemController extends Controller
         $item = Item::onlyTrashed()->where('store_id', $store->id)->get();
 
         return response()->json([
+            "message" => "All inactive items fetched successfully.",
             "item" => $item
         ], 200);
     }
@@ -61,6 +70,7 @@ class ItemController extends Controller
         $item = Item::withTrashed()->where('store_id', $store->id)->get();
 
         return response()->json([
+            "message" => "All items fetched successfully.",
             "item" => $item
         ], 200);
     }
@@ -98,6 +108,7 @@ class ItemController extends Controller
         $item = Item::create($request->all());
 
         return response()->json([
+            "message" => "Item created successfully.",
             "Item" => $item
         ], 200);
     }
@@ -133,6 +144,7 @@ class ItemController extends Controller
         // $profile->update($request->all());
 
         return response()->json([
+            "message" => "Item updated successfully.",
             "item" => $item
         ], 200);
     }
@@ -143,14 +155,15 @@ class ItemController extends Controller
 
         if(!$item){
             return response()->json([
-                "message" => "Item not found"
+                "message" => "Item not found."
             ], 404);
         }
 
         $item->delete();
 
         return response()->json([
-            "message" => $item
+            "message" => "Item soft deleted successfully.",
+            "item" => $item
         ], 200);
     }
 
@@ -167,7 +180,7 @@ class ItemController extends Controller
         $item->restore();
 
         return response()->json([
-            "message" => "Item restored successfully",
+            "message" => "Item restored successfully.",
             "item" => $item
         ], 200);
     }
@@ -185,7 +198,7 @@ class ItemController extends Controller
         $item->forceDelete();
 
         return response()->json([
-            "message" => "Item deleted permanently"
+            "message" => "Item deleted permanently."
         ], 200);
     }
 }

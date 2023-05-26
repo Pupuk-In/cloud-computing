@@ -17,8 +17,8 @@ class PivotPlantSoil extends Seeder
     {
         for ($i= 0; $i < 40; $i++){
             DB::table('plants_has_soils')->insert([
-                'plant_id' => rand(1,10),
-                'soil_id' => rand(1,10),
+                'plant_id' => mt_rand(1,10),
+                'soil_id' => mt_rand(1,10),
                 'created_at' => date('Y-m-d H:i:sO', time()),
                 'updated_at' => date('Y-m-d H:i:sO', time())
             ]);

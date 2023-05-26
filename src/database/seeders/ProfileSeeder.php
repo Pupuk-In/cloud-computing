@@ -68,7 +68,7 @@ class ProfileSeeder extends Seeder
             DB::table('profiles')->insert([
                 'name' => $firstNames[array_rand($firstNames)].' '.$lastNames[array_rand($lastNames)],
                 'picture' => Str::random(10),
-                'birth_date' => rand(1990, 2023).'-'.rand(1,12).'-'.rand(1,29),
+                'birth_date' => mt_rand(1990, 2023).'-'.mt_rand(1,12).'-'.mt_rand(1,29),
                 'phone_number' => '08'.rand(1000000000,9999999999),
                 'address' => $addresses[array_rand($addresses)],
                 'latitude' => mt_rand(-90, 90) + (mt_rand() / mt_getrandmax() - 0.5),

@@ -69,5 +69,7 @@ class Kernel extends HttpKernel
         'item-edit' => \App\Http\Middleware\ItemEdit::class,
         'item-inactive' => \App\Http\Middleware\ItemInactive::class,
         'item-all' => \App\Http\Middleware\ItemAllPrivate::class,
+        'item-soft-delete' => \App\Http\Middleware\ItemSoftDelete::class,
+        'item-owned' => \App\Http\Middleware\ItemOwned::class,
     ];
 }

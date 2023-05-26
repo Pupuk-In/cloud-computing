@@ -33,21 +33,21 @@ Route::namespace('Api')->group(function(){
 
     Route::prefix('stores')->group(function(){
         Route::get('{id}', [StoreController::class, 'index']);
-        Route::get('', [StoreController::class, 'indexSelf']);
+        Route::get('', [StoreController::class, 'indexSelf'])->middleware('auth:sanctum');
         Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum', 'storeprofile');
         Route::patch('', [StoreController::class, 'update'])->middleware('auth:sanctum', 'storeprofile');
         
-        Route::get('items/actives', [ItemController::class, 'index']);
+        Route::get('items/actives', [ItemController::class, 'indexActive']);
         Route::get('items/inactives', [ItemController::class, 'indexInactive'])->middleware('auth:sanctum');
         Route::get('items/getall', [ItemController::class, 'indexAllItems'])->middleware('auth:sanctum');
         Route::get('items/{id}', [ItemController::class, 'indexDetail']);
 
         Route::post('items', [ItemController::class, 'store'])->middleware('auth:sanctum', 'item-create');
-        Route::patch('items/{id}', [ItemController::class, 'update'])->middleware('auth:sanctum', 'item-inactive');
+        Route::patch('items/{id}', [ItemController::class, 'update'])->middleware('auth:sanctum', 'item-owned');
 
-        Route::delete('items/del/{id}', [ItemController::class, 'destroy'])->middleware('auth:sanctum', 'item-edit');
-        Route::patch('items/restore/{id}', [ItemController::class, 'restoreSoftDelete'])->middleware('auth:sanctum', 'item-inactive');
-        Route::delete('items/permdel/{id}', [ItemController::class, 'PermDelete'])->middleware('auth:sanctum', 'item-inactive');
+        Route::delete('items/del/{id}', [ItemController::class, 'destroy'])->middleware('auth:sanctum', 'item-soft-delete');
+        Route::patch('items/restore/{id}', [ItemController::class, 'restoreSoftDelete'])->middleware('auth:sanctum', 'item-owned');
+        Route::delete('items/permdel/{id}', [ItemController::class, 'PermDelete'])->middleware('auth:sanctum', 'item-owned');
     });
 
     Route::prefix('home')->group(function(){
@@ -59,6 +59,8 @@ Route::namespace('Api')->group(function(){
         Route::get('', [ProfileController::class, 'index'])->middleware('userprofile');
         Route::patch('', [ProfileController::class, 'update'])->middleware('userprofile');
     });
+
+    Route::prefix('search');
 
 
     Route::prefix('soils')->group(function(){

@@ -18,7 +18,7 @@ class PivotItemType extends Seeder
         for ($i= 1; $i <= 50; $i++){
             DB::table('items_has_types')->insert([
                 'item_id' => $i,
-                'type_id' => rand(1,20),
+                'type_id' => mt_rand(1,20),
                 'created_at' => date('Y-m-d H:i:sO', time()),
                 'updated_at' => date('Y-m-d H:i:sO', time())
             ]);

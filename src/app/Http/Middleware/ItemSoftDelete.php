@@ -9,7 +9,7 @@ use App\Models\Profile;
 use App\Models\Store;
 use App\Models\Item;
 
-class ItemInactive
+class ItemSoftDelete
 {
     /**
      * Handle an incoming request.
@@ -25,11 +25,11 @@ class ItemInactive
         $store = Store::where('profile_id', $profile->id)->first();
         
         $id = $request->route()->parameter('id');
-        $item = Item::withTrashed()->findOrFail($id);
+        $item = Item::findOrFail($id);
 
         if ($item->store_id != $store->id) {
             return response()->json([
-                "message" => "Unathorized"
+                "message" => "Unathorized."
             ], 401);
         }
 
