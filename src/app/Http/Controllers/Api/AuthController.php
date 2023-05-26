@@ -46,7 +46,7 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'required|string|alpha_dash|unique:users,username',
             'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string'
         ]);
 
         $user = new User([
