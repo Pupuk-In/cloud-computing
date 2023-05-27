@@ -22,7 +22,7 @@
 - Response :
 ```json 
 {
-    "message" : "User created successfully"
+    "message" : "User created successfully."
 }
 ```
 
@@ -45,7 +45,7 @@
 - Response :
 ```json 
 {
-    "message" : "User logged in successfully",
+    "message" : "User logged in successfully.",
     "user" : 
     {
         "id": "integer",
@@ -70,7 +70,7 @@
 - Response :
 ```json 
 {
-    "message" : "User logged out successfully"
+    "message" : "User logged out successfully."
 }
 ```
 
