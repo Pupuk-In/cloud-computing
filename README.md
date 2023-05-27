@@ -16,7 +16,8 @@
 {
     "username" : "string, no whistespace, alphanumeric, required",
     "email" : "string, email, required",
-    "password" : "string, min:8, required"
+    "password" : "string, min:8, required",
+    "password_confirmation" : "string, required"
 }
 ```
 - Response :
