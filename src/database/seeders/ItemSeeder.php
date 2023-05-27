@@ -119,17 +119,18 @@ class ItemSeeder extends Seeder
             return $description;
         }
         
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             DB::table('items')->insert([
                 'name' => $fertilizers[array_rand($fertilizers)],
                 'picture' => "https://saraswantifertilizer.com/wp-content/uploads/2021/03/Front-Banner-Merk-koka.png",
                 'description' => itemDescGen(),
+                'type_id' => mt_rand(1, 20),
                 'price' => mt_rand(5000, 100000),
                 'stock' => mt_rand(50, 200),
                 'sold' => 0,
                 'rating' => (mt_rand(0, 4) + (mt_rand(0, 9)/10)),
                 'brand' => $brands[array_rand($brands)],
-                'store_id' => rand(1, 5),
+                'store_id' => mt_rand(1, 5),
                 'created_at' => date('Y-m-d H:i:sO', time()),
                 'updated_at' => date('Y-m-d H:i:sO', time())
             ]);

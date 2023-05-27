@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string("picture")->nullable();
             $table->text("description");
+            $table->unsignedBigInteger('type_id');
             $table->integer("price");
             $table->integer("stock");
             $table->integer("sold");
@@ -28,6 +29,9 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            $table->foreign('type_id')->references('id')->on('types')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
             $table->foreign('store_id')->references('id')->on('stores')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');

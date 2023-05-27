@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\Profile;
 use App\Models\Item;
+use App\Models\Type;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -29,17 +30,14 @@ class ItemController extends Controller
 
         $store = Store::select('id','name','address','rating')->where('id', $item->store_id)->first();
 
-        if(!$item){
-            return response()->json([
-                "message" => "Item not found."
-            ], 404);
-        }
+        $type = Type::select('id', 'name')->where('id', $item->type_id)->first();
 
         $item['store'] = $store;
+        $item['type'] = $type;
 
         return response()->json([
             "message" => "Item details fetched successfully.",
-            "item" => $item
+            "item" => $item,
         ], 200);
     }
 
