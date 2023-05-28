@@ -14,7 +14,8 @@ class TypeController extends Controller
         $type = Type::all();
 
         return response()->json([
-            "types" => $type
+            "message" => "All types fetched successfully.",
+            "type" => $type
         ], 200);
     }
 

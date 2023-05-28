@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\SoilController;
 use App\Http\Controllers\Api\PlantController;
+use App\Http\Controllers\Api\PlantPartController;
 
 
 /*
@@ -34,6 +35,7 @@ Route::namespace('Api')->group(function(){
     Route::prefix('stores')->group(function(){
         Route::get('{id}', [StoreController::class, 'index']);
         Route::get('', [StoreController::class, 'indexSelf'])->middleware('auth:sanctum');
+        Route::get('{id}/catalogs', [StoreController::class, 'indexCatalog']);
         Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum', 'storeprofile');
         Route::patch('', [StoreController::class, 'update'])->middleware('auth:sanctum', 'storeprofile');
         
@@ -60,14 +62,11 @@ Route::namespace('Api')->group(function(){
         Route::patch('', [ProfileController::class, 'update'])->middleware('userprofile');
     });
 
-    Route::prefix('search');
-
-
-    Route::prefix('soils')->group(function(){
-        Route::get('', [SoilController::class, 'index']);
-        Route::post('', [SoilController::class, 'store']);
-        Route::patch('{id}', [SoilController::class, 'update']);
-        Route::delete('{id}', [SoilController::class, 'destroy']);
+    Route::prefix('types')->group(function(){
+        Route::get('', [TypeController::class, 'index']);
+        Route::post('', [TypeController::class, 'store']);
+        Route::patch('{id}', [TypeController::class, 'update']);
+        Route::delete('{id}', [TypeController::class, 'destroy']);
     });
 
     Route::prefix('plants')->group(function(){
@@ -77,19 +76,25 @@ Route::namespace('Api')->group(function(){
         Route::delete('{id}', [PlantController::class, 'destroy']);
     });
 
-    Route::prefix('types')->group(function(){
-        Route::get('', [TypeController::class, 'index']);
-        Route::post('', [TypeController::class, 'store']);
-        Route::patch('{id}', [TypeController::class, 'update']);
-        Route::delete('{id}', [TypeController::class, 'destroy']);
-    });
-
-    Route::prefix('plantparts')->group(function(){
+    Route::prefix('plant-parts')->group(function(){
         Route::get('', [PlantPartController::class, 'index']);
         Route::post('', [PlantPartController::class, 'store']);
         Route::patch('{id}', [PlantPartController::class, 'update']);
         Route::delete('{id}', [PlantPartController::class, 'destroy']);
     });
+
+    Route::prefix('soils')->group(function(){
+        Route::get('', [SoilController::class, 'index']);
+        Route::post('', [SoilController::class, 'store']);
+        Route::patch('{id}', [SoilController::class, 'update']);
+        Route::delete('{id}', [SoilController::class, 'destroy']);
+    });
+
+    
+
+    
+
+    
 
     Route::get('index', [AuthController::class, 'index'])->middleware('auth:sanctum');
 });

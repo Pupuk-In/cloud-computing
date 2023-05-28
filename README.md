@@ -119,7 +119,7 @@
     "profile": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "birth_date": "date, format: yyyy-mm-dd",
         "age": "age",
         "address": "string",
@@ -143,12 +143,12 @@
 - Body :
 ```json 
 {
-    "name" : "string",
-    "picture" : "string",
-    "birth_date" : "date",
-    "age" : "integer",
-    "address" : "string",
-    "phone_number" : "string"
+    "name": "string",
+    "picture": "string, url",
+    "birth_date": "date",
+    "age": "integer",
+    "address": "string",
+    "phone_number": "string"
 }
 ```
 - Response :
@@ -158,7 +158,7 @@
     "profile": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "birth_date": "date, format: yyyy-mm-dd",
         "age": "age",
         "address": "string",
@@ -173,7 +173,7 @@
 
 # Home Screen
 
-## Get Items on Home Screen
+## Get on Home Screen
 
 ### Get All Fertilizer Types
 
@@ -221,34 +221,6 @@
 
 ## Store View
 
-### Store Details Page View
-
-- Endpoint :
-    - /stores/:id
-- Method :
-    - GET
-- Response :
-```json 
-{
-    "message": "Store details fetched successfully",
-    "store": {
-        "id": "integer",
-        "name": "string",
-        "picture" : "string",
-        "address": "string",
-        "latitude": "double",
-        "longitude": "double",
-        "description": "string",
-        "rating": "float",
-        "profile_id": "integer",
-        "updated_at": "datetime",
-        "created_at": "datetime",
-    }
-}
-```
-
-Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa toko milik akun yang sedang login.
-
 ### Create New Store
 
 - Endpoint :
@@ -289,7 +261,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 }
 ```
 
-### Update Store Profile
+### Update Store Details
 
 - Endpoint :
     - /stores
@@ -330,7 +302,105 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 ```
 
 
-# Item Page
+### Store Details View
+
+- Endpoint :
+    - /stores/:id
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message": "Store details fetched successfully",
+    "store": {
+        "id": "integer",
+        "name": "string",
+        "picture" : "string",
+        "address": "string",
+        "latitude": "double",
+        "longitude": "double",
+        "description": "string",
+        "rating": "float",
+        "profile_id": "integer",
+        "updated_at": "datetime",
+        "created_at": "datetime",
+    }
+}
+```
+Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa toko milik akun yang sedang login.
+
+### Store Catalogs
+
+- Endpoint :
+    - /stores/:id/catalogs
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+- Parameters :
+    - page as int, optional
+- Response :
+```json 
+{
+    "message": "Store catalogs fetched successfully.",
+    "store": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string, url",
+        "address": "string",
+        "latitude": "double",
+        "longitude": "double",
+        "description": "text",
+        "rating": "float",
+        "profile_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime"
+    },
+    "catalog": {
+        "current_page": "integer",
+        "data": [
+            {
+                "id": "integer",
+                "name": "string",
+                "picture": "string, url",
+                "description": "text",
+                "type_id": "integer",
+                "price": "integer",
+                "stock": "integer",
+                "sold": "integer",
+                "rating": "float",
+                "relevance": "string",
+                "brand": "string",
+                "store_id": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "deleted_at": "datetime"
+            },
+        ],
+        "first_page_url": "string, url",
+        "from": "integer",
+        "last_page": "integer",
+        "last_page_url": "string, url",
+        "links": [
+            {
+                "url": "string, url",
+                "label": "string or integer",
+                "active": "boolean"
+            },
+        ],
+        "next_page_url": "string, url",
+        "path": "string, url",
+        "per_page": "integer",
+        "prev_page_url": "string, url",
+        "to": "integer",
+        "total": "integer"
+    }
+}
+```
+
+
+
+# Items CRUD
 
 ## Buyer POV
 
@@ -347,7 +417,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text",
         "type_id": [{
             "id": "integer",
@@ -401,7 +471,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text",
         "type_id": [{
             "id": "integer",
@@ -460,7 +530,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text",
         "type_id": [{
             "id": "integer",
@@ -516,7 +586,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text",
         "type_id": [{
             "id": "integer",
@@ -572,14 +642,15 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 {
     "item": {
         "name": "string, required",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text, required",
+        "type_id": "integer, required",
         "price": "integer, required",
         "stock": "integer, required",
         "relevance": "text",
         "brand": "string",
-        "type_id": "integer",
-        "plant_part_id": "integer"
+        "plant_id": "array of integer, required",
+        "plant_part_id": "array of integer, required"
     }
 }
 ```
@@ -587,49 +658,27 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 ```json 
 {
     "message": "Item created successfully.",
-    "item": {
-        "id": "integer",
+    "Item": {
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text",
-        "type_id": [{
-            "id": "integer",
-            "name": "string"
-        }],
+        "type_id": "integer",
         "price": "integer",
         "stock": "integer",
+        "brand": "keren",
+        "store_id": "integer",
         "sold": "integer",
         "rating": "float",
-        "relevance": "text",
-        "brand": "string",
-        "store_id": {
-            "id": "integer",
-            "name": "string",
-            "address": "string",
-            "rating": "float"
-        },
-        "created_at": "datetime",
         "updated_at": "datetime",
-        "deleted_at": "datetime",
-        "plants": [{
-            "id": "integer",
-            "name": "string",
-            "pivot": {
-                "item_id": "integer",
-                "plant_id": "integer"
-            }
-        }],
-        "plant_parts": [{
-            "id": "integer",
-            "name": "string",
-            "pivot": {
-                "item_id": "integer",
-                "plant_part_id": "integer"
-            }
-        }]
+        "created_at": "datetime",
+        "id": "integer",
+        "plant_id": "array of integer",
+        "plant_part_id": "array of integer"
     }
 }
 ```
+
+
 
 ### Update Item Details
 
@@ -644,60 +693,39 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 ```json 
 {
     "name": "string, required",
-    "picture": "string",
+    "picture": "string, url",
     "description": "text, required",
+    "type_id": "integer, required",
     "price": "integer, required",
     "stock": "integer, required",
     "relevance": "text",
     "brand": "string",
-    "type_id": "integer",
-    "plant_part_id": "integer"
+    "plant_id": "array of integer, required",
+    "plant_part_id": "array of integer, required"
 }
 ```
 - Response :
 ```json 
 {
-    "message": "Item updated successfully.",
-    "item": {
+    "message": "Item created successfully.",
+    "Item": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text",
-        "type_id": [{
-            "id": "integer",
-            "name": "string"
-        }],
+        "type_id": "integer",
         "price": "integer",
         "stock": "integer",
         "sold": "integer",
         "rating": "float",
-        "relevance": "text",
-        "brand": "string",
-        "store_id": {
-            "id": "integer",
-            "name": "string",
-            "address": "string",
-            "rating": "float"
-        },
-        "created_at": "datetime",
+        "relevance": "string",
+        "brand": "keren",
+        "store_id": "integer",
         "updated_at": "datetime",
+        "created_at": "datetime",
         "deleted_at": "datetime",
-        "plants": [{
-            "id": "integer",
-            "name": "string",
-            "pivot": {
-                "item_id": "integer",
-                "plant_id": "integer"
-            }
-        }],
-        "plant_parts": [{
-            "id": "integer",
-            "name": "string",
-            "pivot": {
-                "item_id": "integer",
-                "plant_part_id": "integer"
-            }
-        }]
+        "plant_id": "array of integer",
+        "plant_part_id": "array of integer"
     }
 }
 ```
@@ -717,7 +745,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text",
         "type_id": [{
             "id": "integer",
@@ -773,7 +801,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string",
+        "picture": "string, url",
         "description": "text",
         "type_id": [{
             "id": "integer",
@@ -830,7 +858,79 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 }
 ```
 
+# Categories
 
+## Types
+
+### Get all types
+
+- Endpoint :
+    - /types
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message": "All types fetched successfully.",
+    "type": [
+        {
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        },
+    ]
+}
+```
+
+## Plants
+
+### Get all plants
+
+- Endpoint :
+    - /plants
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message": "All plants fetched successfully.",
+    "plant": [
+        {
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        },
+    ]
+}
+```
+
+## Plant Parts
+
+### Get all plant parts
+
+- Endpoint :
+    - /plant-parts
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message": "All plant parts fetched successfully.",
+    "plant_part": [
+        {
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        },
+    ]
+}
+```
 
 
 # DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA (WIP)
@@ -877,40 +977,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 }
 ```
 
-
-# Item Detail Page
-
-## Item Details
-
-### Get Details of Clicked Items
-
-- Endpoint :
-    - /items/:id
-- Method :
-    - GET
-- Header :
-    - Accept: application/json
-- Parameters :
-    - 
-- Response :
-```json 
-{
-    "message" : "Item details fetched successfully",
-    "items" : 
-    {
-        "id" : "integer",
-        "name" : "string",
-        "picture" : "string, URL",
-        "description" : "string, longtext",
-        "price" : "integer",
-        "stock" : "integer",
-        "rating" : "float",
-        "type" : "string",
-        "plant" : "string",
-        "part" : "string"
-    }
-}
-```
 
 
 # Cart Items Page
@@ -982,53 +1048,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
             "plant" : "string",
             "part" : "string"
         }
-    }
-}
-```
-
-
-
-## Buyer POV
-
-### Store Profile
-
-- Endpoint :
-    - /stores/:id
-- Method :
-    - GET
-- Header :
-    - Accept: application/json
-- Parameters :
-    - stores_id as int
-    - page as int, optional
-    - size as int, optional
-- Response :
-```json 
-{
-    "message" : "Store page fetched successfully",
-    "stores" : 
-    {
-        "name" : "string",
-        "picture" : "string, URL",
-        "address" : "string, longtext",
-        "latitude" : "double",
-        "longitude" : "double",
-        "description" : "string, longtext",
-        "rating" : "double"
-    },
-    "items" :
-    {
-        "id" : "integer",
-        "name" : "string",
-        "picture" : "string, URL",
-        "description" : "string, longtext",
-        "price" : "integer",
-        "stock" : "integer",
-        "rating" : "float",
-        "type" : "string",
-        "plant" : "string",
-        "part" : "string",
-        "test" : "test"
     }
 }
 ```

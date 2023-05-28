@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use App\Models\Profile;
@@ -44,6 +45,25 @@ class StoreController extends Controller
         return response()->json([
             "message" => "Store details fetched successfully.",
             "store" => $store
+        ], 200);
+    }
+
+    public function indexCatalog(Request $request)
+    {
+        $store = Store::where('id', $request->id)->first();
+
+        if(!$store){
+            return response()->json([
+                "message" => "Store not found."
+            ], 404);
+        }
+
+        $catalog = Item::where('store_id', $store->id)->paginate(5);
+
+        return response()->json([
+            "message" => "Store catalogs fetched successfully.",
+            "store" => $store,
+            "catalog" => $catalog
         ], 200);
     }
     

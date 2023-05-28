@@ -124,6 +124,8 @@ class ItemController extends Controller
             'stock' => 'integer|required',
             'relevance' => 'integer',
             'brand' => 'string',
+            'plant_id' => 'array|required',
+            'plant_part_id' => 'array|required',
         ]);
 
         $request['store_id'] = $store->id;
@@ -138,15 +140,22 @@ class ItemController extends Controller
 
         $item = Item::create($request->all());
 
-        ItemPlant::create([
-            'item_id' => $item->id,
-            'plant_id' => $request->plant_id,
-        ]);
+        foreach($request->plant_id as $plant_id){
+            ItemPlant::create([
+                'item_id' => $item->id,
+                'plant_id' => $plant_id,
+            ]);
+        }
 
-        ItemPlantPart::create([
-            'item_id' => $item->id,
-            'plant_part_id' => $request->plant_part_id,
-        ]);
+        foreach($request->plant_part_id as $plant_part_id){
+            ItemPlantPart::create([
+                'item_id' => $item->id,
+                'plant_part_id' => $plant_part_id,
+            ]);
+        }
+
+        $item['plant_id'] = $request->plant_id;
+        $item['plant_part_id'] = $request->plant_part_id;
 
         return response()->json([
             "message" => "Item created successfully.",
@@ -171,16 +180,33 @@ class ItemController extends Controller
             'stock' => 'integer|required',
             'relevance' => 'integer',
             'brand' => 'string',
+            'plant_id' => 'array|required',
+            'plant_part_id' => 'array|required',
         ]);
-        // $profile = Profile::updateOrCreate(
-        // ['user_id' => $user->id],
-        // );
 
         $item = Item::findOrFail($id);
 
         $item->update($request->all());
 
-        // $profile->update($request->all());
+        
+        ItemPlant::where('item_id', $item->id)->delete();
+        foreach($request->plant_id as $plant_id){
+            ItemPlant::create([
+                'item_id' => $item->id,
+                'plant_id' => $plant_id,
+            ]);
+        }
+
+        ItemPlantPart::where('item_id', $item->id)->delete();
+        foreach($request->plant_part_id as $plant_part_id){
+            ItemPlantPart::create([
+                'item_id' => $item->id,
+                'plant_part_id' => $plant_part_id,
+            ]);
+        }
+
+        $item['plant_id'] = $request->plant_id;
+        $item['plant_part_id'] = $request->plant_part_id;
 
         return response()->json([
             "message" => "Item updated successfully.",

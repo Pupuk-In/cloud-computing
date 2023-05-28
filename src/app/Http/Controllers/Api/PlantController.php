@@ -14,7 +14,8 @@ class PlantController extends Controller
         $plant = Plant::all();
 
         return response()->json([
-            "plants" => $plant
+            "message" => "All plants fetched successfully.",
+            "plant" => $plant
         ], 200);
     }
 
