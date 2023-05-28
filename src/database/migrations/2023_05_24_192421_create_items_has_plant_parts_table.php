@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedInteger('plant_part_id');
             $table->timestamps();
 
-            $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('plant_part_id')->references('id')->on('plant_parts');
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreign('plant_part_id')->references('id')->on('plant_parts')->onDelete('cascade');
         });
     }
 

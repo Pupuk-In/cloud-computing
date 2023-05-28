@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\Profile;
 use App\Models\Item;
+use App\Models\Plant;
 use App\Models\Type;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
