@@ -18,28 +18,32 @@ class StoreSeeder extends Seeder
      */
     public function run()
     {
-        $storeNames = array(
-            "Mystic Emporium",
-            "Enchanted Treasures",
-            "Epic Finds",
-            "Cosmic Curiosities",
-            "Wanderlust Wares",
-            "Dreamer's Den",
-            "Arcane Artifacts",
-            "Celestial Boutique",
-            "Magical Mercantile",
-            "Dragon's Hoard",
-            "Realm of Wonder",
-            "Phantom Fashions",
-            "Infinity Bazaar",
-            "Whispering Winds Market",
-            "Mythical Marvels",
-            "Sorcerer's Secret",
-            "Nebula Nook",
-            "Chronicle Curiosity Shop",
-            "Starfall Emporium",
-            "Ethereal Essence"
+        $storeFirstNames = array(
+            "Enchanting",
+            "Mystic",
+            "Arcane",
+            "Whimsical",
+            "Ethereal",
+            "Spellbound",
+            "Enigmatic",
+            "Wonderous",
+            "Celestial",
+            "Magical"
         );
+
+        $storeLastNames = array(
+            " Bazaar",
+            " Emporium",
+            " Haven",
+            " Sanctuary",
+            " Realm",
+            " Grove",
+            " Hearth",
+            " Garden",
+            " Labyrinth",
+            " Phantasm"
+        );
+
         $addresses = array(
             "Jl. Sudirman No. 123, Jakarta",
             "Jl. Diponegoro No. 456, Bandung",
@@ -82,7 +86,7 @@ class StoreSeeder extends Seeder
 
         for ($i = 1; $i <= 5; $i++) {
             DB::table('stores')->insert([
-                'name' => $storeNames[array_rand($storeNames)],
+                'name' => $storeFirstNames[array_rand($storeFirstNames)].$storeLastNames[array_rand($storeLastNames)],
                 'picture' => Str::random(10),
                 'address' => $addresses[array_rand($addresses)],
                 'latitude' => mt_rand(-90, 90) + (mt_rand() / mt_getrandmax() - 0.5),

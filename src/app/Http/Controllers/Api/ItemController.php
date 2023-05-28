@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\Profile;
 use App\Models\Item;
+use App\Models\ItemPlant;
+use App\Models\ItemPlantPart;
 use App\Models\Plant;
 use App\Models\Type;
 use Illuminate\Support\Facades\Auth;
@@ -15,13 +17,22 @@ class ItemController extends Controller
 {
     public function indexActive()
     {
-        $items = Item::get();
+        $item = Item::get();
 
-        $store = Store::where('id', $items->store_id)->first();
+        $store = Store::where('id', $item->store_id)->first();
+
+        $type = $item->type()->select('id', 'name')->get();
+        $plant = $item->plant()->select('id', 'name')->get();
+        $plantPart = $item->plantPart()->select('id', 'name')->get();
+
+        $item['store_id'] = $store;
+        $item['type_id'] = $type;
+        $item['plants'] = $plant;
+        $item['plant_parts'] = $plantPart;
 
         return response()->json([
             "message" => "All active items fetched successfully.",
-            "items" => $items
+            "items" => $item
         ], 200);
     }
 
@@ -31,14 +42,18 @@ class ItemController extends Controller
 
         $store = Store::select('id','name','address','rating')->where('id', $item->store_id)->first();
 
-        $type = Type::select('id', 'name')->where('id', $item->type_id)->first();
+        $type = $item->type()->select('id', 'name')->get();
+        $plant = $item->plant()->select('id', 'name')->get();
+        $plantPart = $item->plantPart()->select('id', 'name')->get();
 
-        $item['store'] = $store;
-        $item['type'] = $type;
+        $item['store_id'] = $store;
+        $item['type_id'] = $type;
+        $item['plants'] = $plant;
+        $item['plant_parts'] = $plantPart;
 
         return response()->json([
             "message" => "Item details fetched successfully.",
-            "item" => $item,
+            "item" => $item
         ], 200);
     }
 
@@ -51,6 +66,15 @@ class ItemController extends Controller
         $store = Store::where('profile_id', $profile->id)->first();
 
         $item = Item::onlyTrashed()->where('store_id', $store->id)->get();
+
+        $type = $item->type()->select('id', 'name')->get();
+        $plant = $item->plant()->select('id', 'name')->get();
+        $plantPart = $item->plantPart()->select('id', 'name')->get();
+
+        $item['store_id'] = $store;
+        $item['type_id'] = $type;
+        $item['plants'] = $plant;
+        $item['plant_parts'] = $plantPart;
 
         return response()->json([
             "message" => "All inactive items fetched successfully.",
@@ -67,6 +91,15 @@ class ItemController extends Controller
         $store = Store::where('profile_id', $profile->id)->first();
 
         $item = Item::withTrashed()->where('store_id', $store->id)->get();
+
+        $type = $item->type()->select('id', 'name')->get();
+        $plant = $item->plant()->select('id', 'name')->get();
+        $plantPart = $item->plantPart()->select('id', 'name')->get();
+
+        $item['store_id'] = $store;
+        $item['type_id'] = $type;
+        $item['plants'] = $plant;
+        $item['plant_parts'] = $plantPart;
 
         return response()->json([
             "message" => "All items fetched successfully.",
@@ -86,12 +119,11 @@ class ItemController extends Controller
             'name' => 'string|required',
             'picture' => 'string',
             'description' => 'string',
+            'type_id' => 'integer|required',
             'price' => 'integer|required',
             'stock' => 'integer|required',
             'relevance' => 'integer',
             'brand' => 'string',
-            'type_id' => 'integer',
-            'plant_part_id' => 'integer',
         ]);
 
         $request['store_id'] = $store->id;
@@ -105,6 +137,16 @@ class ItemController extends Controller
         ]);
 
         $item = Item::create($request->all());
+
+        ItemPlant::create([
+            'item_id' => $item->id,
+            'plant_id' => $request->plant_id,
+        ]);
+
+        ItemPlantPart::create([
+            'item_id' => $item->id,
+            'plant_part_id' => $request->plant_part_id,
+        ]);
 
         return response()->json([
             "message" => "Item created successfully.",
@@ -124,13 +166,11 @@ class ItemController extends Controller
             'name' => 'string|required',
             'picture' => 'string',
             'description' => 'string',
+            'type_id' => 'integer|required',
             'price' => 'integer|required',
             'stock' => 'integer|required',
-            'rating' => 'float',
             'relevance' => 'integer',
             'brand' => 'string',
-            'type_id' => 'integer',
-            'plant_part_id' => 'integer',
         ]);
         // $profile = Profile::updateOrCreate(
         // ['user_id' => $user->id],

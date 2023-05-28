@@ -19,14 +19,13 @@ class Item extends Model
         'name',
         'picture',
         'description',
+        'type_id',
         'price',
         'stock',
         'sold',
         'rating',
         'relevance',
         'brand',
-        'type_id',
-        'plant_part_id',
         'store_id',
     ];
     
@@ -44,19 +43,19 @@ class Item extends Model
         return $this->hasMany(Review::class);
     }
 
-    public function plantParts()
+    public function plantPart()
     {
-        return $this->hasMany(PlantPart::class);
+        return $this->belongsToMany(PlantPart::class);
     }
 
     public function plant()
     {
-        return $this->hasMany(Plant::class);
+        return $this->belongsToMany(Plant::class);
     }
 
     public function type()
     {
-        return $this->hasOne(Type::class);
+        return $this->belongsTo(Type::class);
     }
 
     public function wishlist()
