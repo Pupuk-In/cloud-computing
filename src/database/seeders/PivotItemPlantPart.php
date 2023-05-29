@@ -18,7 +18,9 @@ class PivotItemPlantPart extends Seeder
         for ($i= 0; $i < 100; $i++){
             DB::table('item_plant_part')->insert([
                 'item_id' => mt_rand(1,50),
-                'plant_part_id' => mt_rand(1,6)
+                'plant_part_id' => mt_rand(1,6),
+                'created_at' => date('Y-m-d H:i:sO', time()),
+                'updated_at' => date('Y-m-d H:i:sO', time())
             ]);
         }
     }

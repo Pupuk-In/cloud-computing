@@ -21,9 +21,9 @@ class ItemController extends Controller
 
         $store = Store::where('id', $item->store_id)->first();
 
-        $type = $item->type()->select('id', 'name')->get();
-        $plant = $item->plant()->select('id', 'name')->get();
-        $plantPart = $item->plantPart()->select('id', 'name')->get();
+        $type = $item->type()->get();
+        $plant = $item->plant()->get();
+        $plantPart = $item->plantPart()->get();
 
         $item['store_id'] = $store;
         $item['type_id'] = $type;
@@ -40,11 +40,11 @@ class ItemController extends Controller
     {
         $item = Item::where('id', $request->id)->first();
 
-        $store = Store::select('id','name','address','rating')->where('id', $item->store_id)->first();
+        $store = Store::where('id', $item->store_id)->first();
 
-        $type = $item->type()->select('id', 'name')->get();
-        $plant = $item->plant()->select('id', 'name')->get();
-        $plantPart = $item->plantPart()->select('id', 'name')->get();
+        $type = $item->type()->get();
+        $plant = $item->plant()->get();
+        $plantPart = $item->plantPart()->get();
 
         $item['store_id'] = $store;
         $item['type_id'] = $type;
@@ -53,7 +53,7 @@ class ItemController extends Controller
 
         return response()->json([
             "message" => "Item details fetched successfully.",
-            "item" => $item
+            "item" => $item,
         ], 200);
     }
 
@@ -67,9 +67,9 @@ class ItemController extends Controller
 
         $item = Item::onlyTrashed()->where('store_id', $store->id)->get();
 
-        $type = $item->type()->select('id', 'name')->get();
-        $plant = $item->plant()->select('id', 'name')->get();
-        $plantPart = $item->plantPart()->select('id', 'name')->get();
+        $type = $item->type()->get();
+        $plant = $item->plant()->get();
+        $plantPart = $item->plantPart()->get();
 
         $item['store_id'] = $store;
         $item['type_id'] = $type;
@@ -92,9 +92,9 @@ class ItemController extends Controller
 
         $item = Item::withTrashed()->where('store_id', $store->id)->get();
 
-        $type = $item->type()->select('id', 'name')->get();
-        $plant = $item->plant()->select('id', 'name')->get();
-        $plantPart = $item->plantPart()->select('id', 'name')->get();
+        $type = $item->type()->get();
+        $plant = $item->plant()->get();
+        $plantPart = $item->plantPart()->get();
 
         $item['store_id'] = $store;
         $item['type_id'] = $type;
