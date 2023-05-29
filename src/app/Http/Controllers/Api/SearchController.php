@@ -7,6 +7,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
+use App\Filters\PriceRangeFilter;
 
 
 class SearchController extends Controller
@@ -19,32 +20,30 @@ class SearchController extends Controller
     public function indexItem()
     {
         $item = QueryBuilder::for(Item::class)
-            // ->join('types', 'items.type_id', 'types.id')
-            ->allowedFilters(['name'])
-            ->get();
+            ->with('store', 'type', 'plant', 'plantPart')
+            ->allowedFilters([
+                    AllowedFilter::partial('name'),
+                    AllowedFilter::exact('type', 'type.id'),
+                    AllowedFilter::exact('plant', 'plant.id'),
+                    AllowedFilter::exact('part', 'plantPart.id'),
+                    AllowedFilter::custom('price', new PriceRangeFilter)
+                ])
+            ->defaultSort('created_at')
+            ->allowedSorts('name', 'price', 'created_at')
+            ->paginate(10)
+            ->appends(request()->query());
+
 
         if ($item->isEmpty()) {
             return response()->json([
                 'message' => 'Item list is empty.',
-                'data'    => $item
+                'item'    => $item
             ], 200);
         }
 
-        // $store = $item->store()->get();
-        // $type = $item->type()->get();
-        // $plant = $item->plant()->get();
-        // $plantPart = $item->plantPart()->get();
-
-        // $item['store_id'] = $store;
-        // $item['type_id'] = $type;
-        // $item['plants'] = $plant;
-        // $item['plant_parts'] = $plantPart;
-
-        // $items = Item::with('plant') ->where('user_id', $user->id) ->get() ;
-
         return response()->json([
             'message' => 'Item list fetched successfully.',
-            'data'    => $item
+            'item'    => $item
         ], 200);
     }
 

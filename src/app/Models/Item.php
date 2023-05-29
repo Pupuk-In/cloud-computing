@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Item extends Model
 {
@@ -32,6 +33,11 @@ class Item extends Model
 
     // protected $table = 'items';
     // protected $dates = ['deleted_at'];
+
+    public function priceRange(Builder $query, $start, $end): Builder
+    {
+        return $query->whereBetween('price', [$start, $end]);
+    }
 
     public function store()
     {

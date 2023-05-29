@@ -20,6 +20,7 @@ class Store extends Model
         'address',
         'latitude',
         'longitude',
+        'distance', // 'distance' is not in the database, but is used in the SearchController
         'description',
         'rating',
         'profile_id',

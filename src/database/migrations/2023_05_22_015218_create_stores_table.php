@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('address');
             $table->double('latitude');
             $table->double('longitude');
+            $table->double('distance')->nullable();
             $table->text('description')->nullable();
             $table->float('rating')->nullable();
             $table->unsignedBigInteger('profile_id');

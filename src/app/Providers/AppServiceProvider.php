@@ -6,9 +6,12 @@ use Laravel\Sanctum\Console\ClientCommand;
 use Laravel\Sanctum\Console\InstallCommand;
 use Laravel\Sanctum\Console\KeysCommand;
 use Laravel\Sanctum\Sanctum;
+use Spatie\QueryBuilder\QueryBuilder;
+use App\Filters\PriceRangeFilter;
+use Illuminate\Support\ServiceProvider;
+use Spatie\QueryBuilder\Filters\Filter;
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,9 +33,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->commands([
-            // InstallCommand::class,
-            // ClientCommand::class,
-            // KeysCommand::class,
+        
         ]);
     }
 }
