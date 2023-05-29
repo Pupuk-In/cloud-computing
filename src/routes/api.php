@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\TypeController;
 use App\Http\Controllers\Api\SoilController;
 use App\Http\Controllers\Api\PlantController;
 use App\Http\Controllers\Api\PlantPartController;
-
+use App\Http\Controllers\Api\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,16 +33,16 @@ Route::namespace('Api')->group(function(){
     Route::post('reset-password', [AuthController::class, 'resetPassword'])->middleware('auth:sanctum');
 
     Route::prefix('stores')->group(function(){
-        Route::get('{id}', [StoreController::class, 'index']);
-        Route::get('', [StoreController::class, 'indexSelf'])->middleware('auth:sanctum');
-        Route::get('{id}/catalogs', [StoreController::class, 'indexCatalog']);
+        Route::get('{id}', [StoreController::class, 'show']);
+        Route::get('', [StoreController::class, 'showSelf'])->middleware('auth:sanctum');
+        Route::get('{id}/catalogs', [StoreController::class, 'showCatalog']);
         Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum', 'storeprofile');
         Route::patch('', [StoreController::class, 'update'])->middleware('auth:sanctum', 'storeprofile');
         
-        Route::get('items/actives', [ItemController::class, 'indexActive']);
+        Route::get('items/actives', [ItemController::class, 'indexActive'])->middleware('auth:sanctum');
         Route::get('items/inactives', [ItemController::class, 'indexInactive'])->middleware('auth:sanctum');
         Route::get('items/getall', [ItemController::class, 'indexAllItems'])->middleware('auth:sanctum');
-        Route::get('items/{id}', [ItemController::class, 'indexDetail']);
+        Route::get('items/{id}', [ItemController::class, 'show']);
 
         Route::post('items', [ItemController::class, 'store'])->middleware('auth:sanctum', 'item-create');
         Route::patch('items/{id}', [ItemController::class, 'update'])->middleware('auth:sanctum', 'item-owned');
@@ -53,12 +53,12 @@ Route::namespace('Api')->group(function(){
     });
 
     Route::prefix('home')->group(function(){
-        Route::get('types', [PageHomeController::class, 'indexTypeHome']);
-        Route::get('plants', [PageHomeController::class, 'indexPlantHome']);
+        Route::get('types', [PageHomeController::class, 'indexHomeType']);
+        Route::get('plants', [PageHomeController::class, 'indexHomePlant']);
     });
 
     Route::prefix('profile')->middleware('auth:sanctum')->group(function(){
-        Route::get('', [ProfileController::class, 'index'])->middleware('userprofile');
+        Route::get('', [ProfileController::class, 'show'])->middleware('userprofile');
         Route::patch('', [ProfileController::class, 'update'])->middleware('userprofile');
     });
 
@@ -67,6 +67,10 @@ Route::namespace('Api')->group(function(){
         Route::post('', [TypeController::class, 'store']);
         Route::patch('{id}', [TypeController::class, 'update']);
         Route::delete('{id}', [TypeController::class, 'destroy']);
+    });
+
+    Route::prefix('search')->group(function(){
+        Route::get('items', [SearchController::class, 'indexItem']);
     });
 
     Route::prefix('plants')->group(function(){

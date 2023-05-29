@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 
 class StoreController extends Controller
 {
-    public function index(Request $request)
+    public function show(Request $request)
     {
         $store = Store::where('id', $request->id)->first();
 
@@ -28,7 +28,7 @@ class StoreController extends Controller
         ], 200);
     }
 
-    public function indexSelf()
+    public function showSelf()
     {
         $user = Auth::user();
 
@@ -48,7 +48,7 @@ class StoreController extends Controller
         ], 200);
     }
 
-    public function indexCatalog(Request $request)
+    public function showCatalog(Request $request)
     {
         $store = Store::where('id', $request->id)->first();
 

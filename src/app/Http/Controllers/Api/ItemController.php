@@ -17,43 +17,48 @@ class ItemController extends Controller
 {
     public function indexActive()
     {
-        $item = Item::get();
+        $user = Auth::user();
 
-        $store = Store::where('id', $item->store_id)->first();
+        $profile = Profile::where('user_id', $user->id)->first();
 
-        $type = $item->type()->get();
-        $plant = $item->plant()->get();
-        $plantPart = $item->plantPart()->get();
+        $store = Store::where('profile_id', $profile->id)->first();
+        
+        $item = Item::with('store', 'type', 'plant', 'plantPart')->where('store_id', $store->id)->get();
 
-        $item['store_id'] = $store;
-        $item['type_id'] = $type;
-        $item['plants'] = $plant;
-        $item['plant_parts'] = $plantPart;
+        if ($item->isEmpty()) {
+            return response()->json([
+                'message' => 'Item list is empty.',
+                'data'    => $item
+            ], 200);
+        }
+
+        // $type = $items->type()->get();
+        // $plant = $items->plant()->get();
+        // $plantPart = $items->plantPart()->get();
+
+        // $items['store_id'] = $store;
+        // $items['type_id'] = $type;
+        // $items['plant_id'] = $plant;
+        // $items['plant_part_id'] = $plantPart;
+
+        // foreach($item as $items){
+        //     $type = $items->type()->get();
+        //     $plant = $items->plant()->get();
+        //     $plantPart = $items->plantPart()->get();
+
+        //     $items['store_id'] = $store;
+        //     $items['type_id'] = $type;
+        //     $items['plant_id'] = $plant;
+        //     $items['plant_part_id'] = $plantPart;
+
+        //     $final[] = $item;
+        // }
+
+        // $items = Item::with('plant') ->where('store_id', $store->id)->get();
 
         return response()->json([
             "message" => "All active items fetched successfully.",
-            "items" => $item
-        ], 200);
-    }
-
-    public function indexDetail(Request $request)
-    {
-        $item = Item::where('id', $request->id)->first();
-
-        $store = Store::where('id', $item->store_id)->first();
-
-        $type = $item->type()->get();
-        $plant = $item->plant()->get();
-        $plantPart = $item->plantPart()->get();
-
-        $item['store_id'] = $store;
-        $item['type_id'] = $type;
-        $item['plants'] = $plant;
-        $item['plant_parts'] = $plantPart;
-
-        return response()->json([
-            "message" => "Item details fetched successfully.",
-            "item" => $item,
+            "item" => $item
         ], 200);
     }
 
@@ -65,16 +70,14 @@ class ItemController extends Controller
 
         $store = Store::where('profile_id', $profile->id)->first();
 
-        $item = Item::onlyTrashed()->where('store_id', $store->id)->get();
+        $item = Item::with('store', 'type', 'plant', 'plantPart')->onlyTrashed()->where('store_id', $store->id)->get();
 
-        $type = $item->type()->get();
-        $plant = $item->plant()->get();
-        $plantPart = $item->plantPart()->get();
-
-        $item['store_id'] = $store;
-        $item['type_id'] = $type;
-        $item['plants'] = $plant;
-        $item['plant_parts'] = $plantPart;
+        if ($item->isEmpty()) {
+            return response()->json([
+                'message' => 'Item list is empty.',
+                'data'    => $item
+            ], 200);
+        }
 
         return response()->json([
             "message" => "All inactive items fetched successfully.",
@@ -90,19 +93,27 @@ class ItemController extends Controller
 
         $store = Store::where('profile_id', $profile->id)->first();
 
-        $item = Item::withTrashed()->where('store_id', $store->id)->get();
+        $item = Item::withTrashed()->with('store', 'type', 'plant', 'plantPart')->where('store_id', $store->id)->get();
 
-        $type = $item->type()->get();
-        $plant = $item->plant()->get();
-        $plantPart = $item->plantPart()->get();
-
-        $item['store_id'] = $store;
-        $item['type_id'] = $type;
-        $item['plants'] = $plant;
-        $item['plant_parts'] = $plantPart;
+        if ($item->isEmpty()) {
+            return response()->json([
+                'message' => 'Item list is empty.',
+                'data'    => $item
+            ], 200);
+        }
 
         return response()->json([
             "message" => "All items fetched successfully.",
+            "item" => $item
+        ], 200);
+    }
+
+    public function show(Request $request)
+    {
+        $item = Item::with('store', 'type', 'plant', 'plantPart')->where('id', $request->id)->get();
+
+        return response()->json([
+            "message" => "Item details fetched successfully.",
             "item" => $item
         ], 200);
     }

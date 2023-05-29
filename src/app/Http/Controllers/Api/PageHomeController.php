@@ -10,7 +10,7 @@ use App\Models\Item;
 
 class PageHomeController extends Controller
 {
-    public function indexTypeHome()
+    public function indexHomeType()
     {
         $type = Type::inRandomOrder()
                 ->limit(10)
@@ -22,7 +22,7 @@ class PageHomeController extends Controller
         ], 200);
     }
 
-    public function indexPlantHome()
+    public function indexHomePlant()
     {
         $plant = Plant::inRandomOrder()
                 ->limit(5)

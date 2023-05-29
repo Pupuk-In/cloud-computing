@@ -32,6 +32,6 @@ class Store extends Model
 
     public function item()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsToMany(Item::class);
     }
 }
