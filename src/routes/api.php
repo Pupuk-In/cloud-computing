@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\SoilController;
 use App\Http\Controllers\Api\PlantController;
 use App\Http\Controllers\Api\PlantPartController;
 use App\Http\Controllers\Api\SearchController;
+use App\Http\Controllers\Api\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,11 @@ Route::namespace('Api')->group(function(){
         Route::post('', [TypeController::class, 'store']);
         Route::patch('{id}', [TypeController::class, 'update']);
         Route::delete('{id}', [TypeController::class, 'destroy']);
+    });
+
+    Route::prefix('wishlist')->group(function(){
+        Route::get('', [WishlistController::class, 'index'])->middleware('auth:sanctum');
+        Route::post('', [WishlistController::class, 'store'])->middleware('auth:sanctum');
     });
 
     Route::prefix('search')->group(function(){

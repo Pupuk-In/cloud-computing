@@ -21,11 +21,11 @@ class Wishlist extends Model
 
     public function profile()
     {
-        return $this->hasMany(Profile::class);
+        return $this->belongsTo(Profile::class);
     }
-    
+
     public function item()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsTo(Item::class);
     }
 }

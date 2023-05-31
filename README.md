@@ -1195,31 +1195,79 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 ### Get All Items
 
 - Endpoint :
-    - /wishlists
+    - /wishlist
 - Method :
     - GET
 - Header :
-    - Accept: application/json
-- Parameters :
-    - 
+    - Authorization: Bearer <access_token>
 - Response :
 ```json 
 {
-    "message" : "Cart items fetched successfully",
-    "wishlists" : "items" : 
-    {
+    "message": "Wishlist items fetched successfully.",
+    "wishlist": [
         {
-            "id" : "integer",
-            "name" : "string",
-            "picture" : "string, URL",
-            "description" : "string, longtext",
-            "price" : "integer",
-            "stock" : "integer",
-            "rating" : "float",
-            "type" : "string",
-            "plant" : "string",
-            "part" : "string"
-        }
+            "id": "integer",
+            "profile_id": "integer",
+            "item_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "item": {
+                "id": "integer",
+                "name": "string",
+                "picture": "string, url",
+                "description": "text",
+                "type_id": "integer",
+                "price": "integer",
+                "stock": "integer",
+                "sold": "integer",
+                "rating": "float",
+                "relevance": "string",
+                "brand": "string",
+                "store_id": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "deleted_at": "datetime"
+            }
+        }]
+}
+```
+
+- Endpoint :
+    - /wishlist
+- Method :
+    - POST
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "message": "Item added to wishlist successfully.",
+    "wishlist": {
+        "id": "integer",
+        "profile_id": "integer",
+        "item_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+    },
+    "item": 
+    {
+        "id": "integer",
+        "name": "string",
+        "picture": "string, url",
+        "description": "text",
+        "type_id": "integer",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "string",
+        "brand": "string",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
     }
 }
 ```
+
