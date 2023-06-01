@@ -9,23 +9,18 @@ class Wishlist extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'profile_id',
-        'item_id'
+        'item_id',
     ];
 
     public function profile()
     {
-        return $this->hasMany(Profile::class);
+        return $this->belongsTo(Profile::class);
     }
-    
+
     public function item()
     {
-        return $this->hasMany(Item::class);
+        return $this->belongsToMany(Item::class);
     }
 }

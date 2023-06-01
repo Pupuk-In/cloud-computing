@@ -110,7 +110,7 @@ class ItemController extends Controller
 
     public function show(Request $request)
     {
-        $item = Item::with('store', 'type', 'plant', 'plantPart')->where('id', $request->id)->get();
+        $item = Item::with('store', 'type', 'plant', 'plantPart')->where('id', $request->id)->first();
 
         return response()->json([
             "message" => "Item details fetched successfully.",

@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             PivotPlantSoil::class,
             PivotItemPlant::class,
             PivotItemPlantPart::class,
+            WishlistSeeder::class,
         ]);
     }
 }
