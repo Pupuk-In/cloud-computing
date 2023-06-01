@@ -21,6 +21,6 @@ class Wishlist extends Model
 
     public function item()
     {
-        return $this->belongsToMany(Item::class);
+        return $this->belongsTo(Item::class);
     }
 }

@@ -66,6 +66,6 @@ class Item extends Model
 
     public function wishlist()
     {
-        return $this->belongsToMany(Profile::class);
+        return $this->belongsToMany(Profile::class, 'wishlists');
     }
 }

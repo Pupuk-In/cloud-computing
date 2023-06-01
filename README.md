@@ -1149,6 +1149,125 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 }
 ```
 
+
+
+# Wishlisted Items Page
+
+### Get All Wishlisted Items
+
+- Endpoint :
+    - /wishlists
+- Method :
+    - GET
+- Header :
+    - Authorization: Bearer <access_token>
+- Parameters :
+    - filter[name] as string, partial query
+    - filter[price] as integer, range of price, ex value =50000-90000
+    - sort as string, input should be 'name', 'price', 'created_at', add '-' in front of string for DESC order
+    - page as int, optional
+- Response :
+```json 
+{
+    "message" : "Wishlisted items fetched successfully",
+    "wishlist" : {
+        "current_page": 1,
+        "data": [{
+            "id": 2,
+            "profile_id": 3,
+            "item_id": 96,
+            "created_at": "2023-06-01T11:16:04.000000Z",
+            "updated_at": "2023-06-01T11:16:04.000000Z",
+            "item": {
+                "id": "integer",
+                "name": "string",
+                "picture": "string, url",
+                "description": "text",
+                "type_id": "integer",
+                "price": "integer",
+                "stock": "integer",
+                "sold": "integer",
+                "rating": "float",
+                "relevance": "text",
+                "brand": "string",
+                "store_id": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "deleted_at": "datetime",
+            },
+        }],
+        "first_page_url": "string, url",
+        "from": "integer",
+        "last_page": "integer",
+        "last_page_url": "string, url",
+        "links": [
+            {
+                "url": "string, url",
+                "label": "string",
+                "active": "boolean"
+            },
+        ],
+        "next_page_url": "string, url",
+        "path": "string, url",
+        "per_page": "integer",
+        "prev_page_url": "string, url",
+        "to": "integer",
+        "total": "integer"
+    }
+}
+```
+
+### Add New Item to Wishlist
+
+- Endpoint :
+    - /wishlists
+- Method :
+    - POST
+- Header :
+    - Content-Type: application/json
+    - Accept: application/json
+- Body :
+```json 
+{
+    "item_id" : "integer, required",
+}
+```
+
+- Response :
+```json 
+{
+    "message": "Item added to wishlist successfully.",
+    "wishlist": {
+        "item_id": "integer",
+        "profile_id": "integer",
+        "updated_at": "datetime",
+        "created_at": "datetime",
+        "id": "integer"
+    },
+    "item": {
+        "id": "integer",
+        "name": "string",
+        "picture": "string, url",
+        "description": "text",
+        "type_id": "integer",
+        "price": "integer",
+        "stock": "integer",
+        "sold": "integer",
+        "rating": "float",
+        "relevance": "text",
+        "brand": "string",
+        "store_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "deleted_at": "datetime"
+    }
+}
+```
+
+
+
+
+
 # DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA (WIP)
 
 # Cart Items Page
@@ -1170,43 +1289,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 {
     "message" : "Cart items fetched successfully",
     "carts" : "items" : 
-    {
-        {
-            "id" : "integer",
-            "name" : "string",
-            "picture" : "string, URL",
-            "description" : "string, longtext",
-            "price" : "integer",
-            "stock" : "integer",
-            "rating" : "float",
-            "type" : "string",
-            "plant" : "string",
-            "part" : "string"
-        }
-    }
-}
-```
-
-
-# Wishlisted Items Page
-
-## Lists of Items in Wishlists
-
-### Get All Items
-
-- Endpoint :
-    - /wishlists
-- Method :
-    - GET
-- Header :
-    - Accept: application/json
-- Parameters :
-    - 
-- Response :
-```json 
-{
-    "message" : "Cart items fetched successfully",
-    "wishlists" : "items" : 
     {
         {
             "id" : "integer",

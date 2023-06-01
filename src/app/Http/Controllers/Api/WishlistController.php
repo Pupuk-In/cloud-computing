@@ -9,6 +9,9 @@ use App\Models\Profile;
 use App\Models\Item;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+use App\Filters\PriceRangeFilter;
 
 class WishlistController extends Controller
 {
@@ -17,10 +20,20 @@ class WishlistController extends Controller
 
         $profile = Profile::where('user_id', $user->id)->first();
 
-        $wishlist = Wishlist::with('item')->where('profile_id', $profile->id)->get();
+        $wishlist = QueryBuilder::for(Wishlist::class)
+            ->with('item')
+            ->allowedFilters([
+                    AllowedFilter::partial('name', 'item.name'),
+                    AllowedFilter::custom('price', new PriceRangeFilter)
+                ])
+            ->where('profile_id', $profile->id)
+            ->defaultSort('created_at')
+            ->allowedSorts('name', 'price', 'created_at')
+            ->paginate(10)
+            ->appends(request()->query());
 
         return response()->json([
-            "message" => "Wishlist items fetched successfully.",
+            "message" => "Wishlisted items fetched successfully.",
             "wishlist" => $wishlist
         ], 200);
     }

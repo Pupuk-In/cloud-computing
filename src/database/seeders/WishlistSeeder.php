@@ -15,7 +15,7 @@ class WishlistSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 200; $i++) {
+        for ($i = 0; $i < 400; $i++) {
             DB::table('wishlists')->insert([
                 'profile_id' => mt_rand(1,5),
                 'item_id' => mt_rand(1,100),
