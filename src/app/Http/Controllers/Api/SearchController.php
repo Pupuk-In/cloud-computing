@@ -20,7 +20,7 @@ class SearchController extends Controller
     public function indexItem()
     {
         $item = QueryBuilder::for(Item::class)
-            ->with('store', 'type', 'plant', 'plantPart')
+            ->with('picture', 'store', 'type', 'plant', 'plantPart')
             ->allowedFilters([
                     AllowedFilter::partial('name'),
                     AllowedFilter::exact('type', 'type.id'),

@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\Profile;
 use App\Models\Item;
+use App\Models\ItemPicture;
 use App\Models\ItemPlant;
 use App\Models\ItemPlantPart;
-use App\Models\Plant;
-use App\Models\Type;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -23,7 +22,7 @@ class ItemController extends Controller
 
         $store = Store::where('profile_id', $profile->id)->first();
         
-        $item = Item::with('store', 'type', 'plant', 'plantPart')->where('store_id', $store->id)->get();
+        $item = Item::with('picture', 'store', 'type', 'plant', 'plantPart')->where('store_id', $store->id)->get();
 
         if ($item->isEmpty()) {
             return response()->json([
@@ -70,7 +69,7 @@ class ItemController extends Controller
 
         $store = Store::where('profile_id', $profile->id)->first();
 
-        $item = Item::with('store', 'type', 'plant', 'plantPart')->onlyTrashed()->where('store_id', $store->id)->get();
+        $item = Item::with('picture', 'store', 'type', 'plant', 'plantPart')->onlyTrashed()->where('store_id', $store->id)->get();
 
         if ($item->isEmpty()) {
             return response()->json([
@@ -93,7 +92,7 @@ class ItemController extends Controller
 
         $store = Store::where('profile_id', $profile->id)->first();
 
-        $item = Item::withTrashed()->with('store', 'type', 'plant', 'plantPart')->where('store_id', $store->id)->get();
+        $item = Item::withTrashed()->with('picture', 'store', 'type', 'plant', 'plantPart')->where('store_id', $store->id)->get();
 
         if ($item->isEmpty()) {
             return response()->json([
@@ -110,7 +109,14 @@ class ItemController extends Controller
 
     public function show(Request $request)
     {
-        $item = Item::with('store', 'type', 'plant', 'plantPart')->where('id', $request->id)->first();
+        $item = Item::with('picture', 'store', 'type', 'plant', 'plantPart')->where('id', $request->id)->first();
+
+        if (!$item) {
+            return response()->json([
+                'message' => 'Item not found.',
+                'data'    => $item
+            ], 404);
+        }
 
         return response()->json([
             "message" => "Item details fetched successfully.",
@@ -128,7 +134,7 @@ class ItemController extends Controller
 
         $request->validate([
             'name' => 'string|required',
-            'picture' => 'string',
+            'picture' => 'array',
             'description' => 'string',
             'type_id' => 'integer|required',
             'price' => 'integer|required',
@@ -151,6 +157,13 @@ class ItemController extends Controller
 
         $item = Item::create($request->all());
 
+        foreach($request->picture as $picture){
+            ItemPicture::create([
+                'item_id' => $item->id,
+                'picture' => $picture,
+            ]);
+        }
+
         foreach($request->plant_id as $plant_id){
             ItemPlant::create([
                 'item_id' => $item->id,
@@ -165,8 +178,7 @@ class ItemController extends Controller
             ]);
         }
 
-        $item['plant_id'] = $request->plant_id;
-        $item['plant_part_id'] = $request->plant_part_id;
+        $item = Item::with('picture', 'store', 'type', 'plant', 'plantPart')->find($item->id);
 
         return response()->json([
             "message" => "Item created successfully.",
@@ -184,7 +196,7 @@ class ItemController extends Controller
 
         $request->validate([
             'name' => 'string|required',
-            'picture' => 'string',
+            'picture' => 'array',
             'description' => 'string',
             'type_id' => 'integer|required',
             'price' => 'integer|required',
@@ -199,6 +211,13 @@ class ItemController extends Controller
 
         $item->update($request->all());
 
+        ItemPicture::where('item_id', $item->id)->delete();
+        foreach($request->picture as $picture){
+            ItemPicture::create([
+                'item_id' => $item->id,
+                'picture' => $picture,
+            ]);
+        }
         
         ItemPlant::where('item_id', $item->id)->delete();
         foreach($request->plant_id as $plant_id){
@@ -216,8 +235,7 @@ class ItemController extends Controller
             ]);
         }
 
-        $item['plant_id'] = $request->plant_id;
-        $item['plant_part_id'] = $request->plant_part_id;
+        $item = Item::with('picture', 'store', 'type', 'plant', 'plantPart')->find($item->id);
 
         return response()->json([
             "message" => "Item updated successfully.",
@@ -237,6 +255,8 @@ class ItemController extends Controller
 
         $item->delete();
 
+        $item = Item::withTrashed()->with('picture', 'store', 'type', 'plant', 'plantPart')->find($item->id);
+
         return response()->json([
             "message" => "Item soft deleted successfully.",
             "item" => $item
@@ -253,7 +273,15 @@ class ItemController extends Controller
 
         $item = Item::onlyTrashed()->where('store_id', $store->id)->where('id', $id);
 
+        if(!$item){
+            return response()->json([
+                "message" => "Item not found."
+            ], 404);
+        }
+
         $item->restore();
+
+        $item = Item::withTrashed()->with('picture', 'store', 'type', 'plant', 'plantPart')->find($item->id);
 
         return response()->json([
             "message" => "Item restored successfully.",
@@ -270,6 +298,12 @@ class ItemController extends Controller
         $store = Store::where('profile_id', $profile->id)->first();
 
         $item = Item::withTrashed()->where('store_id', $store->id)->where('id', $id);
+
+        if(!$item){
+            return response()->json([
+                "message" => "Item not found."
+            ], 404);
+        }
 
         $item->forceDelete();
 

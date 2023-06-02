@@ -122,7 +122,6 @@ class ItemSeeder extends Seeder
         for ($i = 0; $i < 100; $i++) {
             DB::table('items')->insert([
                 'name' => $fertilizers[array_rand($fertilizers)],
-                'picture' => "https://saraswantifertilizer.com/wp-content/uploads/2021/03/Front-Banner-Merk-koka.png",
                 'description' => itemDescGen(),
                 'type_id' => mt_rand(1, 20),
                 'price' => mt_rand(5000, 100000),

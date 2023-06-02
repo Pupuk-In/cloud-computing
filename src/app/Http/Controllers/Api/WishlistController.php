@@ -19,14 +19,25 @@ class WishlistController extends Controller
         $user = Auth::user();
 
         $profile = Profile::where('user_id', $user->id)->first();
+        $profile_id = $profile->id;
 
-        $wishlist = QueryBuilder::for(Wishlist::class)
-            ->with('item')
+        $wishlist = QueryBuilder::for(Item::class)
+            ->with([
+                'picture',
+                'store',
+                'type',
+                'plant',
+                'plantPart',
+                'wishlist'
+                ])
+            ->where('profile_id', $profile_id)
             ->allowedFilters([
-                    AllowedFilter::partial('name', 'item.name'),
+                    AllowedFilter::partial('name'),
+                    AllowedFilter::exact('type', 'type.id'),
+                    AllowedFilter::exact('plant', 'plant.id'),
+                    AllowedFilter::exact('part', 'plantPart.id'),
                     AllowedFilter::custom('price', new PriceRangeFilter)
                 ])
-            ->where('profile_id', $profile->id)
             ->defaultSort('created_at')
             ->allowedSorts('name', 'price', 'created_at')
             ->paginate(10)

@@ -9,6 +9,8 @@ class Wishlist extends Model
 {
     use HasFactory;
 
+    protected $table = 'wishlist';
+
     protected $fillable = [
         'profile_id',
         'item_id',
@@ -22,5 +24,30 @@ class Wishlist extends Model
     public function item()
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function picture()
+    {
+        return $this->hasManyThrough(ItemPicture::class, Item::class);
+    }
+
+    public function store()
+    {
+        return $this->hasManyThrough(Store::class, Item::class);
+    }
+
+    public function type()
+    {
+        return $this->hasManyThrough(ItemType::class, Item::class);
+    }
+
+    public function plant()
+    {
+        return $this->hasManyThrough(Plant::class, Item::class);
+    }
+
+    public function plantPart()
+    {
+        return $this->hasManyThrough(PlantPart::class, Item::class);
     }
 }

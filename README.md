@@ -274,7 +274,7 @@
 ```json 
 {
     "name": "string, required, unique",
-    "picture" : "string",
+    "picture" : "string, url",
     "address": "string, required",
     "latitude": "double, required",
     "longitude": "double, required",
@@ -417,7 +417,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string, url",
         "description": "text",
         "type_id": "integer",
         "price": "integer",
@@ -430,6 +429,13 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "created_at": "datetime",
         "updated_at": "datetime",
         "deleted_at": "datetime",
+        "picture": [{
+            "id": "integer",
+            "item_id": "integer",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }],
         "store": {
             "id": "integer",
             "name": "string",
@@ -489,7 +495,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string, url",
         "description": "text",
         "type_id": "integer",
         "price": "integer",
@@ -502,6 +507,13 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "created_at": "datetime",
         "updated_at": "datetime",
         "deleted_at": "datetime",
+        "picture": [{
+            "id": "integer",
+            "item_id": "integer",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }],
         "store": {
             "id": "integer",
             "name": "string",
@@ -566,7 +578,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "item": {
         "id": "integer",
         "name": "string",
-        "picture": "string, url",
         "description": "text",
         "type_id": "integer",
         "price": "integer",
@@ -579,6 +590,13 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "created_at": "datetime",
         "updated_at": "datetime",
         "deleted_at": "datetime",
+        "picture": [{
+            "id": "integer",
+            "item_id": "integer",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }],
         "store": {
             "id": "integer",
             "name": "string",
@@ -653,6 +671,13 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "created_at": "datetime",
         "updated_at": "datetime",
         "deleted_at": "datetime",
+        "picture": [{
+            "id": "integer",
+            "item_id": "integer",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }],
         "store": {
             "id": "integer",
             "name": "string",
@@ -730,22 +755,71 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 ```json 
 {
     "message": "Item created successfully.",
-    "Item": {
+    "item": {
+        "id": "integer",
         "name": "string",
         "picture": "string, url",
         "description": "text",
         "type_id": "integer",
         "price": "integer",
         "stock": "integer",
-        "brand": "keren",
-        "store_id": "integer",
         "sold": "integer",
         "rating": "float",
-        "updated_at": "datetime",
+        "relevance": "text",
+        "brand": "string",
+        "store_id": "integer",
         "created_at": "datetime",
-        "id": "integer",
-        "plant_id": "array of integer",
-        "plant_part_id": "array of integer"
+        "updated_at": "datetime",
+        "deleted_at": "datetime",
+        "picture": [{
+            "id": "integer",
+            "item_id": "integer",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }],
+        "store": {
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "address": "string",
+            "latitude": "double",
+            "longitude": "double",
+            "description": "text",
+            "rating": "float",
+            "profile_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+        },
+        "type": {
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+        },
+        "plant": [{
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "pivot": {
+                "item_id": "integer",
+                "plant_id": "integer"
+            }
+        }],
+        "plant_part": [{
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "pivot": {
+                "item_id": "integer",
+                "plant_part_id": "integer"
+            }
+        }]
     }
 }
 ```
@@ -780,7 +854,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 ```json 
 {
     "message": "Item created successfully.",
-    "Item": {
+    "item": {
         "id": "integer",
         "name": "string",
         "picture": "string, url",
@@ -790,14 +864,61 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "stock": "integer",
         "sold": "integer",
         "rating": "float",
-        "relevance": "string",
-        "brand": "keren",
+        "relevance": "text",
+        "brand": "string",
         "store_id": "integer",
-        "updated_at": "datetime",
         "created_at": "datetime",
+        "updated_at": "datetime",
         "deleted_at": "datetime",
-        "plant_id": "array of integer",
-        "plant_part_id": "array of integer"
+        "picture": [{
+            "id": "integer",
+            "item_id": "integer",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }],
+        "store": {
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "address": "string",
+            "latitude": "double",
+            "longitude": "double",
+            "description": "text",
+            "rating": "float",
+            "profile_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+        },
+        "type": {
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+        },
+        "plant": [{
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "pivot": {
+                "item_id": "integer",
+                "plant_id": "integer"
+            }
+        }],
+        "plant_part": [{
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "pivot": {
+                "item_id": "integer",
+                "plant_part_id": "integer"
+            }
+        }]
     }
 }
 ```
@@ -831,6 +952,13 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "created_at": "datetime",
         "updated_at": "datetime",
         "deleted_at": "datetime",
+        "picture": [{
+            "id": "integer",
+            "item_id": "integer",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }],
         "store": {
             "id": "integer",
             "name": "string",
@@ -906,6 +1034,13 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "created_at": "datetime",
         "updated_at": "datetime",
         "deleted_at": "datetime",
+        "picture": [{
+            "id": "integer",
+            "item_id": "integer",
+            "picture": "string, url",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }],
         "store": {
             "id": "integer",
             "name": "string",
@@ -1069,64 +1204,71 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "current_page": "integer",
         "data": [{
             "item": {
+            "id": "integer",
+            "name": "string",
+            "picture": "string, url",
+            "description": "text",
+            "type_id": "integer",
+            "price": "integer",
+            "stock": "integer",
+            "sold": "integer",
+            "rating": "float",
+            "relevance": "text",
+            "brand": "string",
+            "store_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "deleted_at": "datetime",
+            "picture": [{
+                "id": "integer",
+                "item_id": "integer",
+                "picture": "string, url",
+                "created_at": "datetime",
+                "updated_at": "datetime"
+            }],
+            "store": {
                 "id": "integer",
                 "name": "string",
                 "picture": "string, url",
+                "address": "string",
+                "latitude": "double",
+                "longitude": "double",
                 "description": "text",
-                "type_id": "integer",
-                "price": "integer",
-                "stock": "integer",
-                "sold": "integer",
                 "rating": "float",
-                "relevance": "text",
-                "brand": "string",
-                "store_id": "integer",
+                "profile_id": "integer",
                 "created_at": "datetime",
                 "updated_at": "datetime",
-                "deleted_at": "datetime",
-                "store": {
-                    "id": "integer",
-                    "name": "string",
-                    "picture": "string, url",
-                    "address": "string",
-                    "latitude": "double",
-                    "longitude": "double",
-                    "description": "text",
-                    "rating": "float",
-                    "profile_id": "integer",
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                },
-                "type": {
-                    "id": "integer",
-                    "name": "string",
-                    "picture": "string, url",
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                },
-                "plant": [{
-                    "id": "integer",
-                    "name": "string",
-                    "picture": "string, url",
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                    "pivot": {
-                        "item_id": "integer",
-                        "plant_id": "integer"
-                    }
-                }],
-                "plant_part": [{
-                    "id": "integer",
-                    "name": "string",
-                    "picture": "string, url",
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                    "pivot": {
-                        "item_id": "integer",
-                        "plant_part_id": "integer"
-                    }
-                }]
-            }
+            },
+            "type": {
+                "id": "integer",
+                "name": "string",
+                "picture": "string, url",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+            },
+            "plant": [{
+                "id": "integer",
+                "name": "string",
+                "picture": "string, url",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "pivot": {
+                    "item_id": "integer",
+                    "plant_id": "integer"
+                }
+            }],
+            "plant_part": [{
+                "id": "integer",
+                "name": "string",
+                "picture": "string, url",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "pivot": {
+                    "item_id": "integer",
+                    "plant_part_id": "integer"
+                }
+            }]
+        }
         }],
         "first_page_url": "string, url",
         "from": "integer",
@@ -1171,13 +1313,13 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 {
     "message" : "Wishlisted items fetched successfully",
     "wishlist" : {
-        "current_page": 1,
+        "current_page": "integer",
         "data": [{
-            "id": 2,
-            "profile_id": 3,
-            "item_id": 96,
-            "created_at": "2023-06-01T11:16:04.000000Z",
-            "updated_at": "2023-06-01T11:16:04.000000Z",
+            "id": "integer",
+            "profile_id": "integer",
+            "item_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
             "item": {
                 "id": "integer",
                 "name": "string",

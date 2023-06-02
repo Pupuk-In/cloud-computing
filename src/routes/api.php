@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\PlantController;
 use App\Http\Controllers\Api\PlantPartController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\WishlistController;
+use App\Http\Controllers\Api\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,11 @@ Route::namespace('Api')->group(function(){
         Route::delete('items/del/{id}', [ItemController::class, 'destroy'])->middleware('auth:sanctum', 'item-soft-delete');
         Route::patch('items/restore/{id}', [ItemController::class, 'restoreSoftDelete'])->middleware('auth:sanctum', 'item-owned');
         Route::delete('items/permdel/{id}', [ItemController::class, 'PermDelete'])->middleware('auth:sanctum', 'item-owned');
+    });
+
+    Route::prefix('images')->group(function(){
+        Route::post('', [ImageController::class, 'store'])->middleware('auth:sanctum');
+        Route::delete('', [ImageController::class, 'destroy'])->middleware('auth:sanctum');
     });
 
     Route::prefix('home')->group(function(){

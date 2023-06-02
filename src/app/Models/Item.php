@@ -18,7 +18,6 @@ class Item extends Model
      */
     protected $fillable = [
         'name',
-        'picture',
         'description',
         'type_id',
         'price',
@@ -66,6 +65,11 @@ class Item extends Model
 
     public function wishlist()
     {
-        return $this->belongsToMany(Profile::class, 'wishlists');
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function picture()
+    {
+        return $this->hasMany(ItemPicture::class, 'item_id', 'id');
     }
 }
