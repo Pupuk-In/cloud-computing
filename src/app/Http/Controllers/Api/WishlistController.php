@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use App\Filters\PriceRangeFilter;
+use Spatie\QueryBuilder\AllowedSort;
 
 class WishlistController extends Controller
 {
@@ -19,18 +20,38 @@ class WishlistController extends Controller
         $user = Auth::user();
 
         $profile = Profile::where('user_id', $user->id)->first();
-        $profile_id = $profile->id;
+
+        // $wishlist = QueryBuilder::for(Item::class)
+        //     ->join('items', 'wishlists.item_id', '=', 'items.id')
+        //     ->where('profile_id', $profile->id)
+        //     ->with(
+        //         'item.picture',
+        //         'item.store',
+        //         'item.type',
+        //         'item.plant',
+        //         'item.plantPart'
+        //         )
+        //     ->allowedFilters([
+        //             AllowedFilter::partial('name', 'item.name'),
+        //             AllowedFilter::exact('type', 'item.type.id'),
+        //             AllowedFilter::exact('plant', 'item.plant.id'),
+        //             AllowedFilter::exact('part', 'item.plantPart.id'),
+        //         ])
+        //     ->defaultSort('created_at')
+        //     ->allowedSorts([
+        //         'created_at',
+        //         AllowedSort::field('name', 'items.name'),
+        //     ])
+        //     ->paginate(10)
+        //     ->appends(request()->query());
+
+        // $wishlist = Wishlist::with('item', 'item.picture', 'item.store', 'item.type', 'item.plant', 'item.plantPart')->where('profile_id', $profile->id)->get();
 
         $wishlist = QueryBuilder::for(Item::class)
-            ->with([
-                'picture',
-                'store',
-                'type',
-                'plant',
-                'plantPart',
-                'wishlist'
-                ])
-            ->where('profile_id', $profile_id)
+            ->join('wishlists', 'items.id', '=', 'wishlists.item_id')
+            ->where('profile_id', $profile->id)
+            ->select('items.*', 'wishlists.created_at as date_added')
+            ->with('picture', 'store', 'type', 'plant', 'plantPart')
             ->allowedFilters([
                     AllowedFilter::partial('name'),
                     AllowedFilter::exact('type', 'type.id'),
@@ -38,8 +59,8 @@ class WishlistController extends Controller
                     AllowedFilter::exact('part', 'plantPart.id'),
                     AllowedFilter::custom('price', new PriceRangeFilter)
                 ])
-            ->defaultSort('created_at')
-            ->allowedSorts('name', 'price', 'created_at')
+            ->defaultSort('date_added')
+            ->allowedSorts('name', 'price', 'date_added')
             ->paginate(10)
             ->appends(request()->query());
 
