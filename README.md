@@ -1305,8 +1305,11 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     - Authorization: Bearer <access_token>
 - Parameters :
     - filter[name] as string, partial query
+    - filter[type] as integer, exact query
+    - filter[plant] as integer, exact query
+    - filter[part] as integer, exact query
     - filter[price] as integer, range of price, ex value =50000-90000
-    - sort as string, input should be 'name', 'price', 'created_at', add '-' in front of string for DESC order
+    - sort as string, input should be 'name', 'price', 'date_added', add '-' in front of string for DESC order
     - page as int, optional
 - Response :
 ```json 
@@ -1314,29 +1317,73 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "message" : "Wishlisted items fetched successfully",
     "wishlist" : {
         "current_page": "integer",
-        "data": [{
-            "id": "integer",
-            "profile_id": "integer",
-            "item_id": "integer",
+        "data": [
+            {
+            "id": 51,
+            "name": "string",
+            "description": "text",
+            "type_id": "integer",
+            "price": "integer",
+            "stock": "integer",
+            "sold": "integer",
+            "rating": "float",
+            "relevance": "text",
+            "brand": "string",
+            "store_id": "integer",
             "created_at": "datetime",
             "updated_at": "datetime",
-            "item": {
+            "deleted_at": "datetime",
+            "date_added": "datetime",
+            "picture": [{
+                    "id": "integer",
+                    "item_id": "integer",
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime"
+            }],
+            "store": {
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "address": "string",
+                    "latitude": "double",
+                    "longitude": "double",
+                    "distance": "double",
+                    "description": "text",
+                    "rating": "float",
+                    "profile_id": "integer",
+                    "created_at": "datetime",
+                    "updated_at": "datetime"
+            },
+            "type": {
+                "id": "integer",
+                "name": "string",
+                "picture": "string",
+                "created_at": "datetime",
+                "updated_at": "datetime"
+            },
+            "plant": [{
                 "id": "integer",
                 "name": "string",
                 "picture": "string, url",
-                "description": "text",
-                "type_id": "integer",
-                "price": "integer",
-                "stock": "integer",
-                "sold": "integer",
-                "rating": "float",
-                "relevance": "text",
-                "brand": "string",
-                "store_id": "integer",
                 "created_at": "datetime",
                 "updated_at": "datetime",
-                "deleted_at": "datetime",
-            },
+                "pivot": {
+                    "item_id": "integer",
+                    "plant_id": "integer"
+                }
+            }],
+            "plant_part": [{
+                "id": "integer",
+                "name": "string",
+                "picture": "string, url",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "pivot": {
+                    "item_id": "integer",
+                    "plant_part_id": "integer"
+                }
+            },]
         }],
         "first_page_url": "string, url",
         "from": "integer",
