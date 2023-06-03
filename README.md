@@ -338,6 +338,12 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 - Header :
     - Accept: application/json
 - Parameters :
+    - filter[name] as string, partial query
+    - filter[type] as integer, exact query
+    - filter[plant] as integer, exact query
+    - filter[part] as integer, exact query
+    - filter[price] as integer, range of price, ex value =50000-90000
+    - sort as string, input should be 'name', 'price', 'created_at', add - for DESC order
     - page as int, optional
 - Response :
 ```json 
@@ -350,6 +356,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "address": "string",
         "latitude": "double",
         "longitude": "double",
+        "distance": "double",
         "description": "text",
         "rating": "float",
         "profile_id": "integer",
@@ -358,8 +365,8 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     },
     "catalog": {
         "current_page": "integer",
-        "data": [
-            {
+        "data": [{
+            "item": {
                 "id": "integer",
                 "name": "string",
                 "picture": "string, url",
@@ -369,14 +376,63 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
                 "stock": "integer",
                 "sold": "integer",
                 "rating": "float",
-                "relevance": "string",
+                "relevance": "text",
                 "brand": "string",
                 "store_id": "integer",
                 "created_at": "datetime",
                 "updated_at": "datetime",
-                "deleted_at": "datetime"
-            },
-        ],
+                "deleted_at": "datetime",
+                "picture": [{
+                    "id": "integer",
+                    "item_id": "integer",
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime"
+                }],
+                "store": {
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "address": "string",
+                    "latitude": "double",
+                    "longitude": "double",
+                    "description": "text",
+                    "rating": "float",
+                    "profile_id": "integer",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                },
+                "type": {
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                },
+                "plant": [{
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                    "pivot": {
+                        "item_id": "integer",
+                        "plant_id": "integer"
+                    }
+                }],
+                "plant_part": [{
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                    "pivot": {
+                        "item_id": "integer",
+                        "plant_part_id": "integer"
+                    }
+                }]
+            }
+        }],
         "first_page_url": "string, url",
         "from": "integer",
         "last_page": "integer",
@@ -1204,71 +1260,71 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "current_page": "integer",
         "data": [{
             "item": {
-            "id": "integer",
-            "name": "string",
-            "picture": "string, url",
-            "description": "text",
-            "type_id": "integer",
-            "price": "integer",
-            "stock": "integer",
-            "sold": "integer",
-            "rating": "float",
-            "relevance": "text",
-            "brand": "string",
-            "store_id": "integer",
-            "created_at": "datetime",
-            "updated_at": "datetime",
-            "deleted_at": "datetime",
-            "picture": [{
-                "id": "integer",
-                "item_id": "integer",
-                "picture": "string, url",
-                "created_at": "datetime",
-                "updated_at": "datetime"
-            }],
-            "store": {
                 "id": "integer",
                 "name": "string",
                 "picture": "string, url",
-                "address": "string",
-                "latitude": "double",
-                "longitude": "double",
                 "description": "text",
+                "type_id": "integer",
+                "price": "integer",
+                "stock": "integer",
+                "sold": "integer",
                 "rating": "float",
-                "profile_id": "integer",
+                "relevance": "text",
+                "brand": "string",
+                "store_id": "integer",
                 "created_at": "datetime",
                 "updated_at": "datetime",
-            },
-            "type": {
-                "id": "integer",
-                "name": "string",
-                "picture": "string, url",
-                "created_at": "datetime",
-                "updated_at": "datetime",
-            },
-            "plant": [{
-                "id": "integer",
-                "name": "string",
-                "picture": "string, url",
-                "created_at": "datetime",
-                "updated_at": "datetime",
-                "pivot": {
+                "deleted_at": "datetime",
+                "picture": [{
+                    "id": "integer",
                     "item_id": "integer",
-                    "plant_id": "integer"
-                }
-            }],
-            "plant_part": [{
-                "id": "integer",
-                "name": "string",
-                "picture": "string, url",
-                "created_at": "datetime",
-                "updated_at": "datetime",
-                "pivot": {
-                    "item_id": "integer",
-                    "plant_part_id": "integer"
-                }
-            }]
-        }
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime"
+                }],
+                "store": {
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "address": "string",
+                    "latitude": "double",
+                    "longitude": "double",
+                    "description": "text",
+                    "rating": "float",
+                    "profile_id": "integer",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                },
+                "type": {
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                },
+                "plant": [{
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                    "pivot": {
+                        "item_id": "integer",
+                        "plant_id": "integer"
+                    }
+                }],
+                "plant_part": [{
+                    "id": "integer",
+                    "name": "string",
+                    "picture": "string, url",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                    "pivot": {
+                        "item_id": "integer",
+                        "plant_part_id": "integer"
+                    }
+                }]
+            }
         }],
         "first_page_url": "string, url",
         "from": "integer",
@@ -1290,7 +1346,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     }
 }
 ```
-
 
 
 # Wishlisted Items Page
@@ -1317,8 +1372,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     "message" : "Wishlisted items fetched successfully",
     "wishlist" : {
         "current_page": "integer",
-        "data": [
-            {
+        "data": [{
             "id": "integer",
             "name": "string",
             "description": "text",
@@ -1383,7 +1437,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
                     "item_id": "integer",
                     "plant_part_id": "integer"
                 }
-            },]
+            }]
         }],
         "first_page_url": "string, url",
         "from": "integer",
@@ -1452,8 +1506,6 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
     }
 }
 ```
-
-
 
 
 
