@@ -9,6 +9,9 @@ use App\Models\Store;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
+use App\Filters\PriceRangeFilter;
 
 class StoreController extends Controller
 {
@@ -58,7 +61,20 @@ class StoreController extends Controller
             ], 404);
         }
 
-        $catalog = Item::where('store_id', $store->id)->paginate(5);
+        $catalog = QueryBuilder::for(Item::class)
+            ->where('store_id', $store->id)
+            ->with('picture', 'store', 'type', 'plant', 'plantPart')
+            ->allowedFilters([
+                    AllowedFilter::partial('name'),
+                    AllowedFilter::exact('type', 'type.id'),
+                    AllowedFilter::exact('plant', 'plant.id'),
+                    AllowedFilter::exact('part', 'plantPart.id'),
+                    AllowedFilter::custom('price', new PriceRangeFilter)
+                ])
+            ->defaultSort('created_at')
+            ->allowedSorts('name', 'price', 'created_at')
+            ->paginate(10)
+            ->appends(request()->query());
 
         return response()->json([
             "message" => "Store catalogs fetched successfully.",
@@ -115,10 +131,6 @@ class StoreController extends Controller
             'description' => 'string',
             'rating' => 'float',
         ]);
-        // $profile = Profile::updateOrCreate(
-        // ['user_id' => $user->id],
-        // );
-
         
 
         $store->update($request->all());

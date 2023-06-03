@@ -86,10 +86,18 @@ class SoilSeeder extends Seeder
             return $description;
         }
 
+        $pictures = array(
+            "https://storage.googleapis.com/pupukin-bucket/4f6dd4f000029da89507cb092aa6bacf_6479bf385aea6.png",
+            "https://storage.googleapis.com/pupukin-bucket/fujiikaze_6479b8df6a4f6.jpeg",
+            "https://storage.googleapis.com/pupukin-bucket/mustache_6479c8c244242.png",
+            "https://storage.googleapis.com/pupukin-bucket/go_6479d5354e298.png",
+            "https://storage.googleapis.com/pupukin-bucket/vitogeraldolraldo_6479d5a7f1211.gif"
+        );
+
         foreach($soils as $soil){
             DB::table('soils')->insert([
                 'name' => $soil,
-                'picture' => 'ini gambar ' . $soil,
+                'picture' => $pictures[array_rand($pictures)],
                 'description' => soilDescGen(),
                 'nitrogen' => 20 + mt_rand() / mt_getrandmax() * (200 - 20),
                 'phospor' =>  10 + mt_rand() / mt_getrandmax() * (50 - 10),

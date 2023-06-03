@@ -37,7 +37,7 @@ Route::namespace('Api')->group(function(){
     Route::prefix('stores')->group(function(){
         Route::get('{id}', [StoreController::class, 'show']);
         Route::get('', [StoreController::class, 'showSelf'])->middleware('auth:sanctum');
-        Route::get('{id}/catalogs', [StoreController::class, 'showCatalog']);
+        Route::get('catalogs', [StoreController::class, 'showCatalog']);
         Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum', 'storeprofile');
         Route::patch('', [StoreController::class, 'update'])->middleware('auth:sanctum', 'storeprofile');
         

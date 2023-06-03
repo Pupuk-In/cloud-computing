@@ -64,10 +64,18 @@ class ProfileSeeder extends Seeder
             "Jl. Hayam Wuruk No. 1010, Semarang"
         );
 
+        $pictures = array(
+            "https://storage.googleapis.com/pupukin-bucket/4f6dd4f000029da89507cb092aa6bacf_6479bf385aea6.png",
+            "https://storage.googleapis.com/pupukin-bucket/fujiikaze_6479b8df6a4f6.jpeg",
+            "https://storage.googleapis.com/pupukin-bucket/mustache_6479c8c244242.png",
+            "https://storage.googleapis.com/pupukin-bucket/go_6479d5354e298.png",
+            "https://storage.googleapis.com/pupukin-bucket/vitogeraldolraldo_6479d5a7f1211.gif"
+        );
+
         for ($i=1; $i <= 5; $i++) { 
             DB::table('profiles')->insert([
                 'name' => $firstNames[array_rand($firstNames)].' '.$lastNames[array_rand($lastNames)],
-                'picture' => Str::random(10),
+                'picture' => $pictures[array_rand($pictures)],
                 'birth_date' => mt_rand(1990, 2023).'-'.mt_rand(1,12).'-'.mt_rand(1,29),
                 'phone_number' => '08'.rand(1000000000,9999999999),
                 'address' => $addresses[array_rand($addresses)],

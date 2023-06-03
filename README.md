@@ -1319,7 +1319,7 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
         "current_page": "integer",
         "data": [
             {
-            "id": 51,
+            "id": "integer",
             "name": "string",
             "description": "text",
             "type_id": "integer",
