@@ -1164,6 +1164,34 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 
 ## Types
 
+### Create new types
+
+- Endpoint :
+    - /types
+- Method :
+    - POST
+- Header :
+    - Accept: application/json
+- Body :
+```json 
+{
+    "name": "string",
+    "picture": "string, url"
+}
+```
+- Response :
+```json 
+{
+    "type": {
+        "name": "string",
+        "picture": "string, url",
+        "updated_at": "datetime",
+        "created_at": "datetime",
+        "id": "integer"
+    }
+}
+```
+
 ### Get all types
 
 - Endpoint :
@@ -1188,6 +1216,34 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 
 ## Plants
 
+### Create new plants
+
+- Endpoint :
+    - /plants
+- Method :
+    - POST
+- Header :
+    - Accept: application/json
+- Body :
+```json 
+{
+    "name": "string",
+    "picture": "string, url"
+}
+```
+- Response :
+```json 
+{
+    "type": {
+        "name": "string",
+        "picture": "string, url",
+        "updated_at": "datetime",
+        "created_at": "datetime",
+        "id": "integer"
+    }
+}
+```
+
 ### Get all plants
 
 - Endpoint :
@@ -1211,6 +1267,34 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 ```
 
 ## Plant Parts
+
+### Create new plant parts
+
+- Endpoint :
+    - /plant-parts
+- Method :
+    - POST
+- Header :
+    - Accept: application/json
+- Body :
+```json 
+{
+    "name": "string",
+    "picture": "string, url"
+}
+```
+- Response :
+```json 
+{
+    "type": {
+        "name": "string",
+        "picture": "string, url",
+        "updated_at": "datetime",
+        "created_at": "datetime",
+        "id": "integer"
+    }
+}
+```
 
 ### Get all plant parts
 
@@ -1507,6 +1591,54 @@ Ctt: Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berup
 }
 ```
 
+## Image
+
+### Image Upload
+- Endpoint :
+    - /images
+- Method :
+    - POST
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "picture": "file"
+}
+```
+- Response :
+```json 
+{
+    "message": "File uploaded successfully.",
+    "file": {
+        "name": "string",
+        "url": "string, udl"
+    }
+}
+```
+
+### Image Delete
+- Endpoint :
+    - /images
+- Method :
+    - DELETE
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "picture": "filename OR file URL"
+}
+```
+- Response :
+```json 
+{
+    "message": "File deleted successfully.",
+    "name": "ab6761610000e5eb45f6762cc91177b960e7ca2b_647c66fc48a47.jpg"
+}
+```
 
 
 # DIBAWAH INI BELUM DITERAPKAN SEMUA APINYA (WIP)

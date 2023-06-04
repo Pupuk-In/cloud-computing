@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\PlantPartController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\Api\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,11 @@ Route::namespace('Api')->group(function(){
     Route::prefix('wishlists')->group(function(){
         Route::get('', [WishlistController::class, 'index'])->middleware('auth:sanctum');
         Route::post('', [WishlistController::class, 'store'])->middleware('auth:sanctum');
+    });
+
+    Route::prefix('carts')->group(function(){
+        Route::get('', [CartController::class, 'index'])->middleware('auth:sanctum');
+        Route::post('', [CartController::class, 'store'])->middleware('auth:sanctum');
     });
 
     Route::prefix('plants')->group(function(){

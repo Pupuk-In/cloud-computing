@@ -16,7 +16,8 @@ use Spatie\QueryBuilder\AllowedSort;
 
 class WishlistController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $user = Auth::user();
 
         $profile = Profile::where('user_id', $user->id)->first();
@@ -70,7 +71,8 @@ class WishlistController extends Controller
         ], 200);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $user = Auth::user();
 
         $profile = Profile::where('user_id', $user->id)->first();

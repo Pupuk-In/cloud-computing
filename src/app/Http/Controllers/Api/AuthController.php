@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Profile;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
@@ -62,6 +63,13 @@ class AuthController extends Controller
         ]);
 
         $profile->save();
+
+        $cart = new Cart([
+            'profile_id' => $profile->id,
+            'total' => 0,
+        ]);
+
+        $cart->save();
 
         return response()->json([
             "message" => "User registered successfully."
