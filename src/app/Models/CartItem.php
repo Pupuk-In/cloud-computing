@@ -15,6 +15,7 @@ class CartItem extends Model
         'cart_id',
         'item_id',
         'quantity',
+        'price'
     ];
 
     public function cart()
@@ -24,6 +25,6 @@ class CartItem extends Model
 
     public function item()
     {
-        return $this->belongsToMany(Item::class);
+        return $this->belongsTo(Item::class);
     }
 }

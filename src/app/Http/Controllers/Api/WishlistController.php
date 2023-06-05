@@ -103,4 +103,25 @@ class WishlistController extends Controller
             "item" => $item
         ], 201);
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $wishlist = Wishlist::where('profile_id', $profile->id)->where('item_id', $id)->first();
+
+        if(!$wishlist){
+            return response()->json([
+                "message" => "Item not found in wishlist."
+            ], 404);
+        }
+
+        $wishlist->delete();
+
+        return response()->json([
+            "message" => "Item removed from wishlist successfully."
+        ], 200);
+    }
 }

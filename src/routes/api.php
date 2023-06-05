@@ -70,13 +70,6 @@ Route::namespace('Api')->group(function(){
         Route::patch('', [ProfileController::class, 'update'])->middleware('userprofile');
     });
 
-    Route::prefix('types')->group(function(){
-        Route::get('', [TypeController::class, 'index']);
-        Route::post('', [TypeController::class, 'store']);
-        Route::patch('{id}', [TypeController::class, 'update']);
-        Route::delete('{id}', [TypeController::class, 'destroy']);
-    });
-
     Route::prefix('search')->group(function(){
         Route::get('items', [SearchController::class, 'indexItem']);
     });
@@ -84,11 +77,21 @@ Route::namespace('Api')->group(function(){
     Route::prefix('wishlists')->group(function(){
         Route::get('', [WishlistController::class, 'index'])->middleware('auth:sanctum');
         Route::post('', [WishlistController::class, 'store'])->middleware('auth:sanctum');
+        Route::delete('{id}', [WishlistController::class, 'destroy'])->middleware('auth:sanctum');
     });
 
     Route::prefix('carts')->group(function(){
         Route::get('', [CartController::class, 'index'])->middleware('auth:sanctum');
         Route::post('', [CartController::class, 'store'])->middleware('auth:sanctum');
+        Route::patch('{id}', [CartController::class, 'update'])->middleware('auth:sanctum');
+        Route::delete('{id}', [CartController::class, 'destroy'])->middleware('auth:sanctum');
+    });
+
+    Route::prefix('types')->group(function(){
+        Route::get('', [TypeController::class, 'index']);
+        Route::post('', [TypeController::class, 'store']);
+        Route::patch('{id}', [TypeController::class, 'update']);
+        Route::delete('{id}', [TypeController::class, 'destroy']);
     });
 
     Route::prefix('plants')->group(function(){

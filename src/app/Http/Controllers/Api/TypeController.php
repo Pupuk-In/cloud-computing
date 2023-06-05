@@ -29,6 +29,7 @@ class TypeController extends Controller
         $type = Type::create($request->all());
 
         return response()->json([
+            "message" => "Type created successfully.",
             "type" => $type
         ], 200);
     }
@@ -46,6 +47,7 @@ class TypeController extends Controller
         $type->update($request->all());
 
         return response()->json([
+            "message" => "Type updated successfully.",
             "type" => $type
         ], 200);
     }
@@ -57,7 +59,7 @@ class TypeController extends Controller
         $type->delete();
 
         return response()->json([
-            "type" => $type
+            "message" => "Type deleted successfully.",
         ], 200);
     }
 }

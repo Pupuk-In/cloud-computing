@@ -24,12 +24,12 @@ class PlantController extends Controller
         $request->validate([
             'name' => 'string|required|unique:soils,name',
             'picture' => 'string',
-            'soil_id' => "integer|required|exists:soils,id",
         ]);
 
         $plant = Plant::create($request->all());
 
         return response()->json([
+            "message" => "Plant created successfully.",
             "plant" => $plant
         ], 200);
     }
@@ -42,12 +42,12 @@ class PlantController extends Controller
             'name' => 'string|required',
             Rule::unique('plant', 'name')->ignore($plant->id),
             'picture' => 'string',
-            'soil_id' => "integer|required|exists:soils,id",
         ]);
         
         $plant->update($request->all());
         
         return response()->json([
+            "message" => "Plant updated successfully.",
             "plant" => $plant
         ], 200);
     }
@@ -58,7 +58,7 @@ class PlantController extends Controller
         $plant->delete();
 
         return response()->json([
-            "plant" => $plant
+            "message" => "Plant deleted successfully."
         ], 200);
     }
 }

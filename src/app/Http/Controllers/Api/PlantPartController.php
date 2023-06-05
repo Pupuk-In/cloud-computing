@@ -29,6 +29,7 @@ class PlantPartController extends Controller
         $plantpart = PlantPart::create($request->all());
 
         return response()->json([
+            "message" => "Plant part created successfully.",
             "plant_part" => $plantpart
         ], 200);
     }
@@ -46,6 +47,7 @@ class PlantPartController extends Controller
         $plantpart->update($request->all());
 
         return response()->json([
+            "message" => "Plant part updated successfully.",
             "plant_part" => $plantpart
         ], 200);
     }
@@ -57,6 +59,7 @@ class PlantPartController extends Controller
         $plantpart->delete();
 
         return response()->json([
+            "message" => "Plant part deleted successfully.",
             "plant_part" => $plantpart
         ], 200);
     }

@@ -14,6 +14,7 @@ class SoilController extends Controller
         $soil = Soil::all();
 
         return response()->json([
+            "message" => "All soils fetched successfully.",
             "soils" => $soil
         ], 200);
     }
@@ -35,9 +36,11 @@ class SoilController extends Controller
         $soil = Soil::create($request->all());
 
         return response()->json([
+            "message" => "Soil created successfully",
             "soil" => $soil
         ], 200);
     }
+    
 
     public function update(Request $request, $id)
     {
@@ -59,6 +62,7 @@ class SoilController extends Controller
         $soil->update($request->all());
         
         return response()->json([
+            "message" => "Soil updated successfully",
             "soil" => $soil
         ], 200);
     }
@@ -70,7 +74,7 @@ class SoilController extends Controller
         $soil->delete();
         
         return response()->json([
-            "soil" => $soil
+            "message" => "Soil deleted successfully"
         ], 200);
     }
 }

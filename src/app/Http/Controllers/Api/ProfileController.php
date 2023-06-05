@@ -13,7 +13,10 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        $profile = Profile::where('user_id', $user->id)->first();
+        $profile = Profile::where('user_id', $user->id)
+            ->join('users', 'profiles.user_id', '=', 'users.id')
+            ->select('profiles.*', 'users.username')
+            ->first();
 
         return response()->json([
             "message" => "Profile fetched successfully.",

@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('profile_id');
-            $table->integer('total')->nullable();
+            $table->bigInteger('total')->nullable();
             $table->timestamps();
 
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');

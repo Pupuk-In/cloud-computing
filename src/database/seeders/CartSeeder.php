@@ -19,6 +19,8 @@ class CartSeeder extends Seeder
             DB::table('carts')->insert([
                 'profile_id' => $i,
                 'total' => 0,
+                'created_at' => date('Y-m-d H:i:sO', time()),
+                'updated_at' => date('Y-m-d H:i:sO', time())
             ]);
         }
     }

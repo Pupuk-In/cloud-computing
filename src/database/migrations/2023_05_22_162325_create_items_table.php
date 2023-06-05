@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->text("description");
             $table->unsignedBigInteger('type_id');
-            $table->integer("price");
-            $table->integer("stock");
-            $table->integer("sold");
+            $table->bigInteger("price");
+            $table->bigInteger("stock");
+            $table->bigInteger("sold");
             $table->float("rating")->nullable();
             $table->text("relevance")->nullable();
             $table->string("brand")->nullable();
