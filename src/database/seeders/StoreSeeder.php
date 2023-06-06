@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -92,13 +93,32 @@ class StoreSeeder extends Seeder
             "https://storage.googleapis.com/pupukin-bucket/vitogeraldolraldo_6479d5a7f1211.gif"
         );
 
+        $lat = array(
+            -6.1790364880630015,
+            -6.175823857642837,
+            -6.185961332925814,
+            -6.216600384108018,
+            -6.205315402900296
+        );
+
+        $lon = array(
+            106.75724498708459,
+            106.79035032584834,
+            106.73948114788261,
+            106.75380242550898,
+            106.78662217533427
+        );
+
+
         for ($i = 1; $i <= 5; $i++) {
             DB::table('stores')->insert([
                 'name' => $storeFirstNames[array_rand($storeFirstNames)].$storeLastNames[array_rand($storeLastNames)],
                 'picture' => $pictures[array_rand($pictures)],
                 'address' => $addresses[array_rand($addresses)],
-                'latitude' => mt_rand(-90, 90) + (mt_rand() / mt_getrandmax() - 0.5),
-                'longitude' => mt_rand(-180, 180) + (mt_rand() / mt_getrandmax() - 0.5),
+                // 'latitude' => mt_rand(-90, 90) + (mt_rand() / mt_getrandmax() - 0.5),
+                // 'longitude' => mt_rand(-180, 180) + (mt_rand() / mt_getrandmax() - 0.5),
+                'latitude' => $lat[$i-1],
+                'longitude' => $lon[$i-1],
                 'description' => storeDescGen(),
                 'rating' => 0,
                 'profile_id' => $i,

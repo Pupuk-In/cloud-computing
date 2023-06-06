@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PlantPart extends Model
+class PaymentStatus extends Model
 {
     use HasFactory;
 
-    protected $table = 'plant_parts';
+    protected $table = 'payment_statuses';
 
     /**
      * The attributes that are mass assignable.
@@ -18,11 +18,11 @@ class PlantPart extends Model
      */
     protected $fillable = [
         'name',
-        'picture'
+        'description'
     ];
 
-    public function item()
+    public function transaction()
     {
-        return $this->belongsToMany(Item::class);
+        return $this->hasMany(Transaction::class);
     }
 }

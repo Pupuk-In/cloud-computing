@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Item;
+use App\Models\PaymentMethod;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -30,6 +31,9 @@ class DatabaseSeeder extends Seeder
             WishlistSeeder::class,
             ItemPicture::class,
             CartSeeder::class,
+            PaymentMethodSeeder::class,
+            PaymentStatus::class,
+            TransactionStatusSeeder::class,
         ]);
     }
 }

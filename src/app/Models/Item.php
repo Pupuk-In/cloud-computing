@@ -11,6 +11,8 @@ class Item extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'items';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,10 +30,6 @@ class Item extends Model
         'brand',
         'store_id',
     ];
-    
-
-    // protected $table = 'items';
-    // protected $dates = ['deleted_at'];
 
     public function priceRange(Builder $query, $start, $end): Builder
     {

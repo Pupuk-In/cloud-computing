@@ -9,6 +9,8 @@ class Soil extends Model
 {
     use HasFactory;
 
+    protected $table = 'soils';
+
     /**
      * The attributes that are mass assignable.
      *

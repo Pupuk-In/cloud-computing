@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use App\Filters\PriceRangeFilter;
-
+use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
@@ -17,7 +17,7 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexItem()
+    public function index()
     {
         $item = QueryBuilder::for(Item::class)
             ->with('picture', 'store', 'type', 'plant', 'plantPart')
@@ -32,7 +32,29 @@ class SearchController extends Controller
             ->allowedSorts('name', 'price', 'created_at')
             ->paginate(10)
             ->appends(request()->query());
+        
+        
+        if ($item->isEmpty()) {
+            return response()->json([
+                'message' => 'Item list is empty.',
+                'item'    => $item
+            ], 200);
+        }
 
+        return response()->json([
+            'message' => 'Item list fetched successfully.',
+            'item'    => $item
+        ], 200);
+    }
+
+    public function indexSort()
+    {
+        $item = DB::table('items')
+            ->join('stores', 'items.store_id', '=', 'stores.id')
+            ->select('items.*', 'stores.name as store_name', 'stores.latitude as latitude', 'stores.longitude as longitude')
+            ->selectRaw('6371 * acos(cos(radians(37)) * cos(radians(stores.latitude)) * cos(radians(stores.longitude) - radians(-122)) + sin(radians(37)) * sin(radians(stores.latitude))) AS distance')
+            ->orderBy('distance')
+            ->get();
 
         if ($item->isEmpty()) {
             return response()->json([

@@ -72,6 +72,23 @@ class ProfileSeeder extends Seeder
             "https://storage.googleapis.com/pupukin-bucket/vitogeraldolraldo_6479d5a7f1211.gif"
         );
 
+        $lat = array(
+            -6.193548264239904,
+            -6.195244692390197,
+            -6.19339944026126,
+            -6.19080265894966,
+            -6.195263476299061
+        );
+
+        $lon = array(
+            106.75711239318001,
+            106.75864021802651,
+            106.76067869681414,
+            106.75855451813845,
+            106.75554411102871
+        );
+
+
         for ($i=1; $i <= 5; $i++) { 
             DB::table('profiles')->insert([
                 'name' => $firstNames[array_rand($firstNames)].' '.$lastNames[array_rand($lastNames)],
@@ -79,8 +96,10 @@ class ProfileSeeder extends Seeder
                 'birth_date' => mt_rand(1990, 2023).'-'.mt_rand(1,12).'-'.mt_rand(1,28),
                 'phone_number' => '08'.rand(1000000000,9999999999),
                 'address' => $addresses[array_rand($addresses)],
-                'latitude' => mt_rand(-90, 90) + (mt_rand() / mt_getrandmax() - 0.5),
-                'longitude' => mt_rand(-180, 180) + (mt_rand() / mt_getrandmax() - 0.5),
+                // 'latitude' => mt_rand(-90, 90) + (mt_rand() / mt_getrandmax() - 0.5),
+                // 'longitude' => mt_rand(-180, 180) + (mt_rand() / mt_getrandmax() - 0.5),
+                'latitude' => $lat[$i-1],
+                'longitude' => $lon[$i-1],
                 'user_id' => $i,
                 'created_at' => date('Y-m-d H:i:sO', time()),
                 'updated_at' => date('Y-m-d H:i:sO', time())

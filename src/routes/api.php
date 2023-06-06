@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,7 +72,8 @@ Route::namespace('Api')->group(function(){
     });
 
     Route::prefix('search')->group(function(){
-        Route::get('items', [SearchController::class, 'indexItem']);
+        Route::get('items', [SearchController::class, 'index']);
+        Route::get('items-sort', [SearchController::class, 'indexSort']);
     });
 
     Route::prefix('wishlists')->group(function(){
@@ -85,6 +87,10 @@ Route::namespace('Api')->group(function(){
         Route::post('', [CartController::class, 'store'])->middleware('auth:sanctum');
         Route::patch('{id}', [CartController::class, 'update'])->middleware('auth:sanctum');
         Route::delete('{id}', [CartController::class, 'destroy'])->middleware('auth:sanctum');
+    });
+
+    Route::prefix('transactions')->group(function(){
+        Route::post('', [TransactionController::class, 'store'])->middleware('auth:sanctum');
     });
 
     Route::prefix('types')->group(function(){
@@ -114,11 +120,6 @@ Route::namespace('Api')->group(function(){
         Route::patch('{id}', [SoilController::class, 'update']);
         Route::delete('{id}', [SoilController::class, 'destroy']);
     });
-
-    
-
-    
-
     
 
     Route::get('index', [AuthController::class, 'index'])->middleware('auth:sanctum');
