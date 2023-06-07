@@ -5,9 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
-use Spatie\QueryBuilder\QueryBuilder;
-use Spatie\QueryBuilder\AllowedFilter;
-use App\Filters\PriceRangeFilter;
 use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
@@ -17,23 +14,66 @@ class SearchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $item = QueryBuilder::for(Item::class)
-            ->with('picture', 'store', 'type', 'plant', 'plantPart')
-            ->allowedFilters([
-                    AllowedFilter::partial('name'),
-                    AllowedFilter::exact('type', 'type.id'),
-                    AllowedFilter::exact('plant', 'plant.id'),
-                    AllowedFilter::exact('part', 'plantPart.id'),
-                    AllowedFilter::custom('price', new PriceRangeFilter)
-                ])
-            ->defaultSort('created_at')
-            ->allowedSorts('name', 'price', 'created_at')
-            ->paginate(10)
-            ->appends(request()->query());
-        
-        
+        $itemQuery = Item::with('picture', 'store', 'type', 'plant', 'plantPart');
+
+        // FILTER
+        // by name (partial)
+        if($request->search){
+            $itemQuery->where('name', 'LIKE', '%'.$request->search.'%')
+                ->orWhereHas('type', function($query) use($request){
+                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                });
+        }
+        // by relation type (exact)
+        if($request->type){
+            $itemQuery->whereHas('type', function($query) use($request){
+                $query->where('id', $request->type);
+            });
+        }
+        // by relation plant (exact)
+        if($request->plant){
+            $itemQuery->whereHas('plant', function($query) use($request){
+                $query->where('id', $request->plant);
+            });
+        }
+        // by relation plant (exact)
+        if($request->part){
+            $itemQuery->whereHas('plantPart', function($query) use($request){
+                $query->where('id', $request->part);
+            });
+        }
+        // by price (range)
+        if ($request->input('price')) {
+            $priceRange = explode('-', $request->input('price'));
+
+            if (count($priceRange) === 2) {
+                $lowerLimit = $priceRange[0];
+                $upperLimit = $priceRange[1];
+
+                $itemQuery->whereBetween('price', [$lowerLimit, $upperLimit]);
+            }
+        }
+
+        // SORT
+        if($request->sort){
+            $sortColumn = $request->sort;
+            $sortOrder = $request->order === 'desc' ? 'desc' : 'asc';
+            $itemQuery->orderBy($sortColumn, $sortOrder);
+        } else {
+            $itemQuery->orderBy('created_at', 'desc');
+        }
+
+        // PAGINATE
+        if($request->perPage){
+            $item = $itemQuery->paginate($request->perPage);
+        } else {
+            $item = $itemQuery->paginate(10);
+        }
+
+
+
         if ($item->isEmpty()) {
             return response()->json([
                 'message' => 'Item list is empty.',

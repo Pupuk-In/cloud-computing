@@ -20,7 +20,7 @@ class Transaction extends Model
         'total',
         'profile_id',
         'payment_method_id',
-        'transaction_status_id',
+        'payment_status_id',
     ];
 
     /**

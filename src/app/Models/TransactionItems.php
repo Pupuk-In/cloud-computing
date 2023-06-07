@@ -14,6 +14,7 @@ class TransactionItems extends Model
     protected $fillable = [
         'transaction_by_store_id',
         'item_id',
+        'store_id',
         'quantity',
         'price',
         'subtotal'

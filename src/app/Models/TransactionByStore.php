@@ -16,6 +16,7 @@ class TransactionByStore extends Model
         'store_id',
         'invoice',
         'total',
+        'transaction_status_id'
     ];
 
 

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -44,36 +45,42 @@ class AuthController extends Controller
     
     public function signup(Request $request)
     {
-        $request->validate([
-            'username' => 'required|string|alpha_dash|unique:users,username',
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string'
-        ]);
+        try {
+            $request->validate([
+                'username' => 'required|string|alpha_dash|unique:users,username',
+                'email' => 'required|string|email|unique:users,email',
+                'password' => 'required|string'
+            ]);
 
-        $user = new User([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
+            $user = new User([
+                'username' => $request->username,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
 
-        $user->save();
+            $user->save();
 
-        $profile = new Profile([
-            'user_id' => $user->id,
-        ]);
+            $profile = new Profile([
+                'user_id' => $user->id,
+            ]);
 
-        $profile->save();
+            $profile->save();
 
-        $cart = new Cart([
-            'profile_id' => $profile->id,
-            'total' => 0,
-        ]);
+            $cart = new Cart([
+                'profile_id' => $profile->id,
+                'total' => 0,
+            ]);
 
-        $cart->save();
+            $cart->save();
 
-        return response()->json([
-            "message" => "User registered successfully."
-        ]);
+            return response()->json([
+                "message" => "User registered successfully."
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                "message" => "Failed to register user."
+            ], 400);
+        }
     }
 
     public function logout(Request $request)

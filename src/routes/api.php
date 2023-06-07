@@ -16,6 +16,8 @@ use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\TransactionController;
+use Spatie\QueryBuilder\QueryBuilderMiddleware;
+
 
 /*
 |--------------------------------------------------------------------------
