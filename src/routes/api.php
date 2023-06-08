@@ -42,7 +42,7 @@ Route::namespace('Api')->group(function(){
         Route::get('{id}', [StoreController::class, 'show']);
         Route::get('', [StoreController::class, 'showSelf'])->middleware('auth:sanctum');
         Route::post('{id}/catalogs', [StoreController::class, 'showCatalog']);
-        Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum', 'storeprofile');
+        Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum');
         Route::patch('', [StoreController::class, 'update'])->middleware('auth:sanctum', 'storeprofile');
         
         Route::get('items/actives', [ItemController::class, 'indexActive'])->middleware('auth:sanctum');
