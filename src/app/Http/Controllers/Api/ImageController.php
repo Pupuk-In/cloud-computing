@@ -60,7 +60,14 @@ class ImageController extends Controller
  
             } catch(Exception $e) {
                 return response()->json([
-                    "message" => $e->getMessage()
+                    "message" => $e->getMessage(),
+                    "test1" => $e->getTraceAsString(),
+                    "test2" => $e->getLine(),
+                    "test3" => $e->getFile(),
+                    "test4" => $e->getCode(),
+                    "test5" => $e->getPrevious(),
+                    "test6" => $e->getTrace(),
+                    
                 ], 404);
             }
         }

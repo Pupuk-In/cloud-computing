@@ -97,6 +97,8 @@ class TransactionController extends Controller
                 $transactionItem->save();
             }
 
+            $cart->delete();
+
             return response()->json([
                 'message' => 'success',
                 // 'cart_item' => $cart->cartItem,
