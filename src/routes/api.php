@@ -41,7 +41,7 @@ Route::namespace('Api')->group(function(){
     Route::prefix('stores')->group(function(){
         Route::get('{id}', [StoreController::class, 'show']);
         Route::get('', [StoreController::class, 'showSelf'])->middleware('auth:sanctum');
-        Route::get('{id}/catalogs', [StoreController::class, 'showCatalog']);
+        Route::post('{id}/catalogs', [StoreController::class, 'showCatalog']);
         Route::post('', [StoreController::class, 'store'])->middleware('auth:sanctum', 'storeprofile');
         Route::patch('', [StoreController::class, 'update'])->middleware('auth:sanctum', 'storeprofile');
         
@@ -79,7 +79,7 @@ Route::namespace('Api')->group(function(){
     });
 
     Route::prefix('wishlists')->group(function(){
-        Route::get('', [WishlistController::class, 'index'])->middleware('auth:sanctum');
+        Route::post('index', [WishlistController::class, 'index'])->middleware('auth:sanctum');
         Route::post('', [WishlistController::class, 'store'])->middleware('auth:sanctum');
         Route::delete('{id}', [WishlistController::class, 'destroy'])->middleware('auth:sanctum');
     });

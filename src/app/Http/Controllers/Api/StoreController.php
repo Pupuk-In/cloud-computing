@@ -53,7 +53,7 @@ class StoreController extends Controller
 
     public function showCatalog(Request $request)
     {
-        $store = Store::where('id', $request->id)->first();
+        $store = Store::where('id', $request->store_id)->first();
 
         if(!$store){
             return response()->json([
@@ -61,20 +61,62 @@ class StoreController extends Controller
             ], 404);
         }
 
-        $catalog = QueryBuilder::for(Item::class)
-            ->where('store_id', $store->id)
-            ->with('picture', 'store', 'type', 'plant', 'plantPart')
-            ->allowedFilters([
-                    AllowedFilter::partial('name'),
-                    AllowedFilter::exact('type', 'type.id'),
-                    AllowedFilter::exact('plant', 'plant.id'),
-                    AllowedFilter::exact('part', 'plantPart.id'),
-                    AllowedFilter::custom('price', new PriceRangeFilter)
-                ])
-            ->defaultSort('created_at')
-            ->allowedSorts('name', 'price', 'created_at')
-            ->paginate(10)
-            ->appends(request()->query());
+
+        $catalogQuery = Item::where('store_id', $store->id)->with('picture', 'store', 'type', 'plant', 'plantPart');
+
+        // FILTER
+        // by name (partial)
+        if($request->search){
+            $catalogQuery->where('name', 'LIKE', '%'.$request->search.'%')
+                ->orWhereHas('type', function($query) use($request){
+                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                });
+        }
+        // by relation type (exact)
+        if($request->type){
+            $catalogQuery->whereHas('type', function($query) use($request){
+                $query->where('id', $request->type);
+            });
+        }
+        // by relation plant (exact)
+        if($request->plant){
+            $catalogQuery->whereHas('plant', function($query) use($request){
+                $query->where('id', $request->plant);
+            });
+        }
+        // by relation plant (exact)
+        if($request->part){
+            $catalogQuery->whereHas('plantPart', function($query) use($request){
+                $query->where('id', $request->part);
+            });
+        }
+        // by price (range)
+        if ($request->input('price')) {
+            $priceRange = explode('-', $request->input('price'));
+
+            if (count($priceRange) === 2) {
+                $lowerLimit = $priceRange[0];
+                $upperLimit = $priceRange[1];
+
+                $catalogQuery->whereBetween('price', [$lowerLimit, $upperLimit]);
+            }
+        }
+
+        // SORT
+        if($request->sort){
+            $sortColumn = $request->sort;
+            $sortOrder = $request->order === 'desc' ? 'desc' : 'asc';
+            $catalogQuery->orderBy($sortColumn, $sortOrder);
+        } else {
+            $catalogQuery->orderBy('created_at', 'desc');
+        }
+
+        // PAGINATE
+        if($request->perPage){
+            $catalog = $catalogQuery->paginate($request->perPage);
+        } else {
+            $catalog = $catalogQuery->paginate(10);
+        }
 
         return response()->json([
             "message" => "Store catalogs fetched successfully.",

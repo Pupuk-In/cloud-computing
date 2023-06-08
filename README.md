@@ -323,14 +323,16 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     - GET
 - Header :
     - Accept: application/json
-- Parameters :
-    - filter[name] as string, partial query
-    - filter[type] as integer, exact query
-    - filter[plant] as integer, exact query
-    - filter[part] as integer, exact query
-    - filter[price] as integer, range of price, ex value =50000-90000
-    - sort as string, input should be 'name', 'price', 'created_at', add - for DESC order
-    - page as int, optional
+- Parameters : (Please use this as body request)
+    - search as string, partial query
+    - type as integer, exact query
+    - plant as integer, exact query
+    - part as integer, exact query
+    - price as integer, range of price, ex: price=5000-9000
+    - sort as string, input should be 'name', 'price', 'created_at'
+    - order as string, either 'desc' or 'asc', default 'desc' if not defined
+    - perPage as int, item shown per page, default 10 if not defined
+    - page as int, pagination page number, default 1 if not defined
 - Response :
 ```json 
 {
@@ -1342,12 +1344,12 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ## Read All Wishlisted Items (can be queried)
 
 - Endpoint :
-    - /wishlists
+    - /wishlists/index
 - Method :
-    - GET
+    - POST
 - Header :
     - Authorization: Bearer <access_token>
-- Parameters :
+- Parameters : (Please use this as body request)
     - search as string, partial query
     - type as integer, exact query
     - plant as integer, exact query
@@ -1670,7 +1672,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     - /search/items
 - Method :
     - POST
-- Parameters :
+- Parameters : (Please use this as body request)
     - search as string, partial query
     - type as integer, exact query
     - plant as integer, exact query
