@@ -55,7 +55,7 @@ class ImageController extends Controller
  
                 return response()->json([
                     "message" => "File uploaded successfully.",
-                    "file" => $file
+                    "file" => $file,
                 ], 200);
  
             } catch(Exception $e) {
@@ -67,7 +67,9 @@ class ImageController extends Controller
                     "test4" => $e->getCode(),
                     "test5" => $e->getPrevious(),
                     "test6" => $e->getTrace(),
-                    
+                    "hasFile" => $request->hasFile('picture'),
+                    "bucket" => $bucket,
+                    "filename" => $filenametostore
                 ], 404);
             }
         }
