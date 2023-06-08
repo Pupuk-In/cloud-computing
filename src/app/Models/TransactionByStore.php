@@ -32,6 +32,6 @@ class TransactionByStore extends Model
 
     public function transactionItem()
     {
-        return $this->hasMany(TransactionItem::class);
+        return $this->hasMany(TransactionItems::class);
     }
 }

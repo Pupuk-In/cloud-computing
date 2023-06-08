@@ -104,8 +104,17 @@ class TransactionController extends Controller
                 $cartItems->delete();
             }
 
+            $transaction = Transaction::where('id', $transaction->id)
+                ->with(
+                    'transactionByStore',
+                    'transactionByStore.store',
+                    'transactionByStore.transactionItem',
+                    'transactionByStore.transactionItem.item')
+                ->get();
+
             return response()->json([
                 'message' => 'Transaction success.',
+                'transaction' => $transaction,
                 // 'cart_item' => $cart->cartItem,
                 // 'profile_id' => $profile->id,
                 // 'request' => $request->all(),

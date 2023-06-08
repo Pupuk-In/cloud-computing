@@ -1674,6 +1674,111 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 <br>
 <br>
 
+# Transactions CRUD
+
+## New Transaction
+
+- Endpoint :
+    - /transactions
+- Method :
+    - POST
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json 
+{
+    "recipient_name": "string",
+    "recipient_phone": "string",
+    "recipient_address": "text",
+    "recipient_latitude": "double",
+    "recipient_longitude": "double",
+    "payment_method_id": "integer"
+}
+```
+- Response :
+```json 
+{
+    "message": "Transaction success.",
+    "transaction": [
+        {
+            "id": "integer",
+            "recipient_name": "string",
+            "recipient_phone": "string",
+            "recipient_address": "string",
+            "recipient_latitude": "double",
+            "recipient_longitude": "double",
+            "total": "integer",
+            "profile_id": "integer",
+            "payment_method_id": "integer",
+            "payment_status_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "transaction_by_store": [
+                {
+                    "id": "integer",
+                    "transaction_id": "integer",
+                    "store_id": "integer",
+                    "invoice": "string",
+                    "total": "integer",
+                    "transaction_status_id": "integer",
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                    "store": {
+                        "id": "integer",
+                        "name": "string",
+                        "picture": "string, url",
+                        "address": "text",
+                        "latitude": "double",
+                        "longitude": "double",
+                        "distance": "double",
+                        "description": "text",
+                        "rating": "float",
+                        "profile_id": "integer",
+                        "created_at": "datetime",
+                        "updated_at": "datetime"
+                    },
+                    "transaction_item": [
+                        {
+                            "id": "integer",
+                            "transaction_by_store_id": "integer",
+                            "item_id": "integer",
+                            "store_id": "integer",
+                            "quantity": "integer",
+                            "price": "integer",
+                            "subtotal": "integer",
+                            "created_at": "datetime",
+                            "updated_at": "datetime",
+                            "item": {
+                                "id": "integer",
+                                "name": "string",
+                                "description": "text",
+                                "type_id": "integer",
+                                "price": "integer",
+                                "stock": "integer",
+                                "sold": "integer",
+                                "rating": "float",
+                                "relevance": "text",
+                                "brand": "string",
+                                "store_id": "integer",
+                                "created_at": "datetime",
+                                "updated_at": "datetime",
+                                "deleted_at": "datetime"
+                            }
+                        }
+                    ]
+                },
+            ]
+        }
+    ]
+}
+```
+<br>
+
+
+<br>
+<br>
+
 # Search/Query Page
 
 ## Query Items with Filters

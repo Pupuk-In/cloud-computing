@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('recipient_name')->nullable();
             $table->string('recipient_phone')->nullable();
-            $table->string('recipient_address')->nullable();
+            $table->text('recipient_address')->nullable();
             $table->double('recipient_latitude')->nullable();
             $table->double('recipient_longitude')->nullable();
             $table->bigInteger('total')->nullable();
