@@ -323,16 +323,21 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     - GET
 - Header :
     - Accept: application/json
-- Parameters : (Please use this as body request)
-    - search as string, partial query
-    - type as integer, exact query
-    - plant as integer, exact query
-    - part as integer, exact query
-    - price as integer, range of price, ex: price=5000-9000
-    - sort as string, input should be 'name', 'price', 'created_at'
-    - order as string, either 'desc' or 'asc', default 'desc' if not defined
-    - perPage as int, item shown per page, default 10 if not defined
-    - page as int, pagination page number, default 1 if not defined
+- Body :
+```json 
+{
+    "store_id": "integer, should be filled, id of current store page",
+    "search": "string, partial query, will search for name OR plant name OR type name",
+    "type" : "integer, id of type",
+    "plant": "integer, id of plant",
+    "part": "integer, id of plant parts",
+    "price": "integer, range of price, ex: price=5000-9000",
+    "sort": "string, value should be either 'name' or 'price' or 'created_at'",
+    "order": "string, value should be either 'desc' or 'asc', if not defined then uses default 'desc'",
+    "perPage": "integer, items shown per page, if not defined then uses default 10",
+    "page": "integer, pagination page number, if not defined then uses default 1"
+}
+```
 - Response :
 ```json 
 {
@@ -1349,16 +1354,21 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     - POST
 - Header :
     - Authorization: Bearer <access_token>
-- Parameters : (Please use this as body request)
-    - search as string, partial query
-    - type as integer, exact query
-    - plant as integer, exact query
-    - part as integer, exact query
-    - price as integer, range of price, ex: price=5000-9000
-    - sort as string, input should be 'name', 'price', 'created_at'
-    - order as string, either 'desc' or 'asc', default 'desc' if not defined
-    - perPage as int, item shown per page, default 10 if not defined
-    - page as int, pagination page number, default 1 if not defined
+    - Accept: application/json
+- Body :
+```json 
+{
+    "search": "string, partial query, will search for name OR plant name OR type name",
+    "type" : "integer, id of type",
+    "plant": "integer, id of plant",
+    "part": "integer, id of plant parts",
+    "price": "integer, range of price, ex: price=5000-9000",
+    "sort": "string, value should be either 'name' or 'price' or 'created_at'",
+    "order": "string, value should be either 'desc' or 'asc', if not defined then uses default 'desc'",
+    "perPage": "integer, items shown per page, if not defined then uses default 10",
+    "page": "integer, pagination page number, if not defined then uses default 1"
+}
+```
 - Response :
 ```json 
 {
@@ -1672,16 +1682,22 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     - /search/items
 - Method :
     - POST
-- Parameters : (Please use this as body request)
-    - search as string, partial query
-    - type as integer, exact query
-    - plant as integer, exact query
-    - part as integer, exact query
-    - price as integer, range of price, ex: price=5000-9000
-    - sort as string, input should be 'name', 'price', 'created_at'
-    - order as string, either 'desc' or 'asc', default 'desc' if not defined
-    - perPage as int, item shown per page, default 10 if not defined
-    - page as int, pagination page number, default 1 if not defined
+- Header :
+    - Accept: application/json
+- Body :
+```json 
+{
+    "search": "string, partial query, will search for name OR plant name OR type name",
+    "type" : "integer, id of type",
+    "plant": "integer, id of plant",
+    "part": "integer, id of plant parts",
+    "price": "integer, range of price, ex: price=5000-9000",
+    "sort": "string, value should be either 'name' or 'price' or 'created_at'",
+    "order": "string, value should be either 'desc' or 'asc', if not defined then uses default 'desc'",
+    "perPage": "integer, items shown per page, if not defined then uses default 10",
+    "page": "integer, pagination page number, if not defined then uses default 1"
+}
+```
 - Response :
 ```json 
 {

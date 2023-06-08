@@ -28,6 +28,9 @@ class WishlistController extends Controller
             $wishlistQuery->where('name', 'LIKE', '%'.$request->search.'%')
                 ->orWhereHas('type', function($query) use($request){
                     $query->where('name', 'LIKE', '%'.$request->search.'%');
+                })
+                ->orWhereHas('plant', function($query) use($request){
+                    $query->where('name', 'LIKE', '%'.$request->search.'%');
                 });
         }
         // by relation type (exact)
