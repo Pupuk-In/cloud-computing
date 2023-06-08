@@ -40,7 +40,7 @@ return new class extends Migration
                         SELECT COALESCE(SUM(subtotal), 0)
                         FROM transaction_items
                         WHERE transaction_by_store_id = OLD.transaction_by_store_id
-                        GROUP BY store_id
+                        GROUP BY transaction_by_store_id
                     ),
                     updated_at = NOW()
                     WHERE store_id = OLD.store_id;
@@ -49,8 +49,8 @@ return new class extends Migration
                     SET total = (
                         SELECT COALESCE(SUM(subtotal), 0)
                         FROM transaction_items
-                        WHERE transaction_by_store_id = OLD.transaction_by_store_id
-                        GROUP BY store_id
+                        WHERE transaction_by_store_id = NEW.transaction_by_store_id
+                        GROUP BY transaction_by_store_id
                     ),
                     updated_at = NOW()
                     WHERE store_id = NEW.store_id;
@@ -61,26 +61,39 @@ return new class extends Migration
             $$ LANGUAGE plpgsql;
         ');
 
-        // DB::unprepared('
-        //     CREATE OR REPLACE FUNCTION update_cart_items_price()
-        //     RETURNS TRIGGER AS $$
-        //     BEGIN
-        //         UPDATE cart_items
-        //         SET price = NEW.quantity * (
-        //             SELECT price FROM items WHERE id = NEW.item_id
-        //         )
-        //         WHERE id = NEW.id;
+        DB::unprepared('
+            CREATE OR REPLACE FUNCTION update_transactions_total()
+            RETURNS TRIGGER AS $$
+            BEGIN
+                IF (TG_OP = \'INSERT\' OR TG_OP = \'UPDATE\' OR TG_OP = \'DELETE\') THEN
+                    UPDATE transactions
+                    SET total = (
+                        SELECT COALESCE(SUM(total), 0)
+                        FROM transaction_by_stores
+                        WHERE transaction_id = NEW.transaction_id
+                    )
+                    WHERE id = NEW.transaction_id;
+                END IF;
+                
+                RETURN NULL;
+            END;
+            $$ LANGUAGE plpgsql;
+        ');
 
-        //         RETURN NEW;
-        //     END;
-        //     $$ LANGUAGE plpgsql;
-        // ');
 
         DB::unprepared('
             CREATE TRIGGER transaction_items_update_trigger
             AFTER INSERT OR UPDATE OR DELETE ON transaction_items
             FOR EACH ROW
             EXECUTE FUNCTION update_transaction_total();
+        ');
+
+        DB::unprepared('
+            CREATE TRIGGER trigger_update_transactions_total
+            AFTER INSERT OR UPDATE OR DELETE
+            ON transaction_by_stores
+            FOR EACH ROW
+            EXECUTE FUNCTION update_transactions_total();
         ');
     }
 
@@ -93,8 +106,10 @@ return new class extends Migration
     {
         DB::unprepared('DROP TRIGGER IF EXISTS transaction_items_update_trigger ON transaction_items;');
         DB::unprepared('DROP TRIGGER IF EXISTS update_transaction_item_price_trigger ON transaction_items;');
+        DB::unprepared('DROP TRIGGER IF EXISTS trigger_update_transactions_total ON transaction_by_stores;');
         DB::unprepared('DROP FUNCTION IF EXISTS update_transaction_total();');
         DB::unprepared('DROP FUNCTION IF EXISTS update_transaction_item_price();');
+        DB::unprepared('DROP FUNCTION IF EXISTS update_transactions_total();');
         Schema::dropIfExists('transaction_items');
     }
 };

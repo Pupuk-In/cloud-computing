@@ -37,6 +37,7 @@ class TransactionController extends Controller
                 //     'cartItem.item.plantPart'
                     )
                 ->first();
+        
             
             $cartGroupByStore = Cart::where('carts.profile_id', $profile->id)
                 ->join('cart_items as cartItem', 'cartItem.cart_id', '=', 'carts.id')
@@ -78,29 +79,33 @@ class TransactionController extends Controller
                 $cartGrouped = new TransactionByStore([
                     'transaction_id' => $transaction->id,
                     'store_id' => $cartGrouped->store_id,
-                    'invoice' => 'INV/'.date('y-m-d').'/'.$cartGrouped->store_id.'/'.$transaction->id.'/'.mt_rand(1000, 9999)
+                    'invoice' => 'INV/'.date('ymd').'/'.$cartGrouped->store_id.'/'.$transaction->id.'/'.mt_rand(1000, 9999)
                 ]);
-
+                
                 $cartGrouped->save();
             }
 
-            foreach($cart->cartItem as $cartItem){
+            foreach($cart->cartItem as $cartItems){
                 $transactionItem = new TransactionItems([
-                    'transaction_by_store_id' => $cartItem->item->store_id,
-                    'item_id' => $cartItem->item_id,
-                    'store_id' => $cartItem->item->store_id,
-                    'quantity' => $cartItem->quantity,
-                    'price' => $cartItem->item->price,
-                    'subtotal' => $cartItem->item->price * $cartItem->quantity,
+                    'transaction_by_store_id' => TransactionByStore::where('transaction_id', $transaction->id)->where('store_id', $cartItems->item->store_id)->first()->id,
+                    'item_id' => $cartItems->item_id,
+                    'store_id' => $cartItems->item->store_id,
+                    'quantity' => $cartItems->quantity,
+                    'price' => $cartItems->item->price,
+                    'subtotal' => $cartItems->item->price * $cartItems->quantity,
                 ]);
 
                 $transactionItem->save();
             }
 
-            $cart->delete();
+            $cartItem = CartItem::where('cart_id', $cart->id)->get();
+            
+            foreach($cartItem as $cartItems){
+                $cartItems->delete();
+            }
 
             return response()->json([
-                'message' => 'success',
+                'message' => 'Transaction success.',
                 // 'cart_item' => $cart->cartItem,
                 // 'profile_id' => $profile->id,
                 // 'request' => $request->all(),
