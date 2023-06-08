@@ -12,7 +12,7 @@
 - [Stores CRUD](#store-crud)
     - [Create New Store](#create-new-store)
     - [Read Store Details](#read-store-details)
-    - [Read Store Catalogs](#read-store-catalogs)
+    - [Read Store Catalogs (Can be Queried)](#read-store-catalogs-can-be-queried)
     - [Update Store Details](#update-store-details)
 - [Home Page CRUD](#home-page-crud)
     - [Read 10 Random Types](#read-10-random-fertilizer-types)
@@ -31,13 +31,15 @@
     - [Delete Image](#delete-image)
 - [Wishlists CRUD](#wishlists-crud)
     - [Create New Item to Wishlist](#create-new-item-to-wishlist)
-    - [Read All Items on Wishlist](#read-all-wishlisted-items-can-be-queried)
+    - [Read All Items on Wishlist (Can be Queried)](#read-all-wishlisted-items-can-be-queried)
     - [Delete Item from Wishlist](#delete-item-from-wishlist)
 - [Carts CRUD](#carts-crud)
     - [Create new Item to Cart](#add-new-item-to-cart)
     - [Read All Items on Cart](#read-all-items-on-cart)
     - [Update Item from Cart](#update-item-from-cart)
     - [Delete item from Cart](#delete-item-from-cart)
+- [Transactions CRUD](#transactions-crud)
+    - [Create new Transaction](#new-transaction)
 - [Search Query](#searchquery-page)
 - [Types CRUD](#types-crud)
     - [Create New Type](#create-new-type)
@@ -315,7 +317,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 
 <br>
 
-## Read Store Catalogs
+## Read Store Catalogs (Can be Queried)
 
 - Endpoint :
     - /stores/:id/catalogs
@@ -1346,7 +1348,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```
 <br>
 
-## Read All Wishlisted Items (can be queried)
+## Read All Wishlisted Items (Can be Queried)
 
 - Endpoint :
     - /wishlists/index
