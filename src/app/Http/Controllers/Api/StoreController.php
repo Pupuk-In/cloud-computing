@@ -51,7 +51,7 @@ class StoreController extends Controller
         ], 200);
     }
 
-    public function showCatalog(Request $request)
+    public function indexCatalog(Request $request)
     {
         $store = Store::where('id', $request->store_id)->first();
 
@@ -67,30 +67,30 @@ class StoreController extends Controller
         // FILTER
         // by name (partial)
         if($request->search){
-            $catalogQuery->where('name', 'LIKE', '%'.$request->search.'%')
+            $catalogQuery->where('name', 'ILIKE', '%'.$request->search.'%')
                 ->orWhereHas('type', function($query) use($request){
-                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                    $query->where('types.name', 'ILIKE', '%'.$request->search.'%');
                 })
                 ->orWhereHas('plant', function($query) use($request){
-                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                    $query->where('types.name', 'ILIKE', '%'.$request->search.'%');
                 });
         }
         // by relation type (exact)
         if($request->type){
             $catalogQuery->whereHas('type', function($query) use($request){
-                $query->where('id', $request->type);
+                $query->where('types.id', $request->type);
             });
         }
         // by relation plant (exact)
         if($request->plant){
             $catalogQuery->whereHas('plant', function($query) use($request){
-                $query->where('id', $request->plant);
+                $query->where('plants.id', $request->plant);
             });
         }
         // by relation plant (exact)
         if($request->part){
             $catalogQuery->whereHas('plantPart', function($query) use($request){
-                $query->where('id', $request->part);
+                $query->where('plant_parts.id', $request->part);
             });
         }
         // by price (range)

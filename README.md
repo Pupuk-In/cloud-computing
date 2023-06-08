@@ -1363,7 +1363,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     "plant": "integer, id of plant",
     "part": "integer, id of plant parts",
     "price": "integer, range of price, ex: price=5000-9000",
-    "sort": "string, value should be either 'name' or 'price' or 'created_at'",
+    "sort": "string, value should be either 'name' or 'price' or 'date_added'",
     "order": "string, value should be either 'desc' or 'asc', if not defined then uses default 'desc'",
     "perPage": "integer, items shown per page, if not defined then uses default 10",
     "page": "integer, pagination page number, if not defined then uses default 1"

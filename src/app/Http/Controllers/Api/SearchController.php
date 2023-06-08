@@ -21,30 +21,30 @@ class SearchController extends Controller
         // FILTER
         // by name (partial)
         if($request->search){
-            $itemQuery->where('name', 'LIKE', '%'.$request->search.'%')
+            $itemQuery->where('name', 'ILIKE', '%'.$request->search.'%')
                 ->orWhereHas('type', function($query) use($request){
-                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                    $query->where('types.name', 'ILIKE', '%'.$request->search.'%');
                 })
                 ->orWhereHas('plant', function($query) use($request){
-                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                    $query->where('plants.name', 'ILIKE', '%'.$request->search.'%');
                 });
         }
         // by relation type (exact)
         if($request->type){
             $itemQuery->whereHas('type', function($query) use($request){
-                $query->where('id', $request->type);
+                $query->where('types.id', $request->type);
             });
         }
         // by relation plant (exact)
         if($request->plant){
             $itemQuery->whereHas('plant', function($query) use($request){
-                $query->where('id', $request->plant);
+                $query->where('plants.id', $request->plant);
             });
         }
         // by relation plant (exact)
         if($request->part){
             $itemQuery->whereHas('plantPart', function($query) use($request){
-                $query->where('id', $request->part);
+                $query->where('plant_parts.id', $request->part);
             });
         }
         // by price (range)

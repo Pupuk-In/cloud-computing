@@ -25,30 +25,30 @@ class WishlistController extends Controller
         // FILTER
         // by name (partial)
         if($request->search){
-            $wishlistQuery->where('name', 'LIKE', '%'.$request->search.'%')
+            $wishlistQuery->where('name', 'ILIKE', '%'.$request->search.'%')
                 ->orWhereHas('type', function($query) use($request){
-                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                    $query->where('types.name', 'ILIKE', '%'.$request->search.'%');
                 })
                 ->orWhereHas('plant', function($query) use($request){
-                    $query->where('name', 'LIKE', '%'.$request->search.'%');
+                    $query->where('plants.name', 'ILIKE', '%'.$request->search.'%');
                 });
         }
         // by relation type (exact)
         if($request->type){
             $wishlistQuery->whereHas('type', function($query) use($request){
-                $query->where('id', $request->type);
+                $query->where('types.id', $request->type);
             });
         }
         // by relation plant (exact)
         if($request->plant){
             $wishlistQuery->whereHas('plant', function($query) use($request){
-                $query->where('id', $request->plant);
+                $query->where('plants.id', $request->plant);
             });
         }
         // by relation plant (exact)
         if($request->part){
             $wishlistQuery->whereHas('plantPart', function($query) use($request){
-                $query->where('id', $request->part);
+                $query->where('plant_parts.id', $request->part);
             });
         }
         // by price (range)
