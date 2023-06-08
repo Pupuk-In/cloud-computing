@@ -1669,7 +1669,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 - Endpoint :
     - /search/items
 - Method :
-    - GET
+    - POST
 - Parameters :
     - search as string, partial query
     - type as integer, exact query

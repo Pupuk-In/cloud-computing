@@ -63,10 +63,6 @@ class ImageController extends Controller
                     "message" => $e->getMessage(),
                     "test1" => $e->getTraceAsString(),
                     "test2" => $e->getLine(),
-                    "test3" => $e->getFile(),
-                    "test4" => $e->getCode(),
-                    "test5" => $e->getPrevious(),
-                    "test6" => $e->getTrace(),
                     "hasFile" => $request->hasFile('picture'),
                     "bucket" => $bucket,
                     "filename" => $filenametostore

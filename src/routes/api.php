@@ -74,7 +74,7 @@ Route::namespace('Api')->group(function(){
     });
 
     Route::prefix('search')->group(function(){
-        Route::get('items', [SearchController::class, 'index']);
+        Route::post('items', [SearchController::class, 'index']);
         Route::get('items-sort', [SearchController::class, 'indexSort']);
     });
 

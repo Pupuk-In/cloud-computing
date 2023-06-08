@@ -82,8 +82,8 @@ class SearchController extends Controller
         }
 
         return response()->json([
-            'message' => 'Item fetched successfully.',
-            'item'    => $request->all(),
+            'message' => 'Item list fetched successfully.',
+            'item'    => $item
         ], 200);
     }
 
