@@ -20,6 +20,8 @@ class PaymentMethod extends Model
         'name',
         'description',
         'fee',
+        'created_at',
+        'updated_at'
     ];
 
     /**

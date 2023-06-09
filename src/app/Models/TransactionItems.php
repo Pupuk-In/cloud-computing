@@ -17,7 +17,9 @@ class TransactionItems extends Model
         'store_id',
         'quantity',
         'price',
-        'subtotal'
+        'subtotal',
+        'created_at',
+        'updated_at'
     ];
 
     public function transactionByStore()

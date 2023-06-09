@@ -17,6 +17,9 @@ use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use App\Models\ItemHistory;
+
+use function PHPUnit\Framework\isEmpty;
 
 class TransactionController extends Controller
 {
@@ -58,117 +61,123 @@ class TransactionController extends Controller
 
         $request->merge([
             'profile_id' => $profile->id,
-            'payment_status_id' => 1,
+            'payment_status_id' => 2,
         ]);
         
         DB::beginTransaction();
+
         try{
-            $transaction = DB::insert('INSERT INTO transactions (
-                recipient_name,
-                recipient_phone,
-                recipient_address,
-                recipient_latitude,
-                recipient_longitude,
-                profile_id,
-                payment_method_id,
-                payment_status_id)
-
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
-                $request->recipient_name,
-                $request->recipient_phone,
-                $request->recipient_address,
-                $request->recipient_latitude,
-                $request->recipient_longitude,
-                $request->profile_id,
-                $request->payment_method_id,
-                $request->payment_status_id,
-            ]);
-            $transactionI = DB::getPdo()->lastInsertId();
-        
-
-        // $transaction = new Transaction([
-        //     'recipient_name' => $request->recipient_name,
-        //     'recipient_phone' => $request->recipient_phone,
-        //     'recipient_address' => $request->recipient_address,
-        //     'recipient_latitude' => $request->recipient_latitude,
-        //     'recipient_longitude' => $request->recipient_longitude,
-        //     'profile_id' => $request->profile_id,
-        //     'payment_method_id' => $request->payment_method_id,
-        //     'payment_status_id' => $request->payment_status_id,
-        // ]);
-
-        // $transaction->save();
+            $transactionId = DB::table('transactions')->insertGetId([
+                'recipient_name' => $request->recipient_name,
+                'recipient_phone' => $request->recipient_phone,
+                'recipient_address' => $request->recipient_address,
+                'recipient_latitude' => $request->recipient_latitude,
+                'recipient_longitude' => $request->recipient_longitude,
+                'profile_id' => $request->profile_id,
+                'payment_method_id' => $request->payment_method_id,
+                'payment_status_id' => $request->payment_status_id,
+                'created_at' => date('Y-m-d H:i:sO', time()),
+                'updated_at' => date('Y-m-d H:i:sO', time())
+            ], 'id');
 
 
             foreach($cartGroupByStore as $cartGrouped) {
-                DB::insert('INSERT INTO transaction_by_stores (
-                    transaction_id,
-                    store_id,
-                    invoice)
-
-                    VALUES (?, ?, ?)', [
-                    $transaction->id,
-                    $cartGrouped->store_id,
-                    'INV/'.date('ymd').'/'.$cartGrouped->store_id.'/'.$transaction->id.'/'.mt_rand(1000, 9999)
-                ]);
-
-                // $cartGrouped = new TransactionByStore([
-                //     'transaction_id' => $transaction->id,
-                //     'store_id' => $cartGrouped->store_id,
-                //     'invoice' => 'INV/'.date('ymd').'/'.$cartGrouped->store_id.'/'.$transaction->id.'/'.mt_rand(1000, 9999)
-                // ]);
-                
-                // $cartGrouped->save();
+                $transactionByStoreId = DB::table('transaction_by_stores')->insertGetId([
+                    'transaction_id' => $transactionId,
+                    'store_id' => $cartGrouped->store_id,
+                    'invoice' => 'INV/'.date('ymd').'/'.$cartGrouped->store_id.'/'.$transactionId.'/'.mt_rand(1000, 9999),
+                    'transaction_status_id' => 1,
+                    'created_at' => date('Y-m-d H:i:sO', time()),
+                    'updated_at' => date('Y-m-d H:i:sO', time())
+                ], 'id');
             }
 
+            $cartItem = CartItem::where('cart_id', $cart->id)
+                ->with('item', 'item.picture', 'item.store', 'item.type', 'item.plant', 'item.plantPart')
+                ->get();
+
+            $ids = [];
             foreach($cart->cartItem as $cartItems){
-                DB::insert('INSERT INTO transaction_items (
-                    transaction_by_store_id,
-                    item_id,
-                    store_id,
-                    quantity,
-                    price,
-                    subtotal)
+                $transactionItemId = DB::table('transaction_items')->insertGetId([
+                    'transaction_by_store_id' => TransactionByStore::where('transaction_id', $transactionId)->where('store_id', $cartItems->item->store_id)->first()->id,
+                    'item_id' => $cartItems->item_id,
+                    'store_id' => $cartItems->item->store_id,
+                    'quantity' => $cartItems->quantity,
+                    'price' => $cartItems->item->price,
+                    'subtotal' => $cartItems->item->price * $cartItems->quantity,
+                    'created_at' => date('Y-m-d H:i:sO', time()),
+                    'updated_at' => date('Y-m-d H:i:sO', time())
+                ], 'id');
 
-                    VALUES (?, ?, ?, ?, ?, ?)', [
-                    TransactionByStore::where('transaction_id', $transaction->id)->where('store_id', $cartItems->item->store_id)->first()->id,
-                    $cartItems->item_id,
-                    $cartItems->item->store_id,
-                    $cartItems->quantity,
-                    $cartItems->item->price,
-                    $cartItems->item->price * $cartItems->quantity,
-                ]);
+                $ids[] = $transactionItemId;
+            }
 
-                // $transactionItem = new TransactionItems([
-                //     'transaction_by_store_id' => TransactionByStore::where('transaction_id', $transaction->id)->where('store_id', $cartItems->item->store_id)->first()->id,
-                //     'item_id' => $cartItems->item_id,
-                //     'store_id' => $cartItems->item->store_id,
-                //     'quantity' => $cartItems->quantity,
-                //     'price' => $cartItems->item->price,
-                //     'subtotal' => $cartItems->item->price * $cartItems->quantity,
-                // ]);
+            
 
-                // $transactionItem->save();
+            return response()->json([
+                    "message" => "Checkpoint 2.",
+                    "cart" => $cartItem
+                ], 400);
 
-                DB::commit();
-                
-                $cartItem = CartItem::where('cart_id', $cart->id)->get();
+            // $cartItem['item_history_id'] = $ids;
 
-                foreach($cartItem as $cartItems){
-                    $cartItems->delete();
+            foreach($cartItem as $cartItems){
+                $picture = [];
+                foreach($cartItems->item->picture as $cartItemPicture){
+                    $picture[] = $cartItemPicture->picture;
                 }
+                $picture = json_encode($picture);
 
+                $plant = [];
+                foreach($cartItems->item->plant as $cartItemPlant){
+                    $plant[] = $cartItemPlant->name;
+                }
+                $plant = json_encode($plant);
+
+                $plantPart = [];
+                foreach($cartItems->item->plantPart as $cartItemPlantPart){
+                    $plantPart[] = $cartItemPlantPart->name;
+                }
+                $plantPart = json_encode($plantPart);
+
+                $itemHistoryId = DB::table('item_histories')->insertGetId([
+                    // 'transaction_item_id'
+                    'name' => $cartItems->item->name,
+                    'picture' => $picture,
+                    'description' => $cartItems->item->description,
+                    'type' => $cartItems->item->type->name,
+                    'plant' => $plant,
+                    'plant_part' => $plantPart,
+                    'price' => $cartItems->item->price,
+                    'brand' => $cartItems->item->brand,
+                    'created_at' => date('Y-m-d H:i:sO', time()),
+                    'updated_at' => date('Y-m-d H:i:sO', time())
+                ], 'id');
+            }
+
+            foreach($cartItem as $cartItems){
+                $cartItems->delete();
+            }
+
+            $transaction = Transaction::where('id', $transactionId)
+                ->with('transactionByStore', 'transactionByStore.transactionItem', 'transactionByStore.transactionItem.item')
+                ->first();
+            
+            if($transaction->transactionByStore->isEmpty()){
+                DB::rollback();
 
                 return response()->json([
-                    'message' => 'Transaction success.',
-                    'transaction' => $transaction,
-                    // 'cart_item' => $cart->cartItem,
-                    // 'profile_id' => $profile->id,
-                    // 'request' => $request->all(),
-                    // 'transaction' => $transaction,
-                    // 'grouped by store' => $cartGroupByStore,
-                ], 200);
+                    "message" => "Cart is empty."
+                ], 400);
             }
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Transaction success.',
+                'transaction' => $cartItem
+            ], 200);
+
         } catch(Exception $e) {
             DB::rollback();
 
