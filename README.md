@@ -40,6 +40,9 @@
     - [Delete item from Cart](#delete-item-from-cart)
 - [Transactions CRUD](#transactions-crud)
     - [Create new Transaction](#new-transaction)
+    - [Read All Transaction Grouped by Status](#read-all-transaction-grouped-by-status)
+    - [Read Transaction Details](#read-transaction-details)
+    - [Update Transaction Status](#update-transaction-status)
 - [Search Query](#searchquery-page)
 - [Types CRUD](#types-crud)
     - [Create New Type](#create-new-type)
@@ -323,7 +326,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 - Endpoint :
     - /stores/:id/catalogs
 - Method :
-    - GET
+    - POST
 - Header :
     - Accept: application/json
 - Body :
@@ -1696,7 +1699,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     "recipient_address": "text",
     "recipient_latitude": "double",
     "recipient_longitude": "double",
-    "payment_method_id": "integer"
+    "payment_method_id": "integer, 1=COD, 2=Tf bank, 3=Kredit"
 }
 ```
 - Response :
@@ -1778,6 +1781,215 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```
 <br>
 
+## Read All Transaction Grouped by Status
+
+- Endpoint :
+    - /transactions/stores
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "message": "Transaction lists fetched successfully.",
+    "data": [
+        {
+            "status": "string",
+            "transactions": [
+                {
+                    "recipient_name": "string",
+                    "id": "integer",
+                    "transaction_id": "integer",
+                    "store_id": "integer",
+                    "invoice": "string",
+                    "total": "integer",
+                    "transaction_status_id": "integer",
+                    "created_at": "datetime",
+                    "updated_at": "datetime"
+                }
+            ]
+        }
+    ]
+}
+```
+<br>
+
+## Read Transaction Details
+
+- Endpoint :
+    - /transactions/stores/:id
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "message": "Transaction details fetched successfully.",
+    "data": {
+        "id": "integer",
+        "transaction_id": "integer",
+        "store_id": "integer",
+        "invoice": "string",
+        "total": "integer",
+        "transaction_status_id": "integer",
+        "created_at": "string",
+        "updated_at": "string",
+        "transaction_status": {
+            "id": "integer",
+            "name": "string",
+            "description": "text",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        },
+        "transaction": {
+            "id": "integer",
+            "recipient_name": "string",
+            "recipient_phone": "string",
+            "recipient_address": "string",
+            "recipient_latitude": "double",
+            "recipient_longitude": "double",
+            "total": "integer",
+            "profile_id": "integer",
+            "payment_method_id": "integer",
+            "payment_status_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "payment_method": {
+                "id": "integer",
+                "name": "string",
+                "description": "text",
+                "fee": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime"
+            }
+        },
+        "transaction_item": [
+            {
+                "id": "integer",
+                "transaction_by_store_id": "integer",
+                "item_id": "integer",
+                "store_id": "integer",
+                "quantity": "integer",
+                "price": "integer",
+                "subtotal": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "item_history": [
+                    {
+                        "id": "integer",
+                        "transaction_item_id": "integer",
+                        "name": "string",
+                        "picture": "array of string",
+                        "description": "text",
+                        "type": "string",
+                        "plant": "array of string",
+                        "plant_part": "array of string",
+                        "price": "string",
+                        "brand": "string",
+                        "created_at": "datetime",
+                        "updated_at": "datetime"
+                    }
+                ]
+            },
+        ]
+    }
+}
+```
+<br>
+
+## Update Transaction Status
+
+- Endpoint :
+    - /transactions/stores/:id
+- Method :
+    - PATCH
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Body :
+```json
+{
+    "transaction_status_id": "integer"
+}
+```
+- Response :
+```json 
+{
+    "message": "Transaction status updated successfully.",
+    "data": {
+        "id": "integer",
+        "transaction_id": "integer",
+        "store_id": "integer",
+        "invoice": "string",
+        "total": "integer",
+        "transaction_status_id": "integer",
+        "created_at": "string",
+        "updated_at": "string",
+        "transaction_status": {
+            "id": "integer",
+            "name": "string",
+            "description": "text",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        },
+        "transaction": {
+            "id": "integer",
+            "recipient_name": "string",
+            "recipient_phone": "string",
+            "recipient_address": "string",
+            "recipient_latitude": "double",
+            "recipient_longitude": "double",
+            "total": "integer",
+            "profile_id": "integer",
+            "payment_method_id": "integer",
+            "payment_status_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "payment_method": {
+                "id": "integer",
+                "name": "string",
+                "description": "text",
+                "fee": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime"
+            }
+        },
+        "transaction_item": [
+            {
+                "id": "integer",
+                "transaction_by_store_id": "integer",
+                "item_id": "integer",
+                "store_id": "integer",
+                "quantity": "integer",
+                "price": "integer",
+                "subtotal": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "item_history": [
+                    {
+                        "id": "integer",
+                        "transaction_item_id": "integer",
+                        "name": "string",
+                        "picture": "array of string",
+                        "description": "text",
+                        "type": "string",
+                        "plant": "array of string",
+                        "plant_part": "array of string",
+                        "price": "string",
+                        "brand": "string",
+                        "created_at": "datetime",
+                        "updated_at": "datetime"
+                    }
+                ]
+            },
+        ]
+    }
+}
+```
 
 <br>
 <br>

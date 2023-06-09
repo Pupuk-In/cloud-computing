@@ -36,4 +36,9 @@ class TransactionByStore extends Model
     {
         return $this->hasMany(TransactionItems::class);
     }
+
+    public function transactionStatus()
+    {
+        return $this->belongsTo(TransactionStatus::class);
+    }
 }

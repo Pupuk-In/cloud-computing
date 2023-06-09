@@ -30,6 +30,13 @@ class TransactionStatusSeeder extends Seeder
         ]);
 
         DB::table('transaction_statuses')->insert([
+            'name' => 'dibatalkan',
+            'description' => "bla bla bla",
+            'created_at' => date('Y-m-d H:i:sO', time()),
+            'updated_at' => date('Y-m-d H:i:sO', time())
+        ]);
+
+        DB::table('transaction_statuses')->insert([
             'name' => 'dikirim',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),

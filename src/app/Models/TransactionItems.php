@@ -32,6 +32,11 @@ class TransactionItems extends Model
         return $this->belongsTo(Item::class);
     }
 
+    public function itemHistory()
+    {
+        return $this->hasMany(ItemHistory::class, 'transaction_item_id');
+    }
+
     public function store()
     {
         return $this->belongsTo(Store::class);

@@ -96,7 +96,6 @@ class TransactionController extends Controller
                 ->with('item', 'item.picture', 'item.store', 'item.type', 'item.plant', 'item.plantPart')
                 ->get();
 
-            $ids = [];
             foreach($cart->cartItem as $cartItems){
                 $transactionItemId = DB::table('transaction_items')->insertGetId([
                     'transaction_by_store_id' => TransactionByStore::where('transaction_id', $transactionId)->where('store_id', $cartItems->item->store_id)->first()->id,
@@ -109,24 +108,11 @@ class TransactionController extends Controller
                     'updated_at' => date('Y-m-d H:i:sO', time())
                 ], 'id');
 
-                $ids[] = $transactionItemId;
-            }
-
-            
-
-            return response()->json([
-                    "message" => "Checkpoint 2.",
-                    "cart" => $cartItem
-                ], 400);
-
-            // $cartItem['item_history_id'] = $ids;
-
-            foreach($cartItem as $cartItems){
                 $picture = [];
                 foreach($cartItems->item->picture as $cartItemPicture){
                     $picture[] = $cartItemPicture->picture;
                 }
-                $picture = json_encode($picture);
+                $picture = json_encode($picture, JSON_UNESCAPED_SLASHES);
 
                 $plant = [];
                 foreach($cartItems->item->plant as $cartItemPlant){
@@ -141,7 +127,7 @@ class TransactionController extends Controller
                 $plantPart = json_encode($plantPart);
 
                 $itemHistoryId = DB::table('item_histories')->insertGetId([
-                    // 'transaction_item_id'
+                    'transaction_item_id' => $transactionItemId,
                     'name' => $cartItems->item->name,
                     'picture' => $picture,
                     'description' => $cartItems->item->description,
@@ -155,12 +141,8 @@ class TransactionController extends Controller
                 ], 'id');
             }
 
-            foreach($cartItem as $cartItems){
-                $cartItems->delete();
-            }
-
             $transaction = Transaction::where('id', $transactionId)
-                ->with('transactionByStore', 'transactionByStore.transactionItem', 'transactionByStore.transactionItem.item')
+                ->with('transactionByStore', 'transactionByStore.store','transactionByStore.transactionItem', 'transactionByStore.transactionItem.item')
                 ->first();
             
             if($transaction->transactionByStore->isEmpty()){
@@ -173,9 +155,13 @@ class TransactionController extends Controller
 
             DB::commit();
 
+            foreach($cartItem as $cartItems){
+                $cartItems->delete();
+            }
+
             return response()->json([
                 'message' => 'Transaction success.',
-                'transaction' => $cartItem
+                'transaction' => $transaction
             ], 200);
 
         } catch(Exception $e) {
@@ -185,6 +171,21 @@ class TransactionController extends Controller
                 "message" => $e->getMessage()
             ], 400);
         }
+    }
 
+    public function index()
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $transaction = Transaction::where('profile_id', $profile->id)
+            ->with('transactionByStore', 'transactionByStore.store','transactionByStore.transactionItem', 'transactionByStore.transactionItem.item')
+            ->get();
+
+        return response()->json([
+            'message' => 'Transaction success.',
+            'transaction' => $transaction
+        ], 200);
     }
 }

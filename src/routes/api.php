@@ -15,8 +15,8 @@ use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\WishlistController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\StoreOwnerController;
 use App\Http\Controllers\Api\TransactionController;
-use Spatie\QueryBuilder\QueryBuilderMiddleware;
 
 
 /*
@@ -93,6 +93,9 @@ Route::namespace('Api')->group(function(){
 
     Route::prefix('transactions')->group(function(){
         Route::post('', [TransactionController::class, 'store'])->middleware('auth:sanctum');
+        Route::get('stores', [StoreOwnerController::class, 'indexTransaction'])->middleware('auth:sanctum');
+        Route::get('stores/{id}', [StoreOwnerController::class, 'showTransactionDetails'])->middleware('auth:sanctum');
+        Route::patch('stores/{id}', [StoreOwnerController::class, 'updateTransactionStatus'])->middleware('auth:sanctum');
     });
 
     Route::prefix('types')->group(function(){

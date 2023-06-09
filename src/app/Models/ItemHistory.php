@@ -32,6 +32,6 @@ class ItemHistory extends Model
 
     public function transactionItem()
     {
-        return $this->belongsTo(TransactionItems::class);
+        return $this->belongsToMany(TransactionItems::class);
     }
 }

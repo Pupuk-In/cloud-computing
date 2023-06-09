@@ -18,14 +18,11 @@ class CartController extends Controller
 
         $profile = Profile::where('user_id', $user->id)->first();
 
-        $cart = Cart::where('profile_id', $profile->id)->first();
-
-        $cartItem = CartItem::where('cart_id', $cart->id)
-            ->with('item', 'item.picture', 'item.store', 'item.type', 'item.plant', 'item.plantPart')
-            ->orderBy('id', 'desc')
-            ->get();
-
-        $cart['cart_item'] = $cartItem;
+        $cart = Cart::where('profile_id', $profile->id)
+            ->with(['cartItem' => function ($query) {
+                $query->orderBy('id', 'desc');
+            },'cartItem.item', 'cartItem.item.picture', 'cartItem.item.store', 'cartItem.item.type', 'cartItem.item.plant', 'cartItem.item.plantPart'])
+            ->first();
 
         return response()->json([
             "message" => "Cart items fetched successfully.",
