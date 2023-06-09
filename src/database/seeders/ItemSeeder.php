@@ -110,7 +110,7 @@ class ItemSeeder extends Seeder
             );
 
             $description = "";
-            for ($i = 0; $i < 40; $i++) {
+            for ($i = 0; $i < 10; $i++) {
                 $randomWord = $words[array_rand($words)];
                 $description .= $randomWord . " ";
             }

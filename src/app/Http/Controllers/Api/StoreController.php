@@ -67,13 +67,19 @@ class StoreController extends Controller
         // FILTER
         // by name (partial)
         if($request->search){
-            $catalogQuery->where('name', 'ILIKE', '%'.$request->search.'%')
-                ->orWhereHas('type', function($query) use($request){
-                    $query->where('types.name', 'ILIKE', '%'.$request->search.'%');
-                })
-                ->orWhereHas('plant', function($query) use($request){
-                    $query->where('types.name', 'ILIKE', '%'.$request->search.'%');
-                });
+            $words = explode(' ', $request->search);
+            $catalogQuery->where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('name', 'ILIKE', '%'.$word.'%')
+                        ->orWhere('description', 'ILIKE', '%' . $word . '%')
+                        ->orWhereHas('type', function($query) use($word){
+                            $query->where('types.name', 'ILIKE', '%'.$word.'%');
+                        })
+                        ->orWhereHas('plant', function($query) use($word){
+                            $query->where('plants.name', 'ILIKE', '%'.$word.'%');
+                        });
+                }
+            });
         }
         // by relation type (exact)
         if($request->type){

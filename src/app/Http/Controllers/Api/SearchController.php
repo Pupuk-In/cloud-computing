@@ -21,13 +21,19 @@ class SearchController extends Controller
         // FILTER
         // by name (partial)
         if($request->search){
-            $itemQuery->where('name', 'ILIKE', '%'.$request->search.'%')
-                ->orWhereHas('type', function($query) use($request){
-                    $query->where('types.name', 'ILIKE', '%'.$request->search.'%');
-                })
-                ->orWhereHas('plant', function($query) use($request){
-                    $query->where('plants.name', 'ILIKE', '%'.$request->search.'%');
-                });
+            $words = explode(' ', $request->search);
+            $itemQuery->where(function ($query) use ($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('name', 'ILIKE', '%'.$word.'%')
+                        ->orWhere('description', 'ILIKE', '%' . $word . '%')
+                        ->orWhereHas('type', function($query) use($word){
+                            $query->where('types.name', 'ILIKE', '%'.$word.'%');
+                        })
+                        ->orWhereHas('plant', function($query) use($word){
+                            $query->where('plants.name', 'ILIKE', '%'.$word.'%');
+                        });
+                }
+            });
         }
         // by relation type (exact)
         if($request->type){
@@ -80,13 +86,15 @@ class SearchController extends Controller
         if ($item->isEmpty()) {
             return response()->json([
                 'message' => 'Item list is empty.',
-                'item'    => $item
+                'item'    => $item,
+                'search' => $words
             ], 200);
         }
 
         return response()->json([
             'message' => 'Item list fetched successfully.',
-            'item'    => $item
+            'item'    => $item,
+            'search' => $words
         ], 200);
     }
 
@@ -98,6 +106,86 @@ class SearchController extends Controller
             ->selectRaw('6371 * acos(cos(radians(37)) * cos(radians(stores.latitude)) * cos(radians(stores.longitude) - radians(-122)) + sin(radians(37)) * sin(radians(stores.latitude))) AS distance')
             ->orderBy('distance')
             ->get();
+
+        if ($item->isEmpty()) {
+            return response()->json([
+                'message' => 'Item list is empty.',
+                'item'    => $item
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Item list fetched successfully.',
+            'item'    => $item
+        ], 200);
+    }
+
+    public function indexTest(Request $request)
+    {
+        $itemQuery = Item::with('picture', 'store', 'type', 'plant', 'plantPart');
+
+        // FILTER
+        // by name (partial)
+        if($request->search){
+
+            $words = explode(' ', $request->search);
+            foreach ($words as $word) {
+                $itemQuery->orWhere('description', 'ILIKE', '%'.$word.'%');
+            }
+                // ->orWhereHas('type', function($query) use($request){
+                //     $query->where('types.name', 'ILIKE', '%'.$request->search.'%');
+                // })
+                // ->orWhereHas('plant', function($query) use($request){
+                //     $query->where('plants.name', 'ILIKE', '%'.$request->search.'%');
+                // });
+        }
+        // by relation type (exact)
+        if($request->type){
+            $itemQuery->whereHas('type', function($query) use($request){
+                $query->where('types.id', $request->type);
+            });
+        }
+        // by relation plant (exact)
+        if($request->plant){
+            $itemQuery->whereHas('plant', function($query) use($request){
+                $query->where('plants.id', $request->plant);
+            });
+        }
+        // by relation plant (exact)
+        if($request->part){
+            $itemQuery->whereHas('plantPart', function($query) use($request){
+                $query->where('plant_parts.id', $request->part);
+            });
+        }
+        // by price (range)
+        if ($request->input('price')) {
+            $priceRange = explode('-', $request->input('price'));
+
+            if (count($priceRange) === 2) {
+                $lowerLimit = $priceRange[0];
+                $upperLimit = $priceRange[1];
+
+                $itemQuery->whereBetween('price', [$lowerLimit, $upperLimit]);
+            }
+        }
+
+        // SORT
+        if($request->sort){
+            $sortColumn = $request->sort;
+            $sortOrder = $request->order === 'desc' ? 'desc' : 'asc';
+            $itemQuery->orderBy($sortColumn, $sortOrder);
+        } else {
+            $itemQuery->orderBy('created_at', 'desc');
+        }
+
+        // PAGINATE
+        if($request->perPage){
+            $item = $itemQuery->paginate($request->perPage);
+        } else {
+            $item = $itemQuery->paginate(10);
+        }
+
+
 
         if ($item->isEmpty()) {
             return response()->json([
