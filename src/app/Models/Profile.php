@@ -16,13 +16,15 @@ class Profile extends Model
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'picture',
         'birth_date',
-        'age',
-        'address',
         'phone_number',
+        'address',
+        'latitude',
+        'longitude',
         'user_id',
     ];
 

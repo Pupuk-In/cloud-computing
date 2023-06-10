@@ -7,17 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Profile;
-use App\Models\Item;
 use App\Models\Transaction;
 use App\Models\TransactionByStore;
-use App\Models\TransactionItems;
-use App\Models\TransactionStatus;
-use App\Models\PaymentMethod;
-use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use App\Models\ItemHistory;
+
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -65,7 +60,6 @@ class TransactionController extends Controller
         ]);
         
         DB::beginTransaction();
-
         try{
             $transactionId = DB::table('transactions')->insertGetId([
                 'recipient_name' => $request->recipient_name,

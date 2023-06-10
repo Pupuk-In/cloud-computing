@@ -11,6 +11,8 @@ use App\Models\ItemPlant;
 use App\Models\ItemPlantPart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ItemController extends Controller
 {
@@ -141,8 +143,8 @@ class ItemController extends Controller
             'stock' => 'integer|required',
             'relevance' => 'string',
             'brand' => 'string',
-            'plant_id' => 'array|required',
-            'plant_part_id' => 'array|required',
+            'plant_id' => 'array',
+            'plant_part_id' => 'array',
         ]);
 
         $request['store_id'] = $store->id;
@@ -155,27 +157,45 @@ class ItemController extends Controller
             'store_id' => 'integer'
         ]);
 
+        // DB::beginTransaction();
+        // try{
+            
+
+        // } catch(Exception $e) {
+        //     DB::rollback();
+
+        //     return response()->json([
+        //         "message" => $e->getMessage()
+        //     ], 400);
+        // }
+        
         $item = Item::create($request->all());
 
-        foreach($request->picture as $picture){
-            ItemPicture::create([
-                'item_id' => $item->id,
-                'picture' => $picture,
-            ]);
+        if($request->picture != null){
+            foreach($request->picture as $picture){
+                ItemPicture::create([
+                    'item_id' => $item->id,
+                    'picture' => $picture,
+                ]);
+            }
         }
 
-        foreach($request->plant_id as $plant_id){
-            ItemPlant::create([
-                'item_id' => $item->id,
-                'plant_id' => $plant_id,
-            ]);
+        if($request->plant_id !=null){
+            foreach($request->plant_id as $plant_id){
+                ItemPlant::create([
+                    'item_id' => $item->id,
+                    'plant_id' => $plant_id,
+                ]);
+            }
         }
-
-        foreach($request->plant_part_id as $plant_part_id){
-            ItemPlantPart::create([
-                'item_id' => $item->id,
-                'plant_part_id' => $plant_part_id,
-            ]);
+        
+        if($request->plant_part_id !=null){
+            foreach($request->plant_part_id as $plant_part_id){
+                ItemPlantPart::create([
+                    'item_id' => $item->id,
+                    'plant_part_id' => $plant_part_id,
+                ]);
+            }
         }
 
         $item = Item::with('picture', 'store', 'type', 'plant', 'plantPart')->find($item->id);
