@@ -17,7 +17,7 @@ class WishlistController extends Controller
 
         $profile = Profile::where('user_id', $user->id)->first();
 
-        $wishlistQuery = Wishlist::join('wishlists', 'items.id', '=', 'wishlists.item_id')
+        $wishlistQuery = Item::join('wishlists', 'items.id', '=', 'wishlists.item_id')
             ->where('profile_id', $profile->id)
             ->select('items.*', 'wishlists.created_at as date_added')
             ->with('picture', 'store', 'type', 'plant', 'plantPart');
@@ -112,7 +112,7 @@ class WishlistController extends Controller
         
         $request->validate([
             'profile_id' => 'required',
-            'item_id' => 'required|unique:wishlists,item_id',
+            'item_id' => 'required|unique:wishlists,item_id,NULL,id,profile_id,' . $profile->id,
         ]);
 
         $wishlist = Wishlist::create($request->all());
