@@ -47,10 +47,11 @@ class CartController extends Controller
 
         $request->validate([
             'cart_id' => 'required',
-            'item_id' => 'required',
+            'item_id' => 'required|unique:cart_items,item_id,NULL,id,cart_id,' . $cart->id,
             'quantity' => 'required',
             'price' => 'required'
         ]);
+
 
         // $cartItem = new CartItem([
         //     'cart_id' => $request->cart_id,
