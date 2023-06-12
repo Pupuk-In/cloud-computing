@@ -14,9 +14,6 @@
     - [Read Store Details](#read-store-details)
     - [Read Store Catalogs (Can be Queried)](#read-store-catalogs-can-be-queried)
     - [Update Store Details](#update-store-details)
-- [Home Page CRUD](#home-page-crud)
-    - [Read 10 Random Types](#read-10-random-fertilizer-types)
-    - [Read 5 Random Plants](#read-5-random-plants)
 - [Items CRUD](#items-crud)
     - [Create New Item](#create-new-items)
     - [Read All Active Items](#read-all-active-items)
@@ -44,6 +41,10 @@
     - [Read Transaction Details](#read-transaction-details)
     - [Update Transaction Status](#update-transaction-status)
 - [Search Query](#searchquery-page)
+- [Custom CRUDS](#custom-crud)
+    - [Read 10 Random Types](#read-10-random-fertilizer-types)
+    - [Read 5 Random Plants](#read-5-random-plants)
+    - [Store Owner - Read 2 Latest Items and 2 Latest Unconfirmed Transaction](#store-owner---read-2-latest-items-and-2-latest-unconfirmed-transaction)
 - [Types CRUD](#types-crud)
     - [Create New Type](#create-new-type)
     - [Read All Types](#read-all-types)
@@ -291,6 +292,7 @@
 ```
 <br>
 
+
 ## Read Store Details
 
 - Endpoint :
@@ -497,52 +499,6 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 <br>
 <br>
 
-# Home Page CRUD
-
-## Read 10 Random Fertilizer Types
-
-- Endpoint :
-    - /home/types
-- Method :
-    - GET
-- Response :
-```json 
-{
-    "message" : "Fertilizer types fetched successfully.",
-    "type" : 
-    {
-        "id" : "integer",
-        "name" : "string",
-        "picture" : "string, URL",
-        "created_at": "datetime",
-        "updated_at": "datetime"
-    }
-}
-```
-<br>
-
-## Read 5 Random Plants
-
-- Endpoint :
-    - /plants
-- Method :
-    - GET
-- Response :
-```json 
-{
-    "message" : "Plants fetched successfully.",
-    "plants" : 
-    {
-        "id" : "integer",
-        "name" : "string",
-        "picture" : "string, URL",
-        "soils_id" : "integer"
-    }
-}
-```
-
-<br>
-<br>
 
 # Items CRUD
 
@@ -2116,6 +2072,107 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 
 <br>
 <br>
+
+
+# Custom CRUD
+
+## Home Page - Read 10 Random Fertilizer Types
+
+- Endpoint :
+    - /home/types
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message" : "Fertilizer types fetched successfully.",
+    "type" : [
+        {
+            "id" : "integer",
+            "name" : "string",
+            "picture" : "string, URL",
+            "created_at": "datetime",
+            "updated_at": "datetime"
+        }
+    ]
+}
+```
+<br>
+
+## Home Page - Read 5 Random Plants
+
+- Endpoint :
+    - /plants
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message" : "Plants fetched successfully.",
+    "plants" : [
+        {
+            "id" : "integer",
+            "name" : "string",
+            "picture" : "string, URL",
+            "soils_id" : "integer"
+        }
+    ]
+}
+```
+<br>
+
+## Store Owner - Read 2 Latest Items and 2 Latest Unconfirmed Transaction
+
+- Endpoint :
+    - /stores/dashboard/items-transactions
+- Method :
+    - GET
+- Response :
+```json 
+{
+    "message": "Latest items and transaction lists fetched successfully.",
+    "transaction": [
+        {
+            "status": "string",
+            "transactions": [
+                {
+                    "recipient_name": "string",
+                    "id": "integer",
+                    "transaction_id": "integer",
+                    "store_id": "integer",
+                    "invoice": "string",
+                    "total": "integer",
+                    "transaction_status_id": "integer",
+                    "created_at": "datetime",
+                    "updated_at": "datetime"
+                }
+            ]
+        }
+    ],
+    "item": [
+        {
+            "id": "integer",
+            "name": "string",
+            "description": "text",
+            "type_id": "integer",
+            "price": "integer",
+            "stock": "integer",
+            "sold": "integer",
+            "rating": "float",
+            "relevance": "text",
+            "brand": "string",
+            "store_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "deleted_at": "datetime"
+        },
+    ]
+}
+```
+
+<br>
+<br>
+
 
 # Types CRUD
 

@@ -48,7 +48,45 @@ class StoreOwnerController extends Controller
 
         return response()->json([
             'message' => 'Transaction lists fetched successfully.',
-            'data' => $allTransaction
+            'transaction' => $allTransaction
+        ], 200);
+    }
+
+    public function indexItemsTransactions()
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $store = Store::where('profile_id', $profile->id)->first();
+
+        $transactionGrouped = Transaction::join('transaction_by_stores as transactionByStore', 'transactionByStore.transaction_id', '=', 'transactions.id')
+            ->join('transaction_statuses as transactionStatus', 'transactionStatus.id', '=', 'transactionByStore.transaction_status_id')
+            ->where('transactionStatus.id', '=', 1)
+            ->groupBy('transactionStatus.id')
+            ->select('transactionStatus.name as status')
+            ->orderBy('transactionStatus.id', 'asc')
+            ->get();
+
+        $allTransaction = [];
+        foreach($transactionGrouped as $transaction) {
+            $transaction->transactions = Transaction::join('transaction_by_stores as transactionByStore', 'transactionByStore.transaction_id', '=', 'transactions.id')
+                ->join('transaction_statuses as transactionStatus', 'transactionStatus.id', '=', 'transactionByStore.transaction_status_id')
+                ->select('recipient_name', 'transactionByStore.*')
+                ->where('transactionByStore.store_id', $store->id)
+                ->where('transactionStatus.name', $transaction->status)
+                ->orderBy('transactionByStore.id', 'desc')
+                ->get();
+            
+            array_push($allTransaction, $transaction);
+        }
+
+        $item = Item::where('store_id', $store->id)->latest()->limit(2)->get();
+
+        return response()->json([
+            'message' => 'Latest items and transaction lists fetched successfully.',
+            'transaction' => $allTransaction,
+            'item' => $item
         ], 200);
     }
 
@@ -69,7 +107,7 @@ class StoreOwnerController extends Controller
 
         return response()->json([
             'message' => 'Transaction details fetched successfully.',
-            'data' => $transactionByStore
+            'transaction' => $transactionByStore
         ], 200);
     }
 
@@ -97,7 +135,7 @@ class StoreOwnerController extends Controller
 
         return response()->json([
             'message' => 'Transaction status updated successfully.',
-            'data' => $transactionByStore
+            'transaction' => $transactionByStore
         ], 200);
     }
 }

@@ -56,5 +56,12 @@ class TransactionStatusSeeder extends Seeder
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
+
+        DB::table('transaction_statuses')->insert([
+            'name' => 'selesai',
+            'description' => "bla bla bla",
+            'created_at' => date('Y-m-d H:i:sO', time()),
+            'updated_at' => date('Y-m-d H:i:sO', time())
+        ]);
     }
 }
