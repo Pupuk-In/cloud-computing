@@ -1762,7 +1762,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```json 
 {
     "message": "Transaction lists fetched successfully.",
-    "data": [
+    "transaction": [
         {
             "status": "string",
             "transactions": [
@@ -1797,7 +1797,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```json 
 {
     "message": "Transaction details fetched successfully.",
-    "data": {
+    "transaction": {
         "id": "integer",
         "transaction_id": "integer",
         "store_id": "integer",
@@ -1888,7 +1888,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```json 
 {
     "message": "Transaction status updated successfully.",
-    "data": {
+    "transaction": {
         "id": "integer",
         "transaction_id": "integer",
         "store_id": "integer",
