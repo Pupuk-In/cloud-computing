@@ -1,6 +1,15 @@
 # API Spec
 
-# Lists
+## APIs List
+- API production:
+https://pupukin-prod-l6hx3dk4bq-et.a.run.app/api
+- API development:
+https://auth-api-ocgnabibnq-et.a.run.app/api
+- API development ML:
+https://pupukin-dev-ml-ocgnabibnq-et.a.run.app/api
+
+
+# Endpoint Lists
 - [Authentication](#authentication)
     - [Register](#register)
     - [Login](#login)
@@ -65,6 +74,9 @@
     - [Read All Soils](#read-all-soils)
     - [Update Soil](#update-soil)
     - [Delete Soil](#delete-soil)
+
+# Machine Learning Apis
+- [Nutrient Deficiency Prediction](#nutrient-deficiency-prediction)
 
 <br>
 <br>
@@ -2173,7 +2185,6 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 <br>
 <br>
 
-
 # Types CRUD
 
 ## Create New Type
@@ -2608,5 +2619,34 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```json 
 {
     "message": "Soil deleted successfully."
+}
+```
+<br>
+<br>
+
+# Machine Learning Apis
+
+## Nutrient Deficiency Prediction
+
+- Api :
+    - https://nutrient-deficiency-ml-l6hx3dk4bq-et.a.run.app
+- Endpoint :
+    - /predict
+- Method :
+    - POST
+- Header :
+    - Accept : Application/JSON
+- Body :
+```json 
+{
+    "file": "file"
+}
+```
+- Response :
+```json 
+{
+    "class": "string",
+    "confidence": "double",
+    "description": "string"
 }
 ```
