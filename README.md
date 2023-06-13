@@ -3,6 +3,8 @@
 ## Database Design
 ![ERD](https://github.com/Pupuk-In/cloud-computing/assets/87064650/161575ff-16c9-4e9e-8a23-a501b6f37dc5)
 
+<br>
+
 ## Steps to produce
 
 ### Clone the repository
@@ -28,8 +30,11 @@ Clone the repository from <a href="https://github.com/Pupuk-In/cloud-computing.g
 - Setup your cloud run environment with continuous build from <a href="https://cloud.google.com/build" target="_blank">Cloud Build</a> using <a href="https://cloud.google.com/build/docs/triggers" target="_blank">Triggers</a>, which will be run when a push is done to your repository
 - Don't forget to set your Environment Variables and disclose your Secret Environment Variables using <a href="https://cloud.google.com/secret-manager" target="_blank">Secret Manager</a>
 
-## Setup ML Model Deployment using Cloud Run CI/CD
+### Setup ML Model Deployment using Cloud Run CI/CD
 - Setup your cloud run environment with continuous build from <a href="https://cloud.google.com/build" target="_blank">Cloud Build</a> using <a href="https://cloud.google.com/build/docs/triggers" target="_blank">Triggers</a>, which will be run when a push is done to your repository
+
+<br>
+<br>
 
 # API Specification Documentation
 for our API Specification list, <a href="https://github.com/Pupuk-In/cloud-computing.git" target="_blank">click here</a>
