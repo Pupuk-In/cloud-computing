@@ -91,6 +91,29 @@ class WishlistController extends Controller
         ], 200);
     }
 
+    public function show(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $item = Item::where('id', $id)->first();
+
+        $wishlist = Wishlist::where('profile_id', $profile->id)->where('item_id', $item->id)->first();
+
+        if(!$wishlist){
+            return response()->json([
+                "message" => "Item has not been wishlisted.",
+                "wishlist" => false
+            ], 404);
+        }
+
+        return response()->json([
+            "message" => "Item has already been wishlisted.",
+            "wishlist" => true
+        ], 200);
+    }
+
     public function store(Request $request)
     {
         $user = Auth::user();

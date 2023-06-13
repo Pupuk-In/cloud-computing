@@ -84,6 +84,7 @@ Route::namespace('Api')->group(function(){
         Route::post('index', [WishlistController::class, 'index'])->middleware('auth:sanctum');
         Route::post('', [WishlistController::class, 'store'])->middleware('auth:sanctum');
         Route::delete('{id}', [WishlistController::class, 'destroy'])->middleware('auth:sanctum');
+        Route::get('items/{id}', [WishlistController::class, 'show'])->middleware('auth:sanctum');
     });
 
     Route::prefix('carts')->group(function(){

@@ -38,6 +38,7 @@ https://pupukin-dev-ml-ocgnabibnq-et.a.run.app/api
 - [Wishlists CRUD](#wishlists-crud)
     - [Create New Item to Wishlist](#create-new-item-to-wishlist)
     - [Read All Items on Wishlist (Can be Queried)](#read-all-wishlisted-items-can-be-queried)
+    - [Read Checks Current Item (Wishlisted or Not)](#read-checks-current-item-wishlisted-or-not)
     - [Delete Item from Wishlist](#delete-item-from-wishlist)
 - [Carts CRUD](#carts-crud)
     - [Create new Item to Cart](#add-new-item-to-cart)
@@ -1436,6 +1437,25 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     }
 }
 ```
+<br>
+
+## Read Checks Current Item (wishlisted or not)
+
+- Endpoint :
+    - /wishlists/items/:id
+- Method :
+    - GET
+- Header :
+    - Authorization: Bearer <access_token>
+    - Accept: application/json
+- Response :
+```json 
+{
+    "message": "Item has already been wishlisted.",
+    "wishlist": "boolean"
+}
+```
+
 <br>
 
 ## Delete Item from Wishlist

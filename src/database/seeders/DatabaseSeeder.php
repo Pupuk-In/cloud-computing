@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProfileSeeder::class,
             StoreSeeder::class,
+            CartSeeder::class,
+            PaymentMethodSeeder::class,
+            PaymentStatus::class,
+            TransactionStatusSeeder::class,
+
             SoilSeeder::class,
             PlantSeeder::class,
             TypeSeeder::class,
@@ -28,12 +33,8 @@ class DatabaseSeeder extends Seeder
             PivotPlantSoil::class,
             PivotItemPlant::class,
             PivotItemPlantPart::class,
-            WishlistSeeder::class,
+            // WishlistSeeder::class,
             ItemPicture::class,
-            CartSeeder::class,
-            PaymentMethodSeeder::class,
-            PaymentStatus::class,
-            TransactionStatusSeeder::class,
         ]);
     }
 }
