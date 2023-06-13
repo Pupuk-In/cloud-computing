@@ -5,15 +5,15 @@
 
 <br>
 
-## Steps to produce
+# Steps to produce
 
 ### Clone the repository
-Clone the repository from <a href="https://github.com/Pupuk-In/cloud-computing.git" target="_blank">here</a>
+Clone the repository from [here](https://github.com/Pupuk-In/cloud-computing.git)
 
 ### Setup your Google Cloud SQL and Cloud Storage
-- Configure your <a href="https://cloud.google.com/sql" target="_blank">Cloud SQL</a> to use PostgreSQL
-- Configure your <a href="https://cloud.google.com/storage" target="_blank">Cloud Storage</a> to standard storage
-- Make a service account to interact with your <a href="https://cloud.google.com/storage" target="_blank">Cloud Storage</a>, then make a key in the form of a JSON
+- Configure your [Cloud SQL](https://cloud.google.com/sql) to use PostgreSQL
+- Configure your [Cloud Storage](https://cloud.google.com/storage) to standard storage
+- Make a [Service Account](https://cloud.google.com/iam/docs/service-account-overview) to interact with your [Cloud Storage](https://cloud.google.com/storage), then make a key in the form of a JSON
 
 ### Setup your Cloned Laravel Project
 - Go to your cloned repository directory
@@ -27,14 +27,15 @@ Clone the repository from <a href="https://github.com/Pupuk-In/cloud-computing.g
 - Finally, do `php artisan serve` to make your project locally live
 
 ### Setup your deployment using Cloud Run CI/CD
-- Setup your cloud run environment with continuous build from <a href="https://cloud.google.com/build" target="_blank">Cloud Build</a> using <a href="https://cloud.google.com/build/docs/triggers" target="_blank">Triggers</a>, which will be run when a push is done to your repository
-- Don't forget to set your Environment Variables and disclose your Secret Environment Variables using <a href="https://cloud.google.com/secret-manager" target="_blank">Secret Manager</a>
+- Setup your cloud run environment with continuous build from [Cloud Build](https://cloud.google.com/build) using [Triggers](https://cloud.google.com/build/docs/triggers), which will be run when a push is done to your repository
+- Don't forget to set your Environment Variables and disclose your Secret Environment Variables using [Secret Manager](https://cloud.google.com/secret-manager)
 
 ### Setup ML Model Deployment using Cloud Run CI/CD
-- Setup your cloud run environment with continuous build from <a href="https://cloud.google.com/build" target="_blank">Cloud Build</a> using <a href="https://cloud.google.com/build/docs/triggers" target="_blank">Triggers</a>, which will be run when a push is done to your repository
+- Setup your cloud run environment with continuous build from [Cloud Build](https://cloud.google.com/build) using [Triggers](https://cloud.google.com/build/docs/triggers), which will be run when a push is done to your repository
 
 <br>
 <br>
 
 # API Specification Documentation
-for our API Specification list, <a href="https://github.com/Pupuk-In/cloud-computing.git" target="_blank">click here</a>
+for our API Specification list, [click here](https://github.com/Pupuk-In/cloud-computing.git)
+
