@@ -16,9 +16,13 @@ class ImageController extends Controller
         if ($request->hasFile('picture')) {
             try {
                 $storage = new StorageClient([
-                    'keyFilePath' => base_path(). '/service-account-key',
+                    // 'keyFilePath' => base_path(). '/service-account-key'
+                    'keyFilePath' => '/root/service-account-key'
+                    
+                    // if not found then
+                    
                 ]);
- 
+                
                 $bucketName = env('GOOGLE_CLOUD_BUCKET');
                 $bucket = $storage->bucket($bucketName);
  

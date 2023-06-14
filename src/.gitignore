@@ -14,3 +14,4 @@ yarn-error.log
 /.idea
 /.vscode
 serviceaccountkey.json
+service-account-key
