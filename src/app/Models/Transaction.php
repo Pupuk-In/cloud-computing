@@ -38,9 +38,9 @@ class Transaction extends Model
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function transactionStatus()
+    public function paymentStatus()
     {
-        return $this->belongsTo(TransactionStatus::class);
+        return $this->belongsTo(PaymentStatus::class);
     }
 
     public function transactionByStore()

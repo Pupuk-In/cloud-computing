@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Profile;
+use App\Models\Store;
 use App\Models\Transaction;
 use App\Models\TransactionByStore;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\DB;
+
 
 
 use function PHPUnit\Framework\isEmpty;
@@ -173,13 +175,54 @@ class TransactionController extends Controller
 
         $profile = Profile::where('user_id', $user->id)->first();
 
-        $transaction = Transaction::where('profile_id', $profile->id)
-            ->with('transactionByStore', 'transactionByStore.store','transactionByStore.transactionItem', 'transactionByStore.transactionItem.item')
-            ->get();
+        $transaction = Transaction::join('transaction_by_stores as transactionByStore', 'transactionByStore.transaction_id', '=', 'transactions.id')
+                ->join('transaction_statuses as transactionStatus', 'transactionStatus.id', '=', 'transactionByStore.transaction_status_id')
+                ->join('stores', 'stores.id', '=', 'transactionByStore.store_id')
+                ->select('transactionByStore.*', 'transactionStatus.name as status', 'stores.name as store')
+                ->where('transactions.profile_id', $profile->id)
+                ->orderBy('transactionByStore.id', 'desc')
+                ->get();
 
         return response()->json([
-            'message' => 'Transaction success.',
+            'message' => 'Transaction lists fetched successfully.',
             'transaction' => $transaction
+        ], 200);
+    }
+
+    public function show(Request $request, $id)
+    {
+        $user = Auth::user();
+
+        $profile = Profile::where('user_id', $user->id)->first();
+
+        $store = Store::where('profile_id', $profile->id)->first();
+
+        $transactionByStore = TransactionByStore::where('id', $id)
+            ->with([
+                'transactionStatus:id,name',
+                'transaction:id,recipient_name,recipient_phone,recipient_address,payment_method_id,payment_status_id',
+                'transaction.paymentMethod:id,name',
+                'transaction.paymentStatus:id,name',
+                'transactionItem' => function ($query) {
+                    $query->orderBy('id', 'desc');
+                },
+                'transactionItem.itemHistory',
+            ])
+            ->whereHas('transaction', function ($query) use ($profile) {
+                $query->where('profile_id', $profile->id);
+            })
+            ->first();
+
+        // $transactionByStore = TransactionByStore::where('id', $id)
+        //     ->where('store_id', $store->id)
+        //     ->with(['transactionStatus', 'transaction', 'transaction.paymentMethod', 'transactionItem' => function ($query) {
+        //         $query->orderBy('id', 'desc');
+        //     }, 'transactionItem.itemHistory',])
+        //     ->first();
+
+        return response()->json([
+            'message' => 'Transaction details fetched successfully.',
+            'transaction' => $transactionByStore
         ], 200);
     }
 }
