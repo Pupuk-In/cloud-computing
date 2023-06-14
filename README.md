@@ -41,10 +41,12 @@ https://pupukin-prod-l6hx3dk4bq-et.a.run.app/api
     - [Update Item from Cart](#update-item-from-cart)
     - [Delete item from Cart](#delete-item-from-cart)
 - [Transactions CRUD](#transactions-crud)
-    - [Create new Transaction](#new-transaction)
-    - [Read All Transaction Grouped by Status](#read-all-transaction-grouped-by-status)
-    - [Read Transaction Details](#read-transaction-details)
-    - [Update Transaction Status](#update-transaction-status)
+    - [Create new Transaction as User](#new-transaction)
+    - [Read All Transaction Grouped by Status as Store Owner](#read-all-transaction-grouped-by-status-as-store-owner)
+    - [Read All Transaction as User](#read-all-transaction-as-user)
+    - [Read Transaction Details as Store Owner](#read-transaction-details-as-store-owner)
+    - [Read Transaction Details as User](#read-transaction-details-as-user)
+    - [Update Transaction Status as Store Owner](#update-transaction-status)
 - [Search Query](#searchquery-page)
 - [Custom CRUDS](#custom-crud)
     - [Read 10 Random Types](#read-10-random-fertilizer-types)
@@ -1744,7 +1746,39 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```
 <br>
 
-## Read All Transaction Grouped by Status
+## Read All Transaction as User
+
+- Endpoint :
+    - /transactions
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "message": "Transaction lists fetched successfully.",
+    "transaction": [
+        {
+            "id": "integer",
+            "transaction_id": "integer",
+            "store_id": "integer",
+            "invoice": "string",
+            "total": "integer",
+            "transaction_status_id": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "status": "string",
+            "store": "string"
+        },
+    ]
+}
+```
+<br>
+
+
+## Read All Transaction Grouped by Status as Store Owner
 
 - Endpoint :
     - /transactions/stores
@@ -1779,7 +1813,83 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```
 <br>
 
-## Read Transaction Details
+## Read Transaction Details as User
+
+- Endpoint :
+    - /transactions/:id
+- Method :
+    - GET
+- Header :
+    - Accept: application/json
+    - Authorization: Bearer <access_token>
+- Response :
+```json 
+{
+    "message": "Transaction details fetched successfully.",
+    "transaction": {
+        "id": "integer",
+        "transaction_id": "integer",
+        "store_id": "integer",
+        "invoice": "string",
+        "total": "integer",
+        "transaction_status_id": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "transaction_status": {
+            "id": "integer",
+            "name": "string"
+        },
+        "transaction": {
+            "id": "integer",
+            "recipient_name": "string",
+            "recipient_phone": "string",
+            "recipient_address": "string",
+            "payment_method_id": "integer",
+            "payment_status_id": "integer",
+            "payment_method": {
+                "id": "integer",
+                "name": "string"
+            },
+            "payment_status": {
+                "id": "integer",
+                "name": "string"
+            }
+        },
+        "transaction_item": [
+            {
+                "id": "integer",
+                "transaction_by_store_id": "integer",
+                "item_id": "integer",
+                "store_id": "integer",
+                "quantity": "integer",
+                "price": "integer",
+                "subtotal": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "item_history": [
+                    {
+                        "id": "integer",
+                        "transaction_item_id": "integer",
+                        "name": "string",
+                        "picture": "array of string, url",
+                        "description": "text",
+                        "type": "string",
+                        "plant": "array of string",
+                        "plant_part": "array of string",
+                        "price": "integer",
+                        "brand": "string",
+                        "created_at": "datetime",
+                        "updated_at": "datetime"
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+<br>
+
+## Read Transaction Details as Store Owner
 
 - Endpoint :
     - /transactions/stores/:id
@@ -1864,7 +1974,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```
 <br>
 
-## Update Transaction Status
+## Update Transaction Status as Store Owner
 
 - Endpoint :
     - /transactions/stores/:id
