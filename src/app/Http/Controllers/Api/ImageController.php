@@ -21,14 +21,11 @@ class ImageController extends Controller
 
                 $response = $secretManager->accessSecretVersion($secretName);
                 $payload = $response->getPayload();
-                $secretValue = $payload->getData();
-                
+                $jsonKeyData = $payload->getData();
+
+                // Create a StorageClient instance using the JSON key data from the secret
                 $storage = new StorageClient([
-                    'keyFilePath' => $secretValue
-                    // 'keyFilePath' => '/root/service-account-key'
-                    
-                    // if not found then
-                    
+                    'keyFile' => json_decode($jsonKeyData, true)
                 ]);
                 
                 $bucketName = env('GOOGLE_CLOUD_BUCKET');
@@ -37,6 +34,8 @@ class ImageController extends Controller
                 //get filename with extension
                 $filenamewithextension = $request->file('picture')->getClientOriginalName();
  
+                $filenamewithextension = str_replace(' ', '_', $filenamewithextension);
+
                 //get filename without extension
                 $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
  
