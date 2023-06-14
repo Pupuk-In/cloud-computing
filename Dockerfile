@@ -7,6 +7,8 @@ RUN set -ex \
 
 RUN docker-php-ext-install pdo pdo_pgsql
 
+RUN docker-php-ext-install bcmath
+
 RUN apk add --no-cache nginx wget
 
 RUN mkdir -p /run/nginx
