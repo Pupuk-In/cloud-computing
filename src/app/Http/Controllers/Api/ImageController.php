@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Google\Cloud\Storage\StorageClient;
 use Illuminate\Support\Facades\Storage;
 use Exception;
+use Google\Cloud\SecretManager\V1\SecretManagerServiceClient;
 
 
 class ImageController extends Controller
@@ -15,9 +16,16 @@ class ImageController extends Controller
     {
         if ($request->hasFile('picture')) {
             try {
+                $secretManager = new SecretManagerServiceClient();
+                $secretName = 'projects/pupukin/secrets/service-account-key/versions/latest';
+
+                $response = $secretManager->accessSecretVersion($secretName);
+                $payload = $response->getPayload();
+                $secretValue = $payload->getData();
+                
                 $storage = new StorageClient([
-                    // 'keyFilePath' => base_path(). '/service-account-key'
-                    'keyFilePath' => '/root/service-account-key'
+                    'keyFilePath' => $secretValue
+                    // 'keyFilePath' => '/root/service-account-key'
                     
                     // if not found then
                     
