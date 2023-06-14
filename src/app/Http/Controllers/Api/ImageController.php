@@ -16,8 +16,10 @@ class ImageController extends Controller
     {
         if ($request->hasFile('picture')) {
             try {
+                $projectId = env('GCP_PROJECT_ID');
+                $secretedName = env('SERVICE_ACCOUNT_SECRET_NAME');
                 $secretManager = new SecretManagerServiceClient();
-                $secretName = 'projects/pupukin/secrets/service-account-key/versions/latest';
+                $secretName = 'projects/'.$projectId.'/secrets/'.$secretedName.'/versions/latest';
 
                 $response = $secretManager->accessSecretVersion($secretName);
                 $payload = $response->getPayload();
