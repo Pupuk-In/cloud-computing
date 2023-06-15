@@ -107,7 +107,7 @@ class StoreOwnerController extends Controller
 
         return response()->json([
             'message' => 'Transaction details fetched successfully.',
-            'transaction' => $transactionByStore
+            'transaction_detail' => $transactionByStore
         ], 200);
     }
 
@@ -135,7 +135,7 @@ class StoreOwnerController extends Controller
 
         return response()->json([
             'message' => 'Transaction status updated successfully.',
-            'transaction' => $transactionByStore
+            'transaction_detail' => $transactionByStore
         ], 200);
     }
 }
