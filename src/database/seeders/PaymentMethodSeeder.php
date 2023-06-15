@@ -16,9 +16,17 @@ class PaymentMethodSeeder extends Seeder
     public function run()
     {
         DB::table('payment_methods')->insert([
-            'name' => 'COD',
+            'name' => 'Tunai/COD',
             'description' => "bla bla bla",
-            'fee' => 5000,
+            'fee' => 7500,
+            'created_at' => date('Y-m-d H:i:sO', time()),
+            'updated_at' => date('Y-m-d H:i:sO', time())
+        ]);
+
+        DB::table('payment_methods')->insert([
+            'name' => 'Dompet Digital',
+            'description' => "bla bla bla",
+            'fee' => 4500,
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
@@ -27,14 +35,6 @@ class PaymentMethodSeeder extends Seeder
             'name' => 'Transfer Bank',
             'description' => "bla bla bla",
             'fee' => 6500,
-            'created_at' => date('Y-m-d H:i:sO', time()),
-            'updated_at' => date('Y-m-d H:i:sO', time())
-        ]);
-
-        DB::table('payment_methods')->insert([
-            'name' => 'Kredit',
-            'description' => "bla bla bla",
-            'fee' => 0,
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);

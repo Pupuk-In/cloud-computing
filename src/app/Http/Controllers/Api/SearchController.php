@@ -186,7 +186,6 @@ class SearchController extends Controller
         }
 
 
-
         if ($item->isEmpty()) {
             return response()->json([
                 'message' => 'Item list is empty.',
@@ -198,6 +197,16 @@ class SearchController extends Controller
             'message' => 'Item list fetched successfully.',
             'item'    => $item
         ], 200);
+    }
+
+    public function indexDistance(Request $request)
+    {
+        $markers = DB::table('stores')
+            ->select('id', DB::raw('(3959 * acos(cos(radians(78.3232)) * cos(radians(lat)) * cos(radians(lng) - radians(65.3234)) + sin(radians(78.3232)) * sin(radians(lat)))) AS distance'))
+            ->having('distance', '<', 30)
+            ->orderBy('distance')
+            ->limit(20)
+            ->get();
     }
 
     /**

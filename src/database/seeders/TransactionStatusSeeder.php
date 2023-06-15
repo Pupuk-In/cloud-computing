@@ -16,49 +16,49 @@ class TransactionStatusSeeder extends Seeder
     public function run()
     {
         DB::table('transaction_statuses')->insert([
-            'name' => 'belum konfirmasi',
+            'name' => 'Belum Konfirmasi',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
 
         DB::table('transaction_statuses')->insert([
-            'name' => 'sudah konfirmasi',
+            'name' => 'Sudah Konfirmasi',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
 
         DB::table('transaction_statuses')->insert([
-            'name' => 'dibatalkan',
+            'name' => 'Dibatalkan',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
 
         DB::table('transaction_statuses')->insert([
-            'name' => 'dikirim',
+            'name' => 'Dikirim',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
 
         DB::table('transaction_statuses')->insert([
-            'name' => 'terkirim',
+            'name' => 'Terkirim',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
 
         DB::table('transaction_statuses')->insert([
-            'name' => 'diterima',
+            'name' => 'Diterima',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
 
         DB::table('transaction_statuses')->insert([
-            'name' => 'selesai',
+            'name' => 'Selesai',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())

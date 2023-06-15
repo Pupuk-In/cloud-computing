@@ -53,6 +53,8 @@ https://pupukin-prod-l6hx3dk4bq-et.a.run.app/api
     - [Read 5 Random Plants](#read-5-random-plants)
     - [Store Owner - Read 2 Latest Items and 2 Latest Unconfirmed Transaction](#store-owner---read-2-latest-items-and-2-latest-unconfirmed-transaction)
 
+
+
 # Machine Learning Apis
 - [Nutrient Deficiency Prediction](#nutrient-deficiency-prediction)
 
@@ -1826,7 +1828,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ```json 
 {
     "message": "Transaction details fetched successfully.",
-    "transaction": {
+    "transaction_detail": {
         "id": "integer",
         "transaction_id": "integer",
         "store_id": "integer",

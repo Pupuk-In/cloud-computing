@@ -16,14 +16,14 @@ class PaymentStatus extends Seeder
     public function run()
     {
         DB::table('payment_statuses')->insert([
-            'name' => 'belum bayar',
+            'name' => 'Belum Bayar',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);
 
         DB::table('payment_statuses')->insert([
-            'name' => 'sudah bayar',
+            'name' => 'Sudah Bayar',
             'description' => "bla bla bla",
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())

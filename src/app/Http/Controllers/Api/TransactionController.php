@@ -222,7 +222,7 @@ class TransactionController extends Controller
 
         return response()->json([
             'message' => 'Transaction details fetched successfully.',
-            'transaction' => $transactionByStore
+            'transaction_detail' => $transactionByStore
         ], 200);
     }
 }
