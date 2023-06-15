@@ -31,9 +31,9 @@ Clone the repository from [here](https://github.com/Pupuk-In/cloud-computing.git
 - Setup your [Cloud Run](https://cloud.google.com/run) environment with continuous build from [Cloud Build](https://cloud.google.com/build) using [Triggers](https://cloud.google.com/build/docs/triggers), which will be run when a push is done to your repository
 - Don't forget to set your Environment Variables and disclose your Secret Environment Variables using [Secret Manager](https://cloud.google.com/secret-manager)
 - Also add these to your Environment Variables:
-  - GOOGLE_CLOUD_BUCKET = <your google cloud bucket name>
-  - GCP_PROJECT_ID = <your google cloud platform project ID>
-  - SERVICE_ACCOUNT_SECRET_NAME = <your secret manager name of your service account key JSON file>
+  - GOOGLE_CLOUD_BUCKET = [your google cloud bucket name]
+  - GCP_PROJECT_ID = [your google cloud platform project ID]
+  - SERVICE_ACCOUNT_SECRET_NAME = [your secret name of your service account key JSON file]
 
 ### Setup ML Model Deployment using Cloud Run CI/CD
 - Setup your cloud run environment with continuous build from [Cloud Build](https://cloud.google.com/build) using [Triggers](https://cloud.google.com/build/docs/triggers), which will be run when a push is done to your repository
