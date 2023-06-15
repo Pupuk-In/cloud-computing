@@ -98,7 +98,7 @@ Route::namespace('Api')->group(function(){
         Route::post('', [TransactionController::class, 'store'])->middleware('auth:sanctum');
         Route::get('', [TransactionController::class, 'index'])->middleware('auth:sanctum');
         Route::get('{id}', [TransactionController::class, 'show'])->middleware('auth:sanctum');
-        Route::get('stores', [StoreOwnerController::class, 'indexTransaction'])->middleware('auth:sanctum');
+        Route::get('stores/all', [StoreOwnerController::class, 'indexTransaction'])->middleware('auth:sanctum');
         Route::get('stores/{id}', [StoreOwnerController::class, 'showTransactionDetails'])->middleware('auth:sanctum');
         Route::patch('stores/{id}', [StoreOwnerController::class, 'updateTransactionStatus'])->middleware('auth:sanctum');
     });

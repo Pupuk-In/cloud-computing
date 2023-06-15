@@ -1783,7 +1783,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 ## Read All Transaction Grouped by Status as Store Owner
 
 - Endpoint :
-    - /transactions/stores
+    - /transactions/stores/all
 - Method :
     - GET
 - Header :
