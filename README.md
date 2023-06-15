@@ -42,5 +42,5 @@ Clone the repository from [here](https://github.com/Pupuk-In/cloud-computing.git
 <br>
 
 # API Specification Documentation
-for our API Specification list, [click here](https://github.com/Pupuk-In/cloud-computing.git)
+for our API Specification list, [click here](https://github.com/Pupuk-In/cloud-computing#readme)
 
