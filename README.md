@@ -8,7 +8,6 @@
 ## Cloud Architecture
 ![Cloud Architecture](https://github.com/Pupuk-In/cloud-computing/assets/87064650/68579307-2077-4f9a-ad94-9414f3222519)
 
-
 <br>
 
 # Steps to produce
