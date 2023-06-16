@@ -25,17 +25,18 @@ class PlantPartSeeder extends Seeder
         );
 
         $pictures = array(
-            "https://storage.googleapis.com/pupukin-bucket/4f6dd4f000029da89507cb092aa6bacf_6479bf385aea6.png",
-            "https://storage.googleapis.com/pupukin-bucket/fujiikaze_6479b8df6a4f6.jpeg",
-            "https://storage.googleapis.com/pupukin-bucket/mustache_6479c8c244242.png",
-            "https://storage.googleapis.com/pupukin-bucket/go_6479d5354e298.png",
-            "https://storage.googleapis.com/pupukin-bucket/vitogeraldolraldo_6479d5a7f1211.gif"
+            "https://storage.googleapis.com/pupukin-bucket/akar_tumbuhan_648b4fbcf15c5.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/fungsi_batang_pada_tumbuhan-1.width-800.format-webp_648b5012b77c8.webp",
+            "https://storage.googleapis.com/pupukin-bucket/5fb8e0990191a_648b502fe797a.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/9fcc6f20-dddd-4dba-8c5e-0e58217010cd_648b505af3075.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/tanaman-buah-dalam-ruangan-2_648b507e5ee0d.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/TEKNOLOGI-SELEKSI-BENIH-TANAMAN_648b50b09a0fd.jpg"
         );
 
-        foreach($plantParts as $plantpart){
+        for($i=0; $i<6; $i++){
             DB::table('plant_parts')->insert([
-            'name' => $plantpart,
-            'picture' => $pictures[array_rand($pictures)],
+            'name' => $plantParts[$i],
+            'picture' => $pictures[$i],
             'created_at' => date('Y-m-d H:i:sO', time()),
             'updated_at' => date('Y-m-d H:i:sO', time())
         ]);

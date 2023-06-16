@@ -22,24 +22,28 @@ class PlantSeeder extends Seeder
             "Kentang",
             "Tebu",
             "Kelapa Sawit",
-            "Cabe",
+            "Cabai",
             "Tomat",
             "Bawang Merah",
-            "Cabai"
         );
 
         $pictures = array(
-            "https://storage.googleapis.com/pupukin-bucket/4f6dd4f000029da89507cb092aa6bacf_6479bf385aea6.png",
-            "https://storage.googleapis.com/pupukin-bucket/fujiikaze_6479b8df6a4f6.jpeg",
-            "https://storage.googleapis.com/pupukin-bucket/mustache_6479c8c244242.png",
-            "https://storage.googleapis.com/pupukin-bucket/go_6479d5354e298.png",
-            "https://storage.googleapis.com/pupukin-bucket/vitogeraldolraldo_6479d5a7f1211.gif"
+            "https://storage.googleapis.com/pupukin-bucket/manfaat-padi_648b4d64641a6.webp",
+            "https://storage.googleapis.com/pupukin-bucket/tips-memilih-jagungjpg-20220828092415_648b4decc2e05.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/20120729PanenRayaKedelaiDiSidoarjo-EricIreng280712-4_648b4e1a103f7.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/yetI9s3q30_648b4e42d65bb.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/Tebu_648b4e77a4a44.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/9e96908c9d02a8de0f90eea061b315f7_648b4e9c5cfaf.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/varwwwhtmldinkescommonupload88Manfaat-Cabai_648b4ec4a3e35.jpg",
+            "https://storage.googleapis.com/pupukin-bucket/tomat-biasa_648b4ee25f027.webp",
+            "https://storage.googleapis.com/pupukin-bucket/bawang_648b4f107dd52.jpg",
+
         );
 
-        foreach ($crops as $crop) {
+        for($i = 0; $i < count($crops); $i++) {
             DB::table('plants')->insert([
-                'name' => $crop,
-                'picture' => $pictures[array_rand($pictures)],
+                'name' => $crops[$i],
+                'picture' => $pictures[$i],
                 'created_at' => date('Y-m-d H:i:sO', time()),
                 'updated_at' => date('Y-m-d H:i:sO', time())
             ]);

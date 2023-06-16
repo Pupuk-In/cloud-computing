@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\StoreOwnerController;
 use App\Http\Controllers\Api\TransactionController;
+use App\Http\Controllers\Api\TestController;
 
 
 /*
@@ -132,5 +133,5 @@ Route::namespace('Api')->group(function(){
     });
     
 
-    Route::get('index', [AuthController::class, 'index'])->middleware('auth:sanctum');
+    Route::post('test', [TestController::class, 'index']);
 });

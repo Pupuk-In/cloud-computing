@@ -15,13 +15,15 @@ class PivotItemPlantPart extends Seeder
      */
     public function run()
     {
-        for ($i= 0; $i < 100; $i++){
-            DB::table('item_plant_part')->insert([
-                'item_id' => mt_rand(1,50),
-                'plant_part_id' => mt_rand(1,6),
-                'created_at' => date('Y-m-d H:i:sO', time()),
-                'updated_at' => date('Y-m-d H:i:sO', time())
-            ]);
+        for ($i= 0; $i < 8; $i++){
+            for ($j = 0; $j < 2; $j++){
+                DB::table('item_plant_part')->insert([
+                    'item_id' => $i+1,
+                    'plant_part_id' => mt_rand(1,6),
+                    'created_at' => date('Y-m-d H:i:sO', time()),
+                    'updated_at' => date('Y-m-d H:i:sO', time())
+                ]);
+            }
         }
     }
 }
