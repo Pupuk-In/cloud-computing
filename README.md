@@ -2297,3 +2297,37 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     "description": "string"
 }
 ```
+
+## Product Search Relevance
+
+- Api :
+    - https://search-relevance-ml-l6hx3dk4bq-et.a.run.app
+- Endpoint :
+    - /calculate/
+- Method :
+    - POST
+- Header :
+    - Accept : Application/JSON
+- Body :
+```json 
+{
+    "items": [
+        {
+            "id": "integer",
+            "name": "string"
+        },
+    ],
+    "query": "string"
+
+}
+```
+- Response :
+```json 
+[
+    {
+        "id": "integer",
+        "name": "string",
+        "relevance": "float"
+    },
+]
+```
