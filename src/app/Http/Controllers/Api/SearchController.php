@@ -76,44 +76,58 @@ class SearchController extends Controller
             }
         }
 
-        // PAGINATE
-        if($request->perPage){
-            $item = $itemQuery->select('items.*')->paginate($request->perPage);
-        } else {
-            $item = $itemQuery->select('items.*')->paginate(10);
-        }
-
-        foreach($responseData as $key => $value){
-            foreach($item as $itemed){
-                if($itemed->id == $value['id']){
-                    $itemed['relevance'] = $value['relevance'];
-                }
-            }
-        }
+        
 
         // SORT
         if($request->sort){
             $sortColumn = $request->sort;
             $sortOrder = $request->order === 'desc' ? 'desc' : 'asc';
-            if($sortOrder === 'desc'){
-                $item = $item->sortByDesc($sortColumn);
-            } else {
-                $item = $item->sortBy($sortColumn);
-            }
+            $sortedItems = $itemQuery->orderBy($sortColumn, $sortOrder)->get();
         } else {
-            $item = $item->sortByDesc('relevance');
+            $itemSort = $itemQuery->select('items.*')->get();
+
+            // $sortedItems = $itemQuery->orderBy("created_at", "desc")->paginate(10);
+            foreach($responseData as $key => $value){
+                foreach($itemSort as $itemed){
+                    if($itemed->id == $value['id']){
+                        $itemed['relevance'] = $value['relevance'];
+                    }
+                }
+            }
+
+            $sortedItems = collect();
+
+            $itemSort->sort(function ($item1, $item2) use ($sortedItems) {
+                // Compare the "relevance" values of $item1 and $item2
+                if ($item1->relevance === $item2->relevance) {
+                    return 0;  // The "relevance" values are equal
+                }
+
+                // Sort in descending order by comparing "relevance" values
+                return ($item1->relevance > $item2->relevance) ? -1 : 1;
+            })->each(function ($item) use ($sortedItems) {
+                $sortedItems->push($item);
+            });
         }
 
-        if ($item->isEmpty()) {
+        // PAGINATE
+        // if($request->perPage){
+        //     $item = $itemQuery->select('items.*')->paginate($request->perPage);
+        // } else {
+        //     $item = $itemQuery->select('items.*')->paginate(10);
+        // }
+
+
+        if ($sortedItems->isEmpty()) {
             return response()->json([
                 'message' => 'Item list is empty.',
-                'item'    => $item,
+                'item'    => ["data" => $sortedItems],
             ], 200);
         }
 
         return response()->json([
             'message' => 'Item list fetched successfully.',
-            'item'    => $item,
+            'item'    => ["data" => $sortedItems],
         ], 200);
     }
 
