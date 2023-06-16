@@ -1,10 +1,9 @@
 # API Spec
 
-## APIs List
 - API:
 https://pupukin-prod-l6hx3dk4bq-et.a.run.app/api
 
-# Endpoint Lists
+# Endpoints List
 - [Authentication](#authentication)
     - [Register](#register)
     - [Login](#login)
@@ -54,11 +53,10 @@ https://pupukin-prod-l6hx3dk4bq-et.a.run.app/api
     - [Store Owner - Read 2 Latest Items and 2 Latest Unconfirmed Transaction](#store-owner---read-2-latest-items-and-2-latest-unconfirmed-transaction)
 
 
-
 # Machine Learning Apis
 - [Nutrient Deficiency Prediction](#nutrient-deficiency-prediction)
+- [Product Search Relevance](#product-search-relevance)
 
-<br>
 <br>
 <br>
 
@@ -2271,7 +2269,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
 <br>
 <br>
 
-# Machine Learning Apis
+# Machine Learning APIs
 
 ## Nutrient Deficiency Prediction
 
