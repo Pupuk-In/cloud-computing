@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class SearchController extends Controller
 {
@@ -35,6 +36,16 @@ class SearchController extends Controller
                 }
             });
         }
+
+        $items = $itemQuery->select('id', 'name')->get();
+
+        $response = Http::post('https://search-relevance-ml-l6hx3dk4bq-et.a.run.app/calculate/', [
+            "items" => $items,
+            "query" => $request->search,
+        ]);
+        
+        $responseData = $response->json();
+
         // by relation type (exact)
         if($request->type){
             $itemQuery->whereHas('type', function($query) use($request){
@@ -65,36 +76,44 @@ class SearchController extends Controller
             }
         }
 
+        // PAGINATE
+        if($request->perPage){
+            $item = $itemQuery->select('items.*')->paginate($request->perPage);
+        } else {
+            $item = $itemQuery->select('items.*')->paginate(10);
+        }
+
+        foreach($responseData as $key => $value){
+            foreach($item as $itemed){
+                if($itemed->id == $value['id']){
+                    $itemed['relevance'] = $value['relevance'];
+                }
+            }
+        }
+
         // SORT
         if($request->sort){
             $sortColumn = $request->sort;
             $sortOrder = $request->order === 'desc' ? 'desc' : 'asc';
-            $itemQuery->orderBy($sortColumn, $sortOrder);
+            if($sortOrder === 'desc'){
+                $item = $item->sortByDesc($sortColumn);
+            } else {
+                $item = $item->sortBy($sortColumn);
+            }
         } else {
-            $itemQuery->orderBy('created_at', 'desc');
+            $item = $item->sortByDesc('relevance');
         }
-
-        // PAGINATE
-        if($request->perPage){
-            $item = $itemQuery->paginate($request->perPage);
-        } else {
-            $item = $itemQuery->paginate(10);
-        }
-
-
 
         if ($item->isEmpty()) {
             return response()->json([
                 'message' => 'Item list is empty.',
                 'item'    => $item,
-                'search' => $words
             ], 200);
         }
 
         return response()->json([
             'message' => 'Item list fetched successfully.',
             'item'    => $item,
-            'search' => $words
         ], 200);
     }
 
