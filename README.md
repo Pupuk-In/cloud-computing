@@ -2087,10 +2087,8 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     "plant": "integer, id of plant",
     "part": "integer, id of plant parts",
     "price": "integer, range of price, ex: price=5000-9000",
-    "sort": "string, value should be either 'name' or 'price' or 'created_at'",
+    "sort": "string, value should be either 'name' or 'price' or 'created_at' or 'relevance', if not defined then uses default 'relevance'",
     "order": "string, value should be either 'desc' or 'asc', if not defined then uses default 'desc'",
-    "perPage": "integer, items shown per page, if not defined then uses default 10",
-    "page": "integer, pagination page number, if not defined then uses default 1"
 }
 ```
 - Response :
@@ -2099,7 +2097,6 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
     "message" : "Item list fetched successfully",
     "items" : 
     {
-        "current_page": "integer",
         "data": [{
             "item": {
                 "id": "integer",
@@ -2167,24 +2164,7 @@ Jika {id} tidak diisi pada endpoint, maka akan mengembalikan response berupa tok
                     }
                 }]
             }
-        }],
-        "first_page_url": "string, url",
-        "from": "integer",
-        "last_page": "integer",
-        "last_page_url": "string, url",
-        "links": [
-            {
-                "url": "string, url",
-                "label": "string",
-                "active": "boolean"
-            },
-        ],
-        "next_page_url": "string, url",
-        "path": "string, url",
-        "per_page": "integer",
-        "prev_page_url": "string, url",
-        "to": "integer",
-        "total": "integer"
+        }]
     }
 }
 ```

@@ -18,7 +18,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\StoreOwnerController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\TestController;
-
+use GPBMetadata\Google\Api\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -134,4 +134,5 @@ Route::namespace('Api')->group(function(){
     
 
     Route::post('test', [TestController::class, 'index']);
+    Route::get('index', [AuthController::class, 'index'])->middleware('auth:sanctum');
 });
